@@ -2,7 +2,7 @@
   "name": "yume-assistant",
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://seuusuario.github.io/yume-assistant",
+  "homepage": "https://naotodev1.github.io/yume",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
