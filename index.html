@@ -6,6 +6,16 @@
     <title>Yume - Assistente Virtual</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "nfv8y3n7t6");
+    </script>
+    
     <style>
         /* Reset e configurações básicas */
         * {
@@ -1161,14 +1171,14 @@
             }
 
             init() {
-                // Carregar histórico do localStorage
-                const savedHistory = localStorage.getItem('yumeConversationHistory');
+                // Carregar histórico do sessionStorage (temporário)
+                const savedHistory = sessionStorage.getItem('yumeConversationHistory');
                 if (savedHistory) {
                     this.conversationHistory = JSON.parse(savedHistory);
                 }
 
-                // Carregar cache
-                const savedCache = localStorage.getItem('yumeResponseCache');
+                // Carregar cache do sessionStorage
+                const savedCache = sessionStorage.getItem('yumeResponseCache');
                 if (savedCache) {
                     const cacheArray = JSON.parse(savedCache);
                     cacheArray.forEach(([key, value]) => {
@@ -1192,7 +1202,17 @@
                     this.conversationHistory = this.conversationHistory.slice(-this.maxHistoryLength);
                 }
 
-                localStorage.setItem('yumeConversationHistory', JSON.stringify(this.conversationHistory));
+                sessionStorage.setItem('yumeConversationHistory', JSON.stringify(this.conversationHistory));
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("set", "last_message", message.substring(0, 50));
+                    window.clarity("event", "message_sent", { 
+                        sender: sender, 
+                        source: source,
+                        message_length: message.length 
+                    });
+                }
             }
 
             // Buscar resposta em cache
@@ -1206,13 +1226,13 @@
                 const normalizedMessage = this.normalizeMessage(message);
                 this.responseCache.set(normalizedMessage, { response, source });
 
-                // Salvar cache no localStorage
+                // Salvar cache no sessionStorage
                 this.saveCacheToStorage();
             }
 
             saveCacheToStorage() {
                 const cacheArray = Array.from(this.responseCache.entries());
-                localStorage.setItem('yumeResponseCache', JSON.stringify(cacheArray));
+                sessionStorage.setItem('yumeResponseCache', JSON.stringify(cacheArray));
             }
 
             // Normalizar mensagem para comparação
@@ -1261,9 +1281,14 @@
             // Limpar cache
             clearCache() {
                 this.responseCache.clear();
-                localStorage.removeItem('yumeResponseCache');
+                sessionStorage.removeItem('yumeResponseCache');
                 this.conversationHistory = [];
-                localStorage.removeItem('yumeConversationHistory');
+                sessionStorage.removeItem('yumeConversationHistory');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "cache_cleared");
+                }
             }
         }
 
@@ -1394,9 +1419,27 @@
                     }
 
                     const data = await response.json();
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "mistral_api_call", {
+                            success: true,
+                            message_length: message.length,
+                            response_length: data.choices[0].message.content.length
+                        });
+                    }
+                    
                     return data.choices[0].message.content.trim();
                 } catch (error) {
                     console.error('Erro na Mistral AI:', error);
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "mistral_api_error", {
+                            error: error.message
+                        });
+                    }
+                    
                     throw error;
                 }
             }
@@ -1404,11 +1447,15 @@
             // Alternar estado da IA
             toggleEnabled(enabled) {
                 this.enabled = enabled;
-                localStorage.setItem('yumeAIEnabled', enabled);
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "ai_toggled", { enabled: enabled });
+                }
             }
         }
 
-        // Sistema de Feedback (atualizado para IA)
+        // Sistema de Feedback (atualizado para Clarity)
         class FeedbackSystem {
             constructor() {
                 this.init();
@@ -1421,6 +1468,13 @@
                 this.voiceInteractions = 0;
                 this.feedbackShownThisSession = false;
                 this.lastFeedbackTime = 0;
+                
+                // Inicializar Clarity session
+                if (window.clarity) {
+                    window.clarity("set", "session_start", new Date().toISOString());
+                    window.clarity("set", "user_type", "anonymous");
+                }
+                
                 this.trackUserBehavior();
             }
 
@@ -1507,31 +1561,29 @@
             }
 
             handleFeedbackResponse(rating, messageId, source) {
-                const feedbackData = {
-                    type: 'message_feedback',
-                    rating: rating,
-                    messageId: messageId,
-                    source: source,
-                    sessionDuration: this.sessionDuration,
-                    messageCount: this.messageCount,
-                    timestamp: Date.now(),
-                    user: currentUser?.email || 'anonymous'
-                };
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "message_feedback", {
+                        rating: rating,
+                        source: source,
+                        message_count: this.messageCount,
+                        session_duration: Math.round(this.sessionDuration / 1000)
+                    });
+                }
 
-                this.saveFeedback(feedbackData);
                 this.showToast('Obrigado pelo feedback!', 'success');
             }
 
             handleContextualFeedback(rating) {
-                const feedbackData = {
-                    type: 'contextual_feedback',
-                    rating: rating,
-                    sessionDuration: this.sessionDuration,
-                    messageCount: this.messageCount,
-                    timestamp: Date.now()
-                };
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "contextual_feedback", {
+                        rating: rating,
+                        message_count: this.messageCount,
+                        session_duration: Math.round(this.sessionDuration / 1000)
+                    });
+                }
 
-                this.saveFeedback(feedbackData);
                 this.showToast('Obrigado pelo feedback!', 'success');
 
                 let response = '';
@@ -1555,12 +1607,6 @@
                 }
             }
 
-            saveFeedback(feedback) {
-                const allFeedback = JSON.parse(localStorage.getItem('yumeFeedback') || '[]');
-                allFeedback.push(feedback);
-                localStorage.setItem('yumeFeedback', JSON.stringify(allFeedback));
-            }
-
             showToast(message, type = 'info') {
                 toast.textContent = message;
                 toast.className = 'toast-notification';
@@ -1580,14 +1626,37 @@
 
             incrementMessageCount() {
                 this.messageCount++;
+                
+                // Update no Clarity
+                if (window.clarity) {
+                    window.clarity("set", "message_count", this.messageCount);
+                }
             }
 
             incrementQuickReplies() {
                 this.quickRepliesUsed++;
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "quick_reply_used", { count: this.quickRepliesUsed });
+                }
             }
 
             incrementVoiceInteractions() {
                 this.voiceInteractions++;
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "voice_interaction", { count: this.voiceInteractions });
+                }
+            }
+
+            setUserProfile(user) {
+                if (window.clarity && user) {
+                    window.clarity("set", "user_type", "registered");
+                    window.clarity("set", "user_age_group", user.age);
+                    window.clarity("identify", user.email);
+                }
             }
 
             getMetricsReport() {
@@ -1657,6 +1726,14 @@
             if (sender === 'user') {
                 assistantUI.classList.add('hidden');
                 feedbackSystem.incrementMessageCount();
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "user_message", {
+                        length: text.length,
+                        has_quick_reply: false
+                    });
+                }
             }
 
             const messageDiv = document.createElement('div');
@@ -1682,6 +1759,14 @@
                         source
                     );
                 }
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "assistant_response", {
+                        source: source,
+                        length: text.length
+                    });
+                }
             } else {
                 messageDiv.textContent = text;
 
@@ -1700,10 +1785,16 @@
         // ==================== INICIALIZAÇÃO ====================
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Track page view no Clarity
+            if (window.clarity) {
+                window.clarity("event", "page_view");
+            }
+
             // Verificar se há usuário logado
-            const savedUser = localStorage.getItem('yumeUser');
+            const savedUser = sessionStorage.getItem('yumeUser');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
+                feedbackSystem.setUserProfile(currentUser);
                 showChatScreen();
             }
 
@@ -1714,16 +1805,16 @@
             feedbackSystem = new FeedbackSystem();
 
             // Configurar modo escuro
-            const darkMode = localStorage.getItem('yumeDarkMode') === 'true';
+            const darkMode = sessionStorage.getItem('yumeDarkMode') === 'true';
             document.body.classList.toggle('dark-mode', darkMode);
             darkModeToggle.checked = darkMode;
 
             // Configurar toggle de voz
-            const voiceEnabled = localStorage.getItem('yumeVoiceEnabled') !== 'false';
+            const voiceEnabled = sessionStorage.getItem('yumeVoiceEnabled') !== 'false';
             voiceToggle.checked = voiceEnabled;
 
             // Configurar toggle de IA
-            const aiEnabled = localStorage.getItem('yumeAIEnabled') !== 'false';
+            const aiEnabled = sessionStorage.getItem('yumeAIEnabled') !== 'false';
             aiToggle.checked = aiEnabled;
             aiIntegration.toggleEnabled(aiEnabled);
 
@@ -1739,11 +1830,24 @@
                     const transcript = event.results[0][0].transcript;
                     userInput.value = transcript;
                     toggleMic(false);
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "voice_recognition_success");
+                    }
                 };
 
                 recognition.onerror = function(event) {
                     console.error('Erro no reconhecimento de voz:', event.error);
                     toggleMic(false);
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "voice_recognition_error", {
+                            error: event.error
+                        });
+                    }
+                    
                     showToast('Erro no reconhecimento de voz', 'error');
                 };
 
@@ -1766,12 +1870,22 @@
                 e.preventDefault();
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "show_register_form");
+                }
             });
 
             showLogin.addEventListener('click', function(e) {
                 e.preventDefault();
                 registerForm.classList.add('hidden');
                 loginForm.classList.remove('hidden');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "show_login_form");
+                }
             });
 
             // Formulário de login
@@ -1789,7 +1903,14 @@
                             age: '18-30'
                         };
                         currentUser = user;
-                        localStorage.setItem('yumeUser', JSON.stringify(user));
+                        sessionStorage.setItem('yumeUser', JSON.stringify(user));
+                        feedbackSystem.setUserProfile(user);
+                        
+                        // Track no Clarity
+                        if (window.clarity) {
+                            window.clarity("event", "user_login_success");
+                        }
+                        
                         showChatScreen();
                         showLoading(false);
                         showToast('Login realizado com sucesso!', 'success');
@@ -1822,7 +1943,14 @@
                             age: age
                         };
                         currentUser = user;
-                        localStorage.setItem('yumeUser', JSON.stringify(user));
+                        sessionStorage.setItem('yumeUser', JSON.stringify(user));
+                        feedbackSystem.setUserProfile(user);
+                        
+                        // Track no Clarity
+                        if (window.clarity) {
+                            window.clarity("event", "user_register_success");
+                        }
+                        
                         showChatScreen();
                         showLoading(false);
                         showToast('Conta criada com sucesso!', 'success');
@@ -1835,6 +1963,11 @@
             // Menu
             menuBtn.addEventListener('click', function() {
                 menuOverlay.classList.add('active');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "menu_opened");
+                }
             });
 
             closeMenu.addEventListener('click', function() {
@@ -1843,8 +1976,13 @@
 
             // Logout
             logoutBtn.addEventListener('click', function() {
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "user_logout");
+                }
+                
                 currentUser = null;
-                localStorage.removeItem('yumeUser');
+                sessionStorage.removeItem('yumeUser');
                 showAuthScreen();
                 menuOverlay.classList.remove('active');
                 showToast('Logout realizado com sucesso', 'success');
@@ -1854,19 +1992,30 @@
             darkModeToggle.addEventListener('change', function() {
                 const isDarkMode = this.checked;
                 document.body.classList.toggle('dark-mode', isDarkMode);
-                localStorage.setItem('yumeDarkMode', isDarkMode);
+                sessionStorage.setItem('yumeDarkMode', isDarkMode);
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "dark_mode_toggled", { enabled: isDarkMode });
+                }
             });
 
             // Voz
             voiceToggle.addEventListener('change', function() {
                 const voiceEnabled = this.checked;
-                localStorage.setItem('yumeVoiceEnabled', voiceEnabled);
+                sessionStorage.setItem('yumeVoiceEnabled', voiceEnabled);
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "voice_toggled", { enabled: voiceEnabled });
+                }
             });
 
             // IA Mistral
             aiToggle.addEventListener('change', function() {
                 const aiEnabled = this.checked;
                 aiIntegration.toggleEnabled(aiEnabled);
+                sessionStorage.setItem('yumeAIEnabled', aiEnabled);
                 showToast(aiEnabled ? 'Mistral AI ativada' : 'Mistral AI desativada', 'success');
             });
 
@@ -1874,6 +2023,11 @@
             apiConfigBtn.addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
                 showToast('Mistral AI já está integrada e funcionando!', 'success');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "api_config_clicked");
+                }
             });
 
             // Limpar cache
@@ -1917,11 +2071,21 @@
             document.getElementById('helpBtn').addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
                 addMessage('Precisa de ajuda? Aqui estão algumas coisas que posso fazer:\n\n• Responder perguntas gerais\n• Fornecer informações úteis\n• Auxiliar com tarefas do dia a dia\n• Oferecer sugestões e conselhos\n\nEm que posso te ajudar especificamente?', 'assistant', 'fallback');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "help_clicked");
+                }
             });
 
             document.getElementById('aboutYumeBtn').addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
                 addMessage('Olá! Eu sou a Yume, sua assistente virtual inteligente com tecnologia Mistral AI. Fui desenvolvida para ajudar você com diversas tarefas e fornecer informações úteis no seu dia a dia.\n\nMinhas funcionalidades incluem:\n• Resposta a perguntas usando IA\n• Auxílio em tarefas\n• Fornecimento de informações\n• Suporte e orientação\n\nEstou sempre aprendendo e melhorando para te servir melhor!', 'assistant', 'fallback');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "about_clicked");
+                }
             });
 
             document.getElementById('statsBtn').addEventListener('click', function() {
@@ -1929,12 +2093,22 @@
                 const metrics = feedbackSystem.getMetricsReport();
                 const aiStatus = aiIntegration.isConfigured() ? 'Configurada' : 'Não configurada';
                 addMessage(`📊 **Estatísticas de Uso:**\n\n• Mensagens enviadas: ${metrics.messageCount}\n• Tempo de sessão: ${Math.round(metrics.sessionDuration/1000)} segundos\n• Respostas rápidas usadas: ${metrics.quickRepliesUsed}\n• Mistral AI: ${aiStatus}\n• IA ${aiToggle.checked ? 'Ativada' : 'Desativada'}\n\nContinue usando a Yume para descobrir mais funcionalidades!`, 'assistant', 'fallback');
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "stats_clicked");
+                }
             });
 
             document.getElementById('profileBtn').addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
                 if (currentUser) {
                     addMessage(`👤 **Seu Perfil:**\n\n• Nome: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Faixa etária: ${currentUser.age}\n\nPara alterar suas informações, entre em contato com o suporte.`, 'assistant', 'fallback');
+                }
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "profile_clicked");
                 }
             });
         }
@@ -1950,11 +2124,11 @@
                 "Obrigado"
             ];
 
-            localStorage.setItem('yumeQuickReplies', JSON.stringify(quickReplies));
+            sessionStorage.setItem('yumeQuickReplies', JSON.stringify(quickReplies));
         }
 
         function showQuickReplies() {
-            const quickReplies = JSON.parse(localStorage.getItem('yumeQuickReplies') || '[]');
+            const quickReplies = JSON.parse(sessionStorage.getItem('yumeQuickReplies') || '[]');
             quickReplyArea.innerHTML = '';
 
             quickReplies.forEach(reply => {
@@ -2009,6 +2183,11 @@
                 recognition.start();
                 toggleMic(true);
                 feedbackSystem.incrementVoiceInteractions();
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "voice_recognition_started");
+                }
             }
         }
 
@@ -2039,6 +2218,13 @@
                 utterance.rate = 1.0;
                 utterance.pitch = 1.0;
                 speechSynthesis.speak(utterance);
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "text_to_speech", {
+                        length: text.length
+                    });
+                }
             }
         }
 
