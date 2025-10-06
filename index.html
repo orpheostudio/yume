@@ -867,29 +867,29 @@
             .auth-container {
                 padding: 20px;
             }
-            
+
             .chat-header {
                 padding: 12px 15px;
             }
-            
+
             .chat-body {
                 padding: 15px;
             }
-            
+
             .message {
                 max-width: 90%;
             }
-            
+
             .orb {
                 width: 100px;
                 height: 100px;
                 font-size: 32px;
             }
-            
+
             .menu-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .feedback-options {
                 flex-direction: column;
                 align-items: center;
@@ -900,22 +900,22 @@
             .auth-title {
                 font-size: 20px;
             }
-            
+
             .auth-logo {
                 width: 60px;
                 height: 60px;
             }
-            
+
             .greeting-text {
                 font-size: 20px;
             }
-            
+
             .orb {
                 width: 80px;
                 height: 80px;
                 font-size: 24px;
             }
-            
+
             .modal-content {
                 width: 95%;
             }
@@ -1061,10 +1061,6 @@
                         <i class="fas fa-user-circle"></i>
                         <span>Perfil</span>
                     </button>
-                    <button id="apiConfigBtn" class="menu-card">
-                        <i class="fas fa-key"></i>
-                        <span>API Mistral</span>
-                    </button>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" 
                        target="_blank" class="menu-card">
                         <i class="fas fa-comment-dots"></i>
@@ -1109,7 +1105,7 @@
 
         <!-- Toast Notification -->
         <div class="toast-notification" id="toast"></div>
-        
+
         <!-- Loading Overlay -->
         <div class="loading-overlay hidden" id="loadingOverlay">
             <div class="loading-spinner"></div>
@@ -1170,7 +1166,7 @@
                 if (savedHistory) {
                     this.conversationHistory = JSON.parse(savedHistory);
                 }
-                
+
                 // Carregar cache
                 const savedCache = localStorage.getItem('yumeResponseCache');
                 if (savedCache) {
@@ -1209,7 +1205,7 @@
             cacheResponse(message, response, source = 'mistral') {
                 const normalizedMessage = this.normalizeMessage(message);
                 this.responseCache.set(normalizedMessage, { response, source });
-                
+
                 // Salvar cache no localStorage
                 this.saveCacheToStorage();
             }
@@ -1231,7 +1227,7 @@
             findSimilarResponses(message, threshold = 0.6) {
                 const normalizedMessage = this.normalizeMessage(message);
                 const similar = [];
-                
+
                 this.conversationHistory.forEach(entry => {
                     if (entry.sender === 'user') {
                         const similarity = this.calculateSimilarity(normalizedMessage, this.normalizeMessage(entry.message));
@@ -1245,20 +1241,20 @@
                         }
                     }
                 });
-                
+
                 return similar.sort((a, b) => b.similarity - a.similarity);
             }
 
             calculateSimilarity(str1, str2) {
                 const words1 = str1.split(' ');
                 const words2 = str2.split(' ');
-                
+
                 const set1 = new Set(words1);
                 const set2 = new Set(words2);
-                
+
                 const intersection = new Set([...set1].filter(x => set2.has(x)));
                 const union = new Set([...set1, ...set2]);
-                
+
                 return union.size > 0 ? intersection.size / union.size : 0;
             }
 
@@ -1301,19 +1297,19 @@
 
             getResponse(message) {
                 const lowerMessage = message.toLowerCase();
-                
+
                 if (this.isGreeting(lowerMessage)) {
                     return this.getRandomResponse(this.responses.greetings);
                 }
-                
+
                 if (this.isHelpRequest(lowerMessage)) {
                     return this.getRandomResponse(this.responses.help);
                 }
-                
+
                 if (this.isThanks(lowerMessage)) {
                     return this.getRandomResponse(this.responses.thanks);
                 }
-                
+
                 return this.getRandomResponse(this.responses.unknown);
             }
 
@@ -1340,15 +1336,10 @@
         // Integração com Mistral AI
         class MistralAIIntegration {
             constructor() {
-                this.apiKey = null;
+                // API Key integrada diretamente
+                this.apiKey = 'NFuAj8PYUPcaf6tA1BjbyXuIeSjSA4sW';
                 this.endpoint = 'https://api.mistral.ai/v1/chat/completions';
                 this.enabled = true;
-            }
-
-            // Configurar a API
-            setup(apiKey) {
-                this.apiKey = apiKey;
-                localStorage.setItem('yumeMistralApiKey', apiKey);
             }
 
             // Verificar se está configurado
@@ -1447,7 +1438,7 @@
                 // Adicionar indicador de fonte
                 const sourceIndicator = document.createElement('div');
                 sourceIndicator.className = `ai-indicator ${source}`;
-                
+
                 let sourceText = '';
                 switch(source) {
                     case 'mistral': sourceText = '• Mistral AI'; break;
@@ -1455,7 +1446,7 @@
                     case 'history': sourceText = '• Histórico'; break;
                     case 'fallback': sourceText = '• Base de conhecimento'; break;
                 }
-                
+
                 sourceIndicator.textContent = sourceText;
                 messageElement.appendChild(sourceIndicator);
 
@@ -1482,7 +1473,7 @@
             checkForContextualFeedback() {
                 const now = Date.now();
                 const timeSinceLastFeedback = now - this.lastFeedbackTime;
-                
+
                 if (timeSinceLastFeedback > 120000 && !this.feedbackShownThisSession && this.messageCount >= 3) {
                     this.showContextualFeedback("Como está sendo sua experiência com a Yume até agora?");
                     this.feedbackShownThisSession = true;
@@ -1502,10 +1493,10 @@
                         <button class="feedback-option" data-value="poor">Ruim 👎</button>
                     </div>
                 `;
-                
+
                 chatMessages.appendChild(feedbackDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
-                
+
                 feedbackDiv.querySelectorAll('.feedback-option').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const rating = e.target.dataset.value;
@@ -1573,15 +1564,15 @@
             showToast(message, type = 'info') {
                 toast.textContent = message;
                 toast.className = 'toast-notification';
-                
+
                 if (type === 'error') {
                     toast.style.backgroundColor = 'var(--error-color)';
                 } else if (type === 'success') {
                     toast.style.backgroundColor = 'var(--success-color)';
                 }
-                
+
                 toast.classList.add('show');
-                
+
                 setTimeout(() => {
                     toast.classList.remove('show');
                 }, 3000);
@@ -1614,7 +1605,7 @@
         // Gerar resposta inteligente
         async function generateYumeResponse(message) {
             let response, source;
-            
+
             // 1. Buscar em cache primeiro
             const cached = aiMemorySystem.getCachedResponse(message);
             if (cached) {
@@ -1622,7 +1613,7 @@
                 source = cached.source;
                 console.log('Resposta do cache:', source);
             }
-            
+
             // 2. Buscar respostas similares no histórico
             if (!response) {
                 const similarResponses = aiMemorySystem.findSimilarResponses(message);
@@ -1632,7 +1623,7 @@
                     console.log('Resposta similar do histórico:', source);
                 }
             }
-            
+
             // 3. Tentar Mistral AI se configurada e ativada
             if (!response && aiIntegration.isConfigured() && aiToggle.checked) {
                 try {
@@ -1640,7 +1631,7 @@
                     response = await aiIntegration.callMistralAI(message, aiMemorySystem.conversationHistory);
                     source = 'mistral';
                     console.log('Resposta da Mistral AI');
-                    
+
                     // Cache da resposta da Mistral
                     aiMemorySystem.cacheResponse(message, response, 'mistral');
                 } catch (error) {
@@ -1650,14 +1641,14 @@
                     showLoading(false);
                 }
             }
-            
+
             // 4. Fallback para respostas pré-definidas
             if (!response) {
                 response = fallbackSystem.getResponse(message);
                 source = 'fallback';
                 console.log('Usando fallback');
             }
-            
+
             return { response, source };
         }
 
@@ -1667,20 +1658,20 @@
                 assistantUI.classList.add('hidden');
                 feedbackSystem.incrementMessageCount();
             }
-            
+
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}-message`;
-            
+
             if (sender === 'assistant') {
                 const messageId = 'msg_' + Date.now();
                 messageDiv.setAttribute('data-message-id', messageId);
                 messageDiv.innerHTML = text.replace(/\n/g, '<br>');
-                
+
                 // Adicionar feedback após um delay
                 setTimeout(() => {
                     feedbackSystem.addFeedbackToMessage(messageId, source);
                 }, 500);
-                
+
                 // Adicionar ao histórico
                 const lastUserMessage = Array.from(chatMessages.querySelectorAll('.user-message')).pop();
                 if (lastUserMessage) {
@@ -1693,14 +1684,14 @@
                 }
             } else {
                 messageDiv.textContent = text;
-                
+
                 // Adicionar mensagem do usuário ao histórico
                 aiMemorySystem.addToHistory(text, '', 'user');
             }
-            
+
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-            
+
             if (sender === 'assistant' && voiceToggle.checked) {
                 speakText(text);
             }
@@ -1721,12 +1712,6 @@
             aiIntegration = new MistralAIIntegration();
             fallbackSystem = new FallbackSystem();
             feedbackSystem = new FeedbackSystem();
-
-            // Configurar Mistral API se existir
-            const savedApiKey = localStorage.getItem('yumeMistralApiKey');
-            if (savedApiKey) {
-                aiIntegration.setup(savedApiKey);
-            }
 
             // Configurar modo escuro
             const darkMode = localStorage.getItem('yumeDarkMode') === 'true';
@@ -1776,8 +1761,6 @@
         // ==================== EVENT LISTENERS ====================
 
         function setupEventListeners() {
-            // [MANTIDO TODOS OS EVENT LISTENERS ORIGINAIS...]
-            
             // Alternância entre login e cadastro
             showRegister.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1796,7 +1779,7 @@
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
-                
+
                 if (email && password) {
                     showLoading(true);
                     setTimeout(() => {
@@ -1824,13 +1807,13 @@
                 const password = document.getElementById('registerPassword').value;
                 const age = document.getElementById('registerAge').value;
                 const terms = document.getElementById('termsAccept').checked;
-                
+
                 if (name && email && password && age && terms) {
                     if (password.length < 8) {
                         showToast('A senha deve ter pelo menos 8 caracteres', 'error');
                         return;
                     }
-                    
+
                     showLoading(true);
                     setTimeout(() => {
                         const user = {
@@ -1887,14 +1870,10 @@
                 showToast(aiEnabled ? 'Mistral AI ativada' : 'Mistral AI desativada', 'success');
             });
 
-            // Configurar API Mistral
+            // Configurar API Mistral (removido - já está integrada)
             apiConfigBtn.addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
-                const apiKey = prompt('Digite sua Mistral API Key:');
-                if (apiKey) {
-                    aiIntegration.setup(apiKey);
-                    showToast('Mistral API configurada com sucesso!', 'success');
-                }
+                showToast('Mistral AI já está integrada e funcionando!', 'success');
             });
 
             // Limpar cache
@@ -1913,7 +1892,7 @@
                 if (message) {
                     addMessage(message, 'user');
                     userInput.value = '';
-                    
+
                     try {
                         const { response, source } = await generateYumeResponse(message);
                         addMessage(response, 'assistant', source);
@@ -1970,14 +1949,14 @@
                 "Qual é o seu nome?",
                 "Obrigado"
             ];
-            
+
             localStorage.setItem('yumeQuickReplies', JSON.stringify(quickReplies));
         }
 
         function showQuickReplies() {
             const quickReplies = JSON.parse(localStorage.getItem('yumeQuickReplies') || '[]');
             quickReplyArea.innerHTML = '';
-            
+
             quickReplies.forEach(reply => {
                 const button = document.createElement('button');
                 button.className = 'quick-reply';
@@ -1985,7 +1964,7 @@
                 button.addEventListener('click', async function() {
                     addMessage(reply, 'user');
                     feedbackSystem.incrementQuickReplies();
-                    
+
                     try {
                         const { response, source } = await generateYumeResponse(reply);
                         addMessage(response, 'assistant', source);
@@ -2001,23 +1980,23 @@
         function showAuthScreen() {
             authScreen.classList.remove('hidden');
             chatScreen.classList.add('hidden');
-            
+
             loginForm.reset();
             registerForm.reset();
             registerForm.classList.add('hidden');
             loginForm.classList.remove('hidden');
-            
+
             feedbackSystem = new FeedbackSystem();
         }
 
         function showChatScreen() {
             authScreen.classList.add('hidden');
             chatScreen.classList.remove('hidden');
-            
+
             if (currentUser) {
                 greetingName.textContent = currentUser.name;
                 userAvatar.innerHTML = `<i class="fas fa-user"></i>`;
-                
+
                 if (chatMessages.children.length === 0) {
                     assistantUI.classList.remove('hidden');
                     showQuickReplies();
@@ -2066,15 +2045,15 @@
         function showToast(message, type = 'info') {
             toast.textContent = message;
             toast.className = 'toast-notification';
-            
+
             if (type === 'error') {
                 toast.style.backgroundColor = 'var(--error-color)';
             } else if (type === 'success') {
                 toast.style.backgroundColor = 'var(--success-color)';
             }
-            
+
             toast.classList.add('show');
-            
+
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
