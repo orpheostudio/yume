@@ -4,12 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yume - Assistente Virtual</title>
-    
-    <!-- Google AdSense -->
-    <meta name="google-adsense-account" content="ca-pub-5941203056187445">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
-            crossorigin="anonymous"></script>
-    
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -687,34 +681,6 @@
             border-top-color: var(--border-dark);
         }
 
-        /* Anúncios */
-        .ad-container {
-            margin: 15px 0;
-            display: flex;
-            justify-content: center;
-            min-height: 90px;
-        }
-
-        .ad-banner {
-            background: var(--background-light);
-            border-radius: var(--border-radius);
-            padding: 10px;
-            text-align: center;
-            border: 1px solid var(--border-light);
-        }
-
-        .dark-mode .ad-banner {
-            background: var(--background-dark);
-            border-color: var(--border-dark);
-        }
-
-        .ad-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
         /* Modal e menu */
         .modal-overlay {
             position: fixed;
@@ -1184,11 +1150,6 @@
             .payment-methods {
                 flex-direction: column;
             }
-
-            .ad-container {
-                margin: 10px 0;
-                min-height: 70px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1217,10 +1178,6 @@
 
             .upgrade-container {
                 padding: 20px;
-            }
-
-            .ad-container {
-                min-height: 60px;
             }
         }
     </style>
@@ -1320,44 +1277,7 @@
                     <p class="help-text">Como posso ajudar você hoje?</p>
                     <div class="orb" id="orb"></div>
                 </div>
-
-                <!-- Anúncio Banner -->
-                <div class="ad-container" id="adBanner">
-                    <div class="ad-banner">
-                        <div class="ad-label">Publicidade</div>
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
-                                crossorigin="anonymous"></script>
-                        <ins class="adsbygoogle"
-                             style="display:block"
-                             data-ad-client="ca-pub-5941203056187445"
-                             data-ad-slot="1234567890"
-                             data-ad-format="auto"
-                             data-full-width-responsive="true"></ins>
-                        <script>
-                             (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
-                </div>
-
                 <div class="chat-messages" id="chatMessages"></div>
-
-                <!-- Anúncio In-Article -->
-                <div class="ad-container hidden" id="adInArticle">
-                    <div class="ad-banner">
-                        <div class="ad-label">Publicidade</div>
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
-                                crossorigin="anonymous"></script>
-                        <ins class="adsbygoogle"
-                             style="display:block; text-align:center;"
-                             data-ad-layout="in-article"
-                             data-ad-format="fluid"
-                             data-ad-client="ca-pub-5941203056187445"
-                             data-ad-slot="0987654321"></ins>
-                        <script>
-                             (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
-                </div>
             </div>
 
             <div class="quick-reply-area" id="quickReplyArea"></div>
@@ -1553,8 +1473,6 @@
         const copyPixBtn = document.getElementById('copyPixBtn');
         const mercadopagoBtn = document.getElementById('mercadopagoBtn');
         const paymentMethods = document.querySelectorAll('.payment-method');
-        const adBanner = document.getElementById('adBanner');
-        const adInArticle = document.getElementById('adInArticle');
 
         // Estado da aplicação
         let currentUser = null;
@@ -1565,73 +1483,6 @@
         let aiIntegration = null;
         let fallbackSystem = null;
         let usageSystem = null;
-        let messageCount = 0;
-
-        // ==================== SISTEMA DE ANÚNCIOS ====================
-
-        class AdSystem {
-            constructor() {
-                this.adFrequency = 3; // Mostrar anúncio a cada X mensagens
-                this.adEnabled = true;
-                this.init();
-            }
-
-            init() {
-                // Verificar se é usuário premium
-                const isPremium = sessionStorage.getItem('yumePremium') === 'true';
-                if (isPremium) {
-                    this.adEnabled = false;
-                    this.hideAllAds();
-                }
-            }
-
-            shouldShowAd() {
-                if (!this.adEnabled) return false;
-                
-                messageCount++;
-                return messageCount % this.adFrequency === 0;
-            }
-
-            showBannerAd() {
-                if (!this.adEnabled) return;
-                
-                adBanner.classList.remove('hidden');
-                this.refreshAd(adBanner);
-            }
-
-            showInArticleAd() {
-                if (!this.adEnabled) return;
-                
-                adInArticle.classList.remove('hidden');
-                this.refreshAd(adInArticle);
-            }
-
-            hideAllAds() {
-                adBanner.classList.add('hidden');
-                adInArticle.classList.add('hidden');
-            }
-
-            refreshAd(adElement) {
-                // Forçar recarregamento do anúncio
-                try {
-                    if (window.adsbygoogle) {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                    }
-                } catch (error) {
-                    console.log('Erro ao recarregar anúncio:', error);
-                }
-            }
-
-            disableAds() {
-                this.adEnabled = false;
-                this.hideAllAds();
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "ads_disabled");
-                }
-            }
-        }
 
         // ==================== SISTEMA DE USO E LIMITES ====================
 
@@ -1908,9 +1759,9 @@
                         "Disponha! Se tiver mais alguma dúvida, é só perguntar."
                     ],
                     limit_reached: [
-                        "📊 **Limite de Uso Atingido**\n\nVocê atingiu o limite de mensagens gratuitas por hoje. Faça upgrade para Premium para continuar usando a Yume sem limites!\n\n💎 **Premium inclui:**\n• Mensagens ilimitadas\n• Acesso prioritário\n• Suporte 24/7\n• Recursos avançados\n• **Sem anúncios**",
-                        "🚫 **Limite Diário**\n\nSuas mensagens gratuitas de hoje acabaram. Desbloqueie acesso ilimitado fazendo upgrade para o plano Premium!\n\n✨ **Vantagens Premium:**\n• Use sem limites\n• Respostas mais rápidas\n• Funcionalidades exclusivas\n• **Experiência sem anúncios**",
-                        "⚡ **Upgrade Necessário**\n\nVocê utilizou todas as suas mensagens gratuitas. Faça upgrade para Premium e tenha acesso ilimitado à Yume!\n\n🌟 **Com Premium você:**\n• Conversa sem restrições\n• Aproveita todos os recursos\n• Tem suporte prioritário\n• **Navega sem publicidade**"
+                        "📊 **Limite de Uso Atingido**\n\nVocê atingiu o limite de mensagens gratuitas por hoje. Faça upgrade para Premium para continuar usando a Yume sem limites!\n\n💎 **Premium inclui:**\n• Mensagens ilimitadas\n• Acesso prioritário\n• Suporte 24/7\n• Recursos avançados",
+                        "🚫 **Limite Diário**\n\nSuas mensagens gratuitas de hoje acabaram. Desbloqueie acesso ilimitado fazendo upgrade para o plano Premium!\n\n✨ **Vantagens Premium:**\n• Use sem limites\n• Respostas mais rápidas\n• Funcionalidades exclusivas",
+                        "⚡ **Upgrade Necessário**\n\nVocê utilizou todas as suas mensagens gratuitas. Faça upgrade para Premium e tenha acesso ilimitado à Yume!\n\n🌟 **Com Premium você:**\n• Conversa sem restrições\n• Aproveita todos os recursos\n• Tem suporte prioritário"
                     ]
                 };
             }
@@ -2339,13 +2190,6 @@
                 assistantUI.classList.add('hidden');
                 feedbackSystem.incrementMessageCount();
                 
-                // Mostrar anúncios para usuários gratuitos
-                if (!usageSystem.isPremium()) {
-                    if (adSystem.shouldShowAd()) {
-                        adSystem.showInArticleAd();
-                    }
-                }
-                
                 // Track no Clarity
                 if (window.clarity) {
                     window.clarity("event", "user_message", {
@@ -2426,9 +2270,6 @@
             
             const orb = document.getElementById('orb');
             orb.classList.add('premium');
-            
-            // Desativar anúncios para premium
-            adSystem.disableAds();
         }
 
         // ==================== INICIALIZAÇÃO ====================
@@ -2461,7 +2302,6 @@
             fallbackSystem = new FallbackSystem();
             feedbackSystem = new FeedbackSystem();
             usageSystem = new UsageSystem();
-            adSystem = new AdSystem();
 
             // Configurar modo escuro
             const darkMode = sessionStorage.getItem('yumeDarkMode') === 'true';
@@ -2894,8 +2734,6 @@
 
             feedbackSystem = new FeedbackSystem();
             usageSystem = new UsageSystem();
-            adSystem = new AdSystem();
-            messageCount = 0;
         }
 
         function showChatScreen() {
@@ -2910,11 +2748,6 @@
                 if (chatMessages.children.length === 0) {
                     assistantUI.classList.remove('hidden');
                     showQuickReplies();
-                    
-                    // Mostrar banner ad para usuários gratuitos
-                    if (!usageSystem.isPremium()) {
-                        adSystem.showBannerAd();
-                    }
                 }
             }
         }
