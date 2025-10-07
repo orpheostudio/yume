@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yume - Assistente Virtual</title>
+    
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-5941203056187445">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
+            crossorigin="anonymous"></script>
+    
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -41,6 +47,7 @@
             --success-color: #4CAF50;
             --warning-color: #FF9800;
             --error-color: #F44336;
+            --premium-color: #FFD700;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --border-radius: 12px;
             --transition: all 0.3s ease;
@@ -268,6 +275,7 @@
         .header-user-info {
             display: flex;
             align-items: center;
+            gap: 10px;
         }
 
         .user-avatar {
@@ -279,6 +287,28 @@
             align-items: center;
             justify-content: center;
             color: white;
+        }
+
+        .user-avatar.premium {
+            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+        }
+
+        .plan-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .plan-badge.free {
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .plan-badge.premium {
+            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            color: #000;
         }
 
         .header-title-group {
@@ -364,6 +394,10 @@
             font-size: 40px;
             box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
             animation: pulse 2s infinite;
+        }
+
+        .orb.premium {
+            background: linear-gradient(135deg, var(--premium-color), #FF6B35);
         }
 
         @keyframes pulse {
@@ -616,6 +650,29 @@
             background-color: var(--primary-dark);
         }
 
+        .usage-counter {
+            padding: 8px 15px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .dark-mode .usage-counter {
+            background: rgba(108, 99, 255, 0.2);
+        }
+
+        .usage-counter.low {
+            color: var(--warning-color);
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        .usage-counter.critical {
+            color: var(--error-color);
+            background: rgba(244, 67, 54, 0.1);
+        }
+
         .footer {
             text-align: center;
             padding: 10px;
@@ -628,6 +685,34 @@
         .dark-mode .footer {
             background-color: var(--surface-dark);
             border-top-color: var(--border-dark);
+        }
+
+        /* Anúncios */
+        .ad-container {
+            margin: 15px 0;
+            display: flex;
+            justify-content: center;
+            min-height: 90px;
+        }
+
+        .ad-banner {
+            background: var(--background-light);
+            border-radius: var(--border-radius);
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .dark-mode .ad-banner {
+            background: var(--background-dark);
+            border-color: var(--border-dark);
+        }
+
+        .ad-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         /* Modal e menu */
@@ -741,6 +826,17 @@
         .menu-card span {
             font-size: 14px;
             text-align: center;
+        }
+
+        .menu-card.premium {
+            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            color: #000;
+            font-weight: 600;
+        }
+
+        .menu-card.premium:hover {
+            background: linear-gradient(135deg, #FFA500, var(--premium-color));
+            transform: translateY(-2px);
         }
 
         .menu-list-item {
@@ -872,6 +968,186 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Tela de Upgrade */
+        .upgrade-screen {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .upgrade-container {
+            background-color: var(--surface-light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .dark-mode .upgrade-container {
+            background-color: var(--surface-dark);
+        }
+
+        .upgrade-icon {
+            font-size: 64px;
+            color: var(--premium-color);
+            margin-bottom: 20px;
+        }
+
+        .upgrade-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .upgrade-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .plan-card {
+            background: var(--background-light);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid var(--border-light);
+            transition: var(--transition);
+        }
+
+        .dark-mode .plan-card {
+            background: var(--background-dark);
+            border-color: var(--border-dark);
+        }
+
+        .plan-card.premium {
+            border-color: var(--premium-color);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .plan-card.premium .plan-price {
+            color: var(--premium-color);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dark-mode .plan-features li {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features li i {
+            margin-right: 10px;
+            color: var(--success-color);
+        }
+
+        .upgrade-btn {
+            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .payment-method {
+            padding: 10px 20px;
+            border: 2px solid var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(108, 99, 255, 0.1);
+        }
+
+        .payment-method i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .pix-code {
+            background: var(--background-light);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .dark-mode .pix-code {
+            background: var(--background-dark);
+        }
+
+        .copy-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .auth-container {
@@ -904,6 +1180,15 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .payment-methods {
+                flex-direction: column;
+            }
+
+            .ad-container {
+                margin: 10px 0;
+                min-height: 70px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -928,6 +1213,14 @@
 
             .modal-content {
                 width: 95%;
+            }
+
+            .upgrade-container {
+                padding: 20px;
+            }
+
+            .ad-container {
+                min-height: 60px;
             }
         }
     </style>
@@ -1009,6 +1302,8 @@
                     <div class="user-avatar" id="userAvatar">
                         <i class="fas fa-user"></i>
                     </div>
+                    <div class="plan-badge free" id="planBadge">FREE</div>
+                    <div class="usage-counter" id="usageCounter">15/20 mensagens</div>
                 </div>
                 <div class="header-title-group">
                     <img src="https://i.imgur.com/orvGJOL.png" alt="Yume Logo" class="header-logo">
@@ -1025,7 +1320,44 @@
                     <p class="help-text">Como posso ajudar você hoje?</p>
                     <div class="orb" id="orb"></div>
                 </div>
+
+                <!-- Anúncio Banner -->
+                <div class="ad-container" id="adBanner">
+                    <div class="ad-banner">
+                        <div class="ad-label">Publicidade</div>
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
+                                crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-5941203056187445"
+                             data-ad-slot="1234567890"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+
                 <div class="chat-messages" id="chatMessages"></div>
+
+                <!-- Anúncio In-Article -->
+                <div class="ad-container hidden" id="adInArticle">
+                    <div class="ad-banner">
+                        <div class="ad-label">Publicidade</div>
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5941203056187445"
+                                crossorigin="anonymous"></script>
+                        <ins class="adsbygoogle"
+                             style="display:block; text-align:center;"
+                             data-ad-layout="in-article"
+                             data-ad-format="fluid"
+                             data-ad-client="ca-pub-5941203056187445"
+                             data-ad-slot="0987654321"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
             </div>
 
             <div class="quick-reply-area" id="quickReplyArea"></div>
@@ -1043,6 +1375,65 @@
                 </button>
             </form>
             <div class="footer">Powered by ORPHEO Platforms • Mistral AI</div>
+        </div>
+
+        <!-- Upgrade Screen -->
+        <div class="screen upgrade-screen hidden" id="upgradeScreen">
+            <div class="upgrade-container">
+                <div class="upgrade-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h1 class="upgrade-title">Faça Upgrade para Premium</h1>
+                <p class="upgrade-subtitle">Desbloqueie todo o potencial da Yume com recursos ilimitados</p>
+                
+                <div class="plan-card premium">
+                    <h3 class="plan-name">Plano Premium</h3>
+                    <div class="plan-price">R$ 19,90<span style="font-size: 14px; color: var(--text-muted);">/mês</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Mensagens ilimitadas</li>
+                        <li><i class="fas fa-check"></i> Acesso prioritário à Mistral AI</li>
+                        <li><i class="fas fa-check"></i> Suporte 24/7</li>
+                        <li><i class="fas fa-check"></i> Recursos avançados de IA</li>
+                        <li><i class="fas fa-check"></i> Sem anúncios</li>
+                    </ul>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-method="pix">
+                            <i class="fas fa-qrcode"></i>
+                            <div>PIX</div>
+                        </div>
+                        <div class="payment-method" data-method="mercadopago">
+                            <i class="fas fa-credit-card"></i>
+                            <div>Mercado Pago</div>
+                        </div>
+                    </div>
+
+                    <div id="pixPayment" class="payment-section">
+                        <div class="pix-code" id="pixCode">
+                            00020126580014br.gov.bcb.pix0136123e4567-e89b-12d3-a456-426614174000520400005303986540520.005802BR5913STUDIO TSUKIYO6008BRASILIA62070503***6304E2CA
+                        </div>
+                        <button class="copy-btn" id="copyPixBtn">
+                            <i class="fas fa-copy"></i> Copiar Código PIX
+                        </button>
+                        <p style="font-size: 12px; margin-top: 10px; color: var(--text-muted);">
+                            Após o pagamento, envie o comprovante para: sac.studiotsukiyo@outlook.com
+                        </p>
+                    </div>
+
+                    <div id="mercadopagoPayment" class="payment-section hidden">
+                        <button class="upgrade-btn" id="mercadopagoBtn">
+                            <i class="fas fa-shield-alt"></i> Pagar com Mercado Pago
+                        </button>
+                        <p style="font-size: 12px; margin-top: 10px; color: var(--text-muted);">
+                            Pagamento seguro processado pelo Mercado Pago
+                        </p>
+                    </div>
+                </div>
+
+                <button class="auth-btn" id="backToChatBtn" style="margin-top: 20px;">
+                    <i class="fas fa-arrow-left"></i> Voltar ao Chat
+                </button>
+            </div>
         </div>
 
         <!-- Menu Overlay -->
@@ -1070,6 +1461,10 @@
                     <button id="profileBtn" class="menu-card">
                         <i class="fas fa-user-circle"></i>
                         <span>Perfil</span>
+                    </button>
+                    <button id="upgradeBtn" class="menu-card premium">
+                        <i class="fas fa-crown"></i>
+                        <span>Fazer Upgrade</span>
                     </button>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" 
                        target="_blank" class="menu-card">
@@ -1127,6 +1522,7 @@
         // Elementos DOM
         const authScreen = document.getElementById('authScreen');
         const chatScreen = document.getElementById('chatScreen');
+        const upgradeScreen = document.getElementById('upgradeScreen');
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
         const showRegister = document.getElementById('showRegister');
@@ -1145,11 +1541,20 @@
         const assistantUI = document.getElementById('assistantUI');
         const greetingName = document.getElementById('greetingName');
         const userAvatar = document.getElementById('userAvatar');
+        const planBadge = document.getElementById('planBadge');
+        const usageCounter = document.getElementById('usageCounter');
         const toast = document.getElementById('toast');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const micBtn = document.getElementById('micBtn');
         const apiConfigBtn = document.getElementById('apiConfigBtn');
         const clearCacheBtn = document.getElementById('clearCacheBtn');
+        const upgradeBtn = document.getElementById('upgradeBtn');
+        const backToChatBtn = document.getElementById('backToChatBtn');
+        const copyPixBtn = document.getElementById('copyPixBtn');
+        const mercadopagoBtn = document.getElementById('mercadopagoBtn');
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const adBanner = document.getElementById('adBanner');
+        const adInArticle = document.getElementById('adInArticle');
 
         // Estado da aplicação
         let currentUser = null;
@@ -1159,6 +1564,191 @@
         let aiMemorySystem = null;
         let aiIntegration = null;
         let fallbackSystem = null;
+        let usageSystem = null;
+        let messageCount = 0;
+
+        // ==================== SISTEMA DE ANÚNCIOS ====================
+
+        class AdSystem {
+            constructor() {
+                this.adFrequency = 3; // Mostrar anúncio a cada X mensagens
+                this.adEnabled = true;
+                this.init();
+            }
+
+            init() {
+                // Verificar se é usuário premium
+                const isPremium = sessionStorage.getItem('yumePremium') === 'true';
+                if (isPremium) {
+                    this.adEnabled = false;
+                    this.hideAllAds();
+                }
+            }
+
+            shouldShowAd() {
+                if (!this.adEnabled) return false;
+                
+                messageCount++;
+                return messageCount % this.adFrequency === 0;
+            }
+
+            showBannerAd() {
+                if (!this.adEnabled) return;
+                
+                adBanner.classList.remove('hidden');
+                this.refreshAd(adBanner);
+            }
+
+            showInArticleAd() {
+                if (!this.adEnabled) return;
+                
+                adInArticle.classList.remove('hidden');
+                this.refreshAd(adInArticle);
+            }
+
+            hideAllAds() {
+                adBanner.classList.add('hidden');
+                adInArticle.classList.add('hidden');
+            }
+
+            refreshAd(adElement) {
+                // Forçar recarregamento do anúncio
+                try {
+                    if (window.adsbygoogle) {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    }
+                } catch (error) {
+                    console.log('Erro ao recarregar anúncio:', error);
+                }
+            }
+
+            disableAds() {
+                this.adEnabled = false;
+                this.hideAllAds();
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "ads_disabled");
+                }
+            }
+        }
+
+        // ==================== SISTEMA DE USO E LIMITES ====================
+
+        class UsageSystem {
+            constructor() {
+                this.dailyLimit = 20; // Limite diário gratuito
+                this.monthlyLimit = 100; // Limite mensal gratuito
+                this.init();
+            }
+
+            init() {
+                // Carregar uso do usuário
+                const savedUsage = sessionStorage.getItem('yumeUsage');
+                if (savedUsage) {
+                    const usage = JSON.parse(savedUsage);
+                    this.today = usage.today || this.getTodayDate();
+                    this.dailyCount = usage.dailyCount || 0;
+                    this.monthlyCount = usage.monthlyCount || 0;
+                    this.lastReset = usage.lastReset || this.getTodayDate();
+                } else {
+                    this.resetCounters();
+                }
+
+                this.checkReset();
+            }
+
+            getTodayDate() {
+                return new Date().toDateString();
+            }
+
+            resetCounters() {
+                this.today = this.getTodayDate();
+                this.dailyCount = 0;
+                this.monthlyCount = 0;
+                this.lastReset = this.today;
+                this.saveUsage();
+            }
+
+            checkReset() {
+                const today = this.getTodayDate();
+                if (today !== this.today) {
+                    this.today = today;
+                    this.dailyCount = 0;
+                    
+                    // Reset mensal no primeiro dia do mês
+                    const now = new Date();
+                    if (now.getDate() === 1) {
+                        this.monthlyCount = 0;
+                    }
+                    
+                    this.saveUsage();
+                }
+            }
+
+            canUseAI() {
+                return this.dailyCount < this.dailyLimit && this.monthlyCount < this.monthlyLimit;
+            }
+
+            incrementUsage() {
+                this.dailyCount++;
+                this.monthlyCount++;
+                this.saveUsage();
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "usage_incremented", {
+                        daily: this.dailyCount,
+                        monthly: this.monthlyCount
+                    });
+                }
+            }
+
+            getRemainingMessages() {
+                const dailyRemaining = Math.max(0, this.dailyLimit - this.dailyCount);
+                const monthlyRemaining = Math.max(0, this.monthlyLimit - this.monthlyCount);
+                return Math.min(dailyRemaining, monthlyRemaining);
+            }
+
+            getUsageStatus() {
+                const remaining = this.getRemainingMessages();
+                const totalLimit = Math.min(this.dailyLimit, this.monthlyLimit - this.monthlyCount + this.dailyLimit);
+                
+                return {
+                    used: this.dailyCount,
+                    remaining: remaining,
+                    total: totalLimit,
+                    isLow: remaining <= 5,
+                    isCritical: remaining <= 2,
+                    isExceeded: remaining <= 0
+                };
+            }
+
+            saveUsage() {
+                const usage = {
+                    today: this.today,
+                    dailyCount: this.dailyCount,
+                    monthlyCount: this.monthlyCount,
+                    lastReset: this.lastReset
+                };
+                sessionStorage.setItem('yumeUsage', JSON.stringify(usage));
+            }
+
+            // Para usuários premium
+            setPremium() {
+                this.dailyLimit = Infinity;
+                this.monthlyLimit = Infinity;
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "premium_activated");
+                }
+            }
+
+            isPremium() {
+                return this.dailyLimit === Infinity;
+            }
+        }
 
         // ==================== SISTEMA DE MEMÓRIA E IA ====================
 
@@ -1316,6 +1906,11 @@
                         "De nada! Fico feliz em ajudar! 😊",
                         "Por nada! Estou aqui para o que precisar.",
                         "Disponha! Se tiver mais alguma dúvida, é só perguntar."
+                    ],
+                    limit_reached: [
+                        "📊 **Limite de Uso Atingido**\n\nVocê atingiu o limite de mensagens gratuitas por hoje. Faça upgrade para Premium para continuar usando a Yume sem limites!\n\n💎 **Premium inclui:**\n• Mensagens ilimitadas\n• Acesso prioritário\n• Suporte 24/7\n• Recursos avançados\n• **Sem anúncios**",
+                        "🚫 **Limite Diário**\n\nSuas mensagens gratuitas de hoje acabaram. Desbloqueie acesso ilimitado fazendo upgrade para o plano Premium!\n\n✨ **Vantagens Premium:**\n• Use sem limites\n• Respostas mais rápidas\n• Funcionalidades exclusivas\n• **Experiência sem anúncios**",
+                        "⚡ **Upgrade Necessário**\n\nVocê utilizou todas as suas mensagens gratuitas. Faça upgrade para Premium e tenha acesso ilimitado à Yume!\n\n🌟 **Com Premium você:**\n• Conversa sem restrições\n• Aproveita todos os recursos\n• Tem suporte prioritário\n• **Navega sem publicidade**"
                     ]
                 };
             }
@@ -1336,6 +1931,10 @@
                 }
 
                 return this.getRandomResponse(this.responses.unknown);
+            }
+
+            getLimitReachedResponse() {
+                return this.getRandomResponse(this.responses.limit_reached);
             }
 
             isGreeting(message) {
@@ -1675,6 +2274,13 @@
         async function generateYumeResponse(message) {
             let response, source;
 
+            // Verificar limite de uso
+            if (!usageSystem.isPremium() && !usageSystem.canUseAI()) {
+                response = fallbackSystem.getLimitReachedResponse();
+                source = 'limit';
+                return { response, source };
+            }
+
             // 1. Buscar em cache primeiro
             const cached = aiMemorySystem.getCachedResponse(message);
             if (cached) {
@@ -1701,6 +2307,12 @@
                     source = 'mistral';
                     console.log('Resposta da Mistral AI');
 
+                    // Incrementar uso apenas para respostas da Mistral
+                    if (!usageSystem.isPremium()) {
+                        usageSystem.incrementUsage();
+                        updateUsageCounter();
+                    }
+
                     // Cache da resposta da Mistral
                     aiMemorySystem.cacheResponse(message, response, 'mistral');
                 } catch (error) {
@@ -1726,6 +2338,13 @@
             if (sender === 'user') {
                 assistantUI.classList.add('hidden');
                 feedbackSystem.incrementMessageCount();
+                
+                // Mostrar anúncios para usuários gratuitos
+                if (!usageSystem.isPremium()) {
+                    if (adSystem.shouldShowAd()) {
+                        adSystem.showInArticleAd();
+                    }
+                }
                 
                 // Track no Clarity
                 if (window.clarity) {
@@ -1782,6 +2401,36 @@
             }
         }
 
+        // Atualizar contador de uso
+        function updateUsageCounter() {
+            const usage = usageSystem.getUsageStatus();
+            usageCounter.textContent = `${usage.used}/${usage.total} mensagens`;
+            
+            // Atualizar classes CSS baseadas no status
+            usageCounter.className = 'usage-counter';
+            if (usage.isLow) {
+                usageCounter.classList.add('low');
+            }
+            if (usage.isCritical) {
+                usageCounter.classList.add('critical');
+            }
+        }
+
+        // Atualizar interface para premium
+        function updatePremiumUI() {
+            userAvatar.classList.add('premium');
+            planBadge.textContent = 'PREMIUM';
+            planBadge.className = 'plan-badge premium';
+            usageCounter.textContent = 'ILIMITADO';
+            usageCounter.className = 'usage-counter';
+            
+            const orb = document.getElementById('orb');
+            orb.classList.add('premium');
+            
+            // Desativar anúncios para premium
+            adSystem.disableAds();
+        }
+
         // ==================== INICIALIZAÇÃO ====================
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1795,6 +2444,14 @@
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 feedbackSystem.setUserProfile(currentUser);
+                
+                // Verificar se é premium
+                const isPremium = sessionStorage.getItem('yumePremium') === 'true';
+                if (isPremium) {
+                    usageSystem.setPremium();
+                    updatePremiumUI();
+                }
+                
                 showChatScreen();
             }
 
@@ -1803,6 +2460,8 @@
             aiIntegration = new MistralAIIntegration();
             fallbackSystem = new FallbackSystem();
             feedbackSystem = new FeedbackSystem();
+            usageSystem = new UsageSystem();
+            adSystem = new AdSystem();
 
             // Configurar modo escuro
             const darkMode = sessionStorage.getItem('yumeDarkMode') === 'true';
@@ -1860,6 +2519,7 @@
 
             setupEventListeners();
             setupQuickReplies();
+            updateUsageCounter();
         });
 
         // ==================== EVENT LISTENERS ====================
@@ -1905,6 +2565,13 @@
                         currentUser = user;
                         sessionStorage.setItem('yumeUser', JSON.stringify(user));
                         feedbackSystem.setUserProfile(user);
+                        
+                        // Verificar se é premium
+                        const isPremium = sessionStorage.getItem('yumePremium') === 'true';
+                        if (isPremium) {
+                            usageSystem.setPremium();
+                            updatePremiumUI();
+                        }
                         
                         // Track no Clarity
                         if (window.clarity) {
@@ -2019,16 +2686,76 @@
                 showToast(aiEnabled ? 'Mistral AI ativada' : 'Mistral AI desativada', 'success');
             });
 
-            // Configurar API Mistral (removido - já está integrada)
-            apiConfigBtn.addEventListener('click', function() {
+            // Upgrade para Premium
+            upgradeBtn.addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
-                showToast('Mistral AI já está integrada e funcionando!', 'success');
+                showUpgradeScreen();
                 
                 // Track no Clarity
                 if (window.clarity) {
-                    window.clarity("event", "api_config_clicked");
+                    window.clarity("event", "upgrade_clicked");
                 }
             });
+
+            // Voltar ao chat do upgrade
+            backToChatBtn.addEventListener('click', function() {
+                showChatScreen();
+            });
+
+            // Copiar código PIX
+            copyPixBtn.addEventListener('click', function() {
+                const pixCode = document.getElementById('pixCode');
+                navigator.clipboard.writeText(pixCode.textContent).then(() => {
+                    showToast('Código PIX copiado!', 'success');
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "pix_copied");
+                    }
+                });
+            });
+
+            // Mercado Pago
+            mercadopagoBtn.addEventListener('click', function() {
+                showToast('Redirecionando para Mercado Pago...', 'info');
+                
+                // Simular pagamento (em produção, integrar com API real)
+                setTimeout(() => {
+                    activatePremium();
+                }, 2000);
+                
+                // Track no Clarity
+                if (window.clarity) {
+                    window.clarity("event", "mercadopago_clicked");
+                }
+            });
+
+            // Métodos de pagamento
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    paymentMethods.forEach(m => m.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    const methodType = this.dataset.method;
+                    document.querySelectorAll('.payment-section').forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    document.getElementById(methodType + 'Payment').classList.remove('hidden');
+                });
+            });
+
+            // Configurar API Mistral (removido - já está integrada)
+            if (apiConfigBtn) {
+                apiConfigBtn.addEventListener('click', function() {
+                    menuOverlay.classList.remove('active');
+                    showToast('Mistral AI já está integrada e funcionando!', 'success');
+                    
+                    // Track no Clarity
+                    if (window.clarity) {
+                        window.clarity("event", "api_config_clicked");
+                    }
+                });
+            }
 
             // Limpar cache
             clearCacheBtn.addEventListener('click', function() {
@@ -2092,7 +2819,10 @@
                 menuOverlay.classList.remove('active');
                 const metrics = feedbackSystem.getMetricsReport();
                 const aiStatus = aiIntegration.isConfigured() ? 'Configurada' : 'Não configurada';
-                addMessage(`📊 **Estatísticas de Uso:**\n\n• Mensagens enviadas: ${metrics.messageCount}\n• Tempo de sessão: ${Math.round(metrics.sessionDuration/1000)} segundos\n• Respostas rápidas usadas: ${metrics.quickRepliesUsed}\n• Mistral AI: ${aiStatus}\n• IA ${aiToggle.checked ? 'Ativada' : 'Desativada'}\n\nContinue usando a Yume para descobrir mais funcionalidades!`, 'assistant', 'fallback');
+                const usage = usageSystem.getUsageStatus();
+                const planType = usageSystem.isPremium() ? 'Premium' : 'Gratuito';
+                
+                addMessage(`📊 **Estatísticas de Uso:**\n\n• Mensagens enviadas: ${metrics.messageCount}\n• Tempo de sessão: ${Math.round(metrics.sessionDuration/1000)} segundos\n• Respostas rápidas usadas: ${metrics.quickRepliesUsed}\n• Mistral AI: ${aiStatus}\n• Plano: ${planType}\n• Mensagens restantes: ${usage.remaining}\n\nContinue usando a Yume para descobrir mais funcionalidades!`, 'assistant', 'fallback');
                 
                 // Track no Clarity
                 if (window.clarity) {
@@ -2103,7 +2833,8 @@
             document.getElementById('profileBtn').addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
                 if (currentUser) {
-                    addMessage(`👤 **Seu Perfil:**\n\n• Nome: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Faixa etária: ${currentUser.age}\n\nPara alterar suas informações, entre em contato com o suporte.`, 'assistant', 'fallback');
+                    const planType = usageSystem.isPremium() ? 'Premium' : 'Gratuito';
+                    addMessage(`👤 **Seu Perfil:**\n\n• Nome: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Faixa etária: ${currentUser.age}\n• Plano: ${planType}\n\nPara alterar suas informações, entre em contato com o suporte.`, 'assistant', 'fallback');
                 }
                 
                 // Track no Clarity
@@ -2154,6 +2885,7 @@
         function showAuthScreen() {
             authScreen.classList.remove('hidden');
             chatScreen.classList.add('hidden');
+            upgradeScreen.classList.add('hidden');
 
             loginForm.reset();
             registerForm.reset();
@@ -2161,11 +2893,15 @@
             loginForm.classList.remove('hidden');
 
             feedbackSystem = new FeedbackSystem();
+            usageSystem = new UsageSystem();
+            adSystem = new AdSystem();
+            messageCount = 0;
         }
 
         function showChatScreen() {
             authScreen.classList.add('hidden');
             chatScreen.classList.remove('hidden');
+            upgradeScreen.classList.add('hidden');
 
             if (currentUser) {
                 greetingName.textContent = currentUser.name;
@@ -2174,7 +2910,31 @@
                 if (chatMessages.children.length === 0) {
                     assistantUI.classList.remove('hidden');
                     showQuickReplies();
+                    
+                    // Mostrar banner ad para usuários gratuitos
+                    if (!usageSystem.isPremium()) {
+                        adSystem.showBannerAd();
+                    }
                 }
+            }
+        }
+
+        function showUpgradeScreen() {
+            authScreen.classList.add('hidden');
+            chatScreen.classList.add('hidden');
+            upgradeScreen.classList.remove('hidden');
+        }
+
+        function activatePremium() {
+            usageSystem.setPremium();
+            sessionStorage.setItem('yumePremium', 'true');
+            updatePremiumUI();
+            showChatScreen();
+            showToast('🎉 Parabéns! Agora você é usuário Premium!', 'success');
+            
+            // Track no Clarity
+            if (window.clarity) {
+                window.clarity("event", "premium_activated_success");
             }
         }
 
