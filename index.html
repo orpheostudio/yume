@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yume - Assistente Virtual</title>
+    <title>Yume - Assistente Virtual IA</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Microsoft Clarity -->
+    <!-- Microsoft Clarity Correto -->
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -25,38 +25,45 @@
         }
 
         :root {
-            --primary-color: #6C63FF;
-            --primary-light: #8A85FF;
-            --primary-dark: #5651D9;
-            --secondary-color: #FF6584;
-            --background-light: #F8F9FA;
-            --background-dark: #121212;
-            --surface-light: #FFFFFF;
-            --surface-dark: #1E1E1E;
-            --text-light: #333333;
-            --text-dark: #E0E0E0;
-            --text-muted: #666666;
-            --border-light: #E0E0E0;
-            --border-dark: #333333;
-            --success-color: #4CAF50;
-            --warning-color: #FF9800;
-            --error-color: #F44336;
-            --premium-color: #FFD700;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-            --transition: all 0.3s ease;
+            --primary-color: #10a37f;
+            --primary-light: #1abc9c;
+            --primary-dark: #0d8c6c;
+            --secondary-color: #10a37f;
+            --accent-color: #10a37f;
+            --user-message-bg: #10a37f;
+            --assistant-message-bg: #f7f7f8;
+            --background-light: #ffffff;
+            --background-dark: #343541;
+            --surface-light: #ffffff;
+            --surface-dark: #444654;
+            --text-light: #374151;
+            --text-dark: #ececf1;
+            --text-muted: #6b7280;
+            --border-light: #e5e5e5;
+            --border-dark: #565869;
+            --success-color: #10a37f;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --premium-color: #f59e0b;
+            --ai-color: #10a37f;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --transition: all 0.2s ease;
         }
 
-        /* Tema claro (padrão) */
+        /* Tema claro (padrão) - Estilo ChatGPT */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--background-light);
             color: var(--text-light);
-            line-height: 1.6;
+            line-height: 1.5;
             transition: var(--transition);
+            min-height: 100vh;
         }
 
-        /* Tema escuro */
+        /* Tema escuro - Estilo ChatGPT Dark */
         body.dark-mode {
             background-color: var(--background-dark);
             color: var(--text-dark);
@@ -86,49 +93,52 @@
 
         /* Tela de autenticação */
         .auth-screen {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            background: var(--background-light);
+        }
+
+        .dark-mode .auth-screen {
+            background: var(--background-dark);
         }
 
         .auth-container {
-            background-color: var(--surface-light);
-            border-radius: var(--border-radius);
+            background: var(--surface-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 32px;
             width: 100%;
             max-width: 400px;
             transition: var(--transition);
         }
 
         .dark-mode .auth-container {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+            box-shadow: var(--shadow-dark);
         }
 
         .auth-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .auth-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         .auth-title {
             font-size: 24px;
-            font-weight: 700;
+            font-weight: 600;
             margin-bottom: 8px;
             color: var(--primary-color);
-        }
-
-        .dark-mode .auth-title {
-            color: var(--primary-light);
         }
 
         .auth-subtitle {
@@ -144,45 +154,59 @@
 
         .form-title {
             font-size: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             text-align: center;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .dark-mode .form-title {
+            color: var(--text-dark);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
             flex-direction: column;
         }
 
         .form-group label {
             font-size: 14px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select {
-            padding: 12px 15px;
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: var(--transition);
-            background-color: var(--surface-light);
             color: var(--text-light);
         }
 
+        .dark-mode .form-group label {
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--surface-light);
+            color: var(--text-light);
+            resize: vertical;
+        }
+
         .dark-mode .form-group input,
-        .dark-mode .form-group select {
-            background-color: var(--surface-dark);
+        .dark-mode .form-group select,
+        .dark-mode .form-group textarea {
+            background: var(--surface-dark);
             border-color: var(--border-dark);
             color: var(--text-dark);
         }
 
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
         }
 
         .checkbox-group {
@@ -191,8 +215,8 @@
         }
 
         .checkbox-group input {
-            margin-right: 10px;
-            margin-top: 3px;
+            margin-right: 8px;
+            margin-top: 2px;
         }
 
         .checkbox-group label {
@@ -210,26 +234,27 @@
         }
 
         .auth-btn {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .auth-btn:hover {
-            background-color: var(--primary-dark);
+            background: var(--primary-dark);
         }
 
         .auth-switch {
             text-align: center;
             margin-top: 20px;
             font-size: 14px;
+            color: var(--text-muted);
         }
 
         .auth-switch a {
@@ -247,6 +272,11 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            background: var(--background-light);
+        }
+
+        .dark-mode .chat-screen {
+            background: var(--background-dark);
         }
 
         /* Cabeçalho do chat */
@@ -254,54 +284,68 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 15px 20px;
-            background-color: var(--surface-light);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 12px 16px;
+            background: var(--surface-light);
+            border-bottom: 1px solid var(--border-light);
             position: relative;
             z-index: 10;
         }
 
         .dark-mode .chat-header {
-            background-color: var(--surface-dark);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background: var(--surface-dark);
+            border-bottom-color: var(--border-dark);
         }
 
         .header-user-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .user-avatar {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background-color: var(--primary-light);
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
         }
 
         .user-avatar.premium {
-            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            background: var(--premium-color);
         }
 
         .plan-badge {
             padding: 4px 8px;
             border-radius: 12px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
         .plan-badge.free {
-            background-color: var(--primary-light);
+            background: var(--primary-color);
             color: white;
         }
 
+        .plan-badge:hover {
+            transform: scale(1.05);
+        }
+
         .plan-badge.premium {
-            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            background: var(--premium-color);
             color: #000;
         }
 
@@ -314,23 +358,24 @@
         }
 
         .header-logo {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
             border-radius: 50%;
         }
 
         .header-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
+            color: var(--primary-color);
         }
 
         .icon-btn {
             background: none;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -344,22 +389,31 @@
         }
 
         .icon-btn:hover {
-            background-color: rgba(108, 99, 255, 0.1);
+            background: var(--border-light);
+        }
+
+        .dark-mode .icon-btn:hover {
+            background: var(--border-dark);
         }
 
         /* Corpo do chat */
         .chat-body {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
+            background: var(--background-light);
+        }
+
+        .dark-mode .chat-body {
+            background: var(--background-dark);
         }
 
         /* Interface da assistente */
         .assistant-ui {
             text-align: center;
-            padding: 40px 20px;
+            padding: 48px 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -367,119 +421,114 @@
 
         .greeting-text {
             font-size: 24px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-color);
         }
 
         .help-text {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
         .orb {
-            width: 120px;
-            height: 120px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 40px;
-            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
-            animation: pulse 2s infinite;
+            font-size: 24px;
         }
 
         .orb.premium {
-            background: linear-gradient(135deg, var(--premium-color), #FF6B35);
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 12px 30px rgba(108, 99, 255, 0.4);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
-            }
+            background: var(--premium-color);
         }
 
         /* Área de mensagens */
         .chat-messages {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 16px;
+            margin-top: 16px;
         }
 
         .message {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 18px;
+            max-width: 85%;
+            padding: 16px 20px;
+            border-radius: var(--border-radius-lg);
             position: relative;
-            animation: fadeIn 0.3s ease;
+            animation: messageSlide 0.2s ease;
+            line-height: 1.5;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .user-message {
             align-self: flex-end;
-            background-color: var(--primary-color);
+            background: var(--user-message-bg);
             color: white;
-            border-bottom-right-radius: 4px;
         }
 
         .assistant-message {
             align-self: flex-start;
-            background-color: var(--surface-light);
+            background: var(--assistant-message-bg);
             color: var(--text-light);
-            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-light);
         }
 
         .dark-mode .assistant-message {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
             color: var(--text-dark);
+            border-color: var(--border-dark);
         }
 
         /* Sistema de Feedback */
         .feedback-buttons {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(108, 99, 255, 0.1);
-            border-radius: 10px;
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(16, 163, 127, 0.05);
+            border-radius: var(--border-radius);
             text-align: center;
         }
 
         .dark-mode .feedback-buttons {
-            background: rgba(108, 99, 255, 0.2);
+            background: rgba(16, 163, 127, 0.1);
         }
 
         .feedback-label {
-            font-size: 14px;
-            margin-right: 10px;
+            font-size: 12px;
+            margin-right: 8px;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .feedback-btn {
-            background: none;
+            background: var(--surface-light);
             border: 1px solid var(--border-light);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
             cursor: pointer;
-            margin: 0 5px;
-            transition: all 0.3s ease;
+            margin: 0 4px;
+            transition: var(--transition);
+            font-size: 12px;
         }
 
         .dark-mode .feedback-btn {
+            background: var(--surface-dark);
             border-color: var(--border-dark);
         }
 
@@ -499,45 +548,17 @@
             border-color: var(--error-color);
         }
 
-        .feedback-prompt {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-light)) !important;
-            color: white !important;
-        }
-
-        .feedback-options {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .feedback-option {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 8px 16px;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .feedback-option:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
         /* Indicador de IA */
         .ai-indicator {
             font-size: 10px;
             opacity: 0.7;
-            margin-top: 5px;
+            margin-top: 6px;
             text-align: right;
+            font-weight: 500;
         }
 
         .ai-indicator.mistral {
-            color: #FF6B35;
+            color: var(--ai-color);
         }
 
         .ai-indicator.cache {
@@ -554,35 +575,40 @@
 
         /* Área de respostas rápidas */
         .quick-reply-area {
-            padding: 15px 20px;
+            padding: 16px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
             border-top: 1px solid var(--border-light);
+            background: var(--surface-light);
         }
 
         .dark-mode .quick-reply-area {
+            background: var(--surface-dark);
             border-top-color: var(--border-dark);
         }
 
         .quick-reply {
-            padding: 10px 16px;
-            background-color: var(--surface-light);
+            padding: 8px 12px;
+            background: var(--surface-light);
             border: 1px solid var(--border-light);
-            border-radius: 20px;
-            font-size: 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
             white-space: nowrap;
             cursor: pointer;
             transition: var(--transition);
+            color: var(--text-light);
         }
 
         .dark-mode .quick-reply {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
+            color: var(--text-dark);
             border-color: var(--border-dark);
         }
 
         .quick-reply:hover {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
         }
@@ -590,15 +616,15 @@
         /* Área de entrada de mensagens */
         .chat-input-area {
             display: flex;
-            padding: 15px 20px;
-            gap: 10px;
+            padding: 16px;
+            gap: 12px;
             align-items: center;
-            background-color: var(--surface-light);
+            background: var(--surface-light);
             border-top: 1px solid var(--border-light);
         }
 
         .dark-mode .chat-input-area {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
             border-top-color: var(--border-dark);
         }
 
@@ -606,15 +632,20 @@
             flex: 1;
             display: flex;
             align-items: center;
-            background-color: var(--background-light);
-            border-radius: 24px;
-            padding: 0 15px;
+            background: var(--surface-light);
+            border-radius: 20px;
+            padding: 0 16px;
             border: 1px solid var(--border-light);
+            transition: var(--transition);
         }
 
         .dark-mode .input-wrapper {
-            background-color: var(--background-dark);
+            background: var(--surface-dark);
             border-color: var(--border-dark);
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-color);
         }
 
         .chat-input {
@@ -622,7 +653,7 @@
             border: none;
             background: none;
             padding: 12px 0;
-            font-size: 16px;
+            font-size: 14px;
             outline: none;
             color: var(--text-light);
         }
@@ -636,48 +667,54 @@
         }
 
         #sendButton {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
         }
 
         #sendButton:hover {
-            background-color: var(--primary-dark);
+            background: var(--primary-dark);
         }
 
         .usage-counter {
-            padding: 8px 15px;
-            background: rgba(108, 99, 255, 0.1);
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 6px 12px;
+            background: rgba(16, 163, 127, 0.1);
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .usage-counter:hover {
+            transform: scale(1.05);
         }
 
         .dark-mode .usage-counter {
-            background: rgba(108, 99, 255, 0.2);
+            background: rgba(16, 163, 127, 0.2);
         }
 
         .usage-counter.low {
             color: var(--warning-color);
-            background: rgba(255, 152, 0, 0.1);
+            background: rgba(245, 158, 11, 0.1);
         }
 
         .usage-counter.critical {
             color: var(--error-color);
-            background: rgba(244, 67, 54, 0.1);
+            background: rgba(239, 68, 68, 0.1);
         }
 
         .footer {
             text-align: center;
-            padding: 10px;
-            font-size: 12px;
+            padding: 12px;
+            font-size: 11px;
             color: var(--text-muted);
-            background-color: var(--surface-light);
+            background: var(--surface-light);
             border-top: 1px solid var(--border-light);
         }
 
         .dark-mode .footer {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
             border-top-color: var(--border-dark);
         }
 
@@ -688,11 +725,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 100;
+            z-index: 1000;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
@@ -704,8 +741,8 @@
         }
 
         .modal-content {
-            background-color: var(--surface-light);
-            border-radius: var(--border-radius);
+            background: var(--surface-light);
+            border-radius: var(--border-radius-lg);
             width: 90%;
             max-width: 500px;
             max-height: 80vh;
@@ -716,7 +753,8 @@
         }
 
         .dark-mode .modal-content {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
+            box-shadow: var(--shadow-dark);
         }
 
         .modal-overlay.active .modal-content {
@@ -727,7 +765,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 16px;
             border-bottom: 1px solid var(--border-light);
         }
 
@@ -736,27 +774,33 @@
         }
 
         .menu-header h3 {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
+            color: var(--primary-color);
         }
 
         .close-btn {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             color: var(--text-light);
+            transition: var(--transition);
         }
 
         .dark-mode .close-btn {
             color: var(--text-dark);
         }
 
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 20px;
+            gap: 12px;
+            padding: 16px;
         }
 
         .menu-card {
@@ -764,10 +808,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 15px;
-            background-color: var(--background-light);
+            padding: 16px 12px;
+            background: var(--surface-light);
             border-radius: var(--border-radius);
-            border: none;
+            border: 1px solid var(--border-light);
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
@@ -775,46 +819,57 @@
         }
 
         .dark-mode .menu-card {
-            background-color: var(--background-dark);
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
         }
 
         .menu-card:hover {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
             color: white;
-            transform: translateY(-2px);
+            border-color: var(--primary-color);
         }
 
         .menu-card i {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
 
         .menu-card span {
-            font-size: 14px;
+            font-size: 12px;
             text-align: center;
+            font-weight: 500;
         }
 
         .menu-card.premium {
-            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            background: var(--premium-color);
             color: #000;
             font-weight: 600;
+            border: none;
         }
 
         .menu-card.premium:hover {
-            background: linear-gradient(135deg, #FFA500, var(--premium-color));
-            transform: translateY(-2px);
+            background: #eab308;
         }
 
         .menu-list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 20px;
+            padding: 12px 16px;
             border-bottom: 1px solid var(--border-light);
+            transition: var(--transition);
         }
 
         .dark-mode .menu-list-item {
             border-bottom-color: var(--border-dark);
+        }
+
+        .menu-list-item:hover {
+            background: var(--border-light);
+        }
+
+        .dark-mode .menu-list-item:hover {
+            background: var(--border-dark);
         }
 
         .menu-list-item:last-of-type {
@@ -822,15 +877,16 @@
         }
 
         .menu-list-item i {
-            margin-right: 10px;
+            margin-right: 8px;
             color: var(--primary-color);
+            font-size: 14px;
         }
 
         /* Switch toggle */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
+            width: 44px;
             height: 24px;
         }
 
@@ -847,9 +903,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background: var(--border-light);
             transition: var(--transition);
             border-radius: 24px;
+        }
+
+        .dark-mode .slider {
+            background: var(--border-dark);
         }
 
         .slider:before {
@@ -859,44 +919,47 @@
             width: 16px;
             left: 4px;
             bottom: 4px;
-            background-color: white;
+            background: white;
             transition: var(--transition);
             border-radius: 50%;
         }
 
         input:checked + .slider {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(20px);
         }
 
         .logout-btn {
             grid-column: 1 / -1;
-            background-color: rgba(244, 67, 54, 0.1);
+            background: rgba(239, 68, 68, 0.1);
             color: var(--error-color);
+            border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
         .logout-btn:hover {
-            background-color: var(--error-color);
+            background: var(--error-color);
             color: white;
+            border-color: var(--error-color);
         }
 
         /* Toast notification */
         .toast-notification {
             position: fixed;
-            bottom: 20px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
             color: var(--text-dark);
-            padding: 12px 20px;
+            padding: 12px 16px;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             z-index: 1000;
             opacity: 0;
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .toast-notification.show {
@@ -911,7 +974,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -921,13 +984,13 @@
         }
 
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
-            border-top-color: white;
+            border-top-color: var(--primary-color);
             animation: spin 1s linear infinite;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         @keyframes spin {
@@ -936,80 +999,91 @@
 
         /* Tela de Upgrade */
         .upgrade-screen {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            background: var(--background-light);
+        }
+
+        .dark-mode .upgrade-screen {
+            background: var(--background-dark);
         }
 
         .upgrade-container {
-            background-color: var(--surface-light);
-            border-radius: var(--border-radius);
+            background: var(--surface-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow);
-            padding: 30px;
+            padding: 24px;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             text-align: center;
         }
 
         .dark-mode .upgrade-container {
-            background-color: var(--surface-dark);
+            background: var(--surface-dark);
+            border: 1px solid var(--border-dark);
+            box-shadow: var(--shadow-dark);
         }
 
         .upgrade-icon {
-            font-size: 64px;
+            font-size: 48px;
             color: var(--premium-color);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .upgrade-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--primary-color);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--premium-color);
         }
 
         .upgrade-subtitle {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
         .plan-card {
-            background: var(--background-light);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 2px solid var(--border-light);
+            background: var(--surface-light);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-light);
             transition: var(--transition);
         }
 
         .dark-mode .plan-card {
-            background: var(--background-dark);
+            background: var(--surface-dark);
             border-color: var(--border-dark);
         }
 
         .plan-card.premium {
             border-color: var(--premium-color);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            background: rgba(245, 158, 11, 0.05);
         }
 
         .plan-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            transform: translateY(-2px);
         }
 
         .plan-name {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .dark-mode .plan-name {
+            color: var(--text-dark);
         }
 
         .plan-price {
             font-size: 32px;
             font-weight: 700;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             color: var(--primary-color);
         }
 
@@ -1026,6 +1100,9 @@
         .plan-features li {
             padding: 8px 0;
             border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            font-size: 13px;
         }
 
         .dark-mode .plan-features li {
@@ -1037,17 +1114,18 @@
         }
 
         .plan-features li i {
-            margin-right: 10px;
+            margin-right: 8px;
             color: var(--success-color);
+            font-size: 14px;
         }
 
         .upgrade-btn {
-            background: linear-gradient(135deg, var(--premium-color), #FFA500);
+            background: var(--premium-color);
             color: #000;
             border: none;
-            border-radius: 8px;
-            padding: 15px 30px;
-            font-size: 16px;
+            border-radius: var(--border-radius);
+            padding: 12px 24px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
@@ -1055,129 +1133,291 @@
         }
 
         .upgrade-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
-        }
-
-        .payment-methods {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .payment-method {
-            padding: 10px 20px;
-            border: 2px solid var(--border-light);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            flex: 1;
-        }
-
-        .payment-method.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(108, 99, 255, 0.1);
-        }
-
-        .payment-method i {
-            font-size: 24px;
-            margin-bottom: 5px;
+            background: #eab308;
         }
 
         .pix-code {
-            background: var(--background-light);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            font-family: monospace;
-            font-size: 14px;
+            background: var(--surface-light);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin: 16px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
             word-break: break-all;
+            border: 1px solid var(--border-light);
         }
 
         .dark-mode .pix-code {
-            background: var(--background-dark);
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
         }
 
         .copy-btn {
             background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 6px;
-            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            padding: 12px 16px;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
+            font-weight: 600;
         }
 
         .copy-btn:hover {
             background: var(--primary-dark);
         }
 
+        /* Profile Modal */
+        .profile-modal {
+            max-width: 500px;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .dark-mode .profile-header {
+            border-bottom-color: var(--border-dark);
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-avatar.premium {
+            background: var(--premium-color);
+        }
+
+        .avatar-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-color);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            border: 2px solid var(--surface-light);
+        }
+
+        .dark-mode .avatar-edit {
+            border-color: var(--surface-dark);
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .profile-plan {
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .profile-plan.free {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .profile-plan.premium {
+            background: var(--premium-color);
+            color: #000;
+        }
+
+        .profile-body {
+            padding: 16px;
+        }
+
+        .profile-section {
+            margin-bottom: 24px;
+        }
+
+        .profile-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-section-title i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .profile-preferences {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .preference-tag {
+            padding: 6px 12px;
+            background: var(--surface-light);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dark-mode .preference-tag {
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .preference-tag:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .preference-tag.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card {
+            background: var(--surface-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius);
+            padding: 12px;
+            text-align: center;
+        }
+
+        .dark-mode .stat-card {
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .profile-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border-light);
+            background: var(--surface-light);
+            color: var(--text-light);
+        }
+
+        .dark-mode .profile-btn {
+            background: var(--surface-dark);
+            color: var(--text-dark);
+            border-color: var(--border-dark);
+        }
+
+        .profile-btn.primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .profile-btn:hover {
+            transform: translateY(-2px);
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .auth-container {
-                padding: 20px;
+                padding: 24px 16px;
+                margin: 16px;
             }
 
             .chat-header {
-                padding: 12px 15px;
+                padding: 12px;
             }
 
             .chat-body {
-                padding: 15px;
+                padding: 12px;
             }
 
             .message {
                 max-width: 90%;
+                padding: 12px 16px;
             }
 
             .orb {
-                width: 100px;
-                height: 100px;
-                font-size: 32px;
+                width: 48px;
+                height: 48px;
+                font-size: 18px;
             }
 
             .menu-grid {
                 grid-template-columns: 1fr;
             }
 
-            .feedback-options {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .payment-methods {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .auth-title {
-                font-size: 20px;
-            }
-
-            .auth-logo {
-                width: 60px;
-                height: 60px;
-            }
-
-            .greeting-text {
-                font-size: 20px;
-            }
-
-            .orb {
-                width: 80px;
-                height: 80px;
-                font-size: 24px;
-            }
-
-            .modal-content {
-                width: 95%;
-            }
-
             .upgrade-container {
-                padding: 20px;
+                padding: 20px 16px;
+                margin: 16px;
+            }
+
+            .profile-modal {
+                max-width: 90%;
             }
         }
     </style>
@@ -1189,13 +1429,13 @@
             <div class="auth-container">
                 <div class="auth-header">
                     <img src="https://i.imgur.com/orvGJOL.png" alt="Yume Logo" class="auth-logo">
-                    <h1 class="auth-title">Bem-vindo à Yume</h1>
-                    <p class="auth-subtitle">Sua assistente virtual com IA Mistral</p>
+                    <h1 class="auth-title">Yume AI</h1>
+                    <p class="auth-subtitle">Assistente Virtual com Inteligência Artificial</p>
                 </div>
 
                 <!-- Login Form -->
                 <form class="auth-form" id="loginForm">
-                    <h2 class="form-title">Entrar</h2>
+                    <h2 class="form-title">Acessar Conta</h2>
                     <div class="form-group">
                         <label for="loginEmail">E-mail</label>
                         <input type="email" id="loginEmail" required placeholder="seu@email.com">
@@ -1206,16 +1446,16 @@
                     </div>
                     <button type="submit" class="auth-btn">Entrar</button>
                     <p class="auth-switch">
-                        Não tem conta? <a href="#" id="showRegister">Cadastre-se</a>
+                        Novo por aqui? <a href="#" id="showRegister">Crie sua conta</a>
                     </p>
                 </form>
 
                 <!-- Register Form -->
                 <form class="auth-form hidden" id="registerForm">
-                    <h2 class="form-title">Criar Conta</h2>
+                    <h2 class="form-title">Junte-se à Yume</h2>
                     <div class="form-group">
-                        <label for="registerName">Nome</label>
-                        <input type="text" id="registerName" required placeholder="Seu nome">
+                        <label for="registerName">Nome Completo</label>
+                        <input type="text" id="registerName" required placeholder="Seu nome completo">
                     </div>
                     <div class="form-group">
                         <label for="registerEmail">E-mail</label>
@@ -1228,7 +1468,7 @@
                     <div class="form-group">
                         <label for="registerAge">Faixa Etária</label>
                         <select id="registerAge" required>
-                            <option value="">Selecione</option>
+                            <option value="">Selecione sua idade</option>
                             <option value="18-30">18-30 anos</option>
                             <option value="31-49">31-49 anos</option>
                             <option value="50-59">50-59 anos</option>
@@ -1238,15 +1478,15 @@
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="termsAccept" required>
                         <label for="termsAccept">
-                            Eu li e aceito os 
+                            Concordo com os 
                             <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">
                                 Termos de Uso e Política de Privacidade
                             </a>
                         </label>
                     </div>
-                    <button type="submit" class="auth-btn">Criar Conta</button>
+                    <button type="submit" class="auth-btn">Começar Agora</button>
                     <p class="auth-switch">
-                        Já tem conta? <a href="#" id="showLogin">Entrar</a>
+                        Já tem conta? <a href="#" id="showLogin">Fazer login</a>
                     </p>
                 </form>
             </div>
@@ -1259,12 +1499,12 @@
                     <div class="user-avatar" id="userAvatar">
                         <i class="fas fa-user"></i>
                     </div>
-                    <div class="plan-badge free" id="planBadge">FREE</div>
-                    <div class="usage-counter" id="usageCounter">15/20 mensagens</div>
+                    <div class="plan-badge free" id="planBadge">Upgrade</div>
+                    <div class="usage-counter" id="usageCounter">Upgrade</div>
                 </div>
                 <div class="header-title-group">
                     <img src="https://i.imgur.com/orvGJOL.png" alt="Yume Logo" class="header-logo">
-                    <h1 class="header-name">Yume</h1>
+                    <h1 class="header-name">Yume AI</h1>
                 </div>
                 <button type="button" class="icon-btn header-menu-btn" id="menuBtn" title="Menu">
                     <i class="fas fa-ellipsis-h"></i>
@@ -1273,9 +1513,11 @@
 
             <div class="chat-body">
                 <div class="assistant-ui" id="assistantUI">
-                    <p class="greeting-text">Olá, <b id="greetingName">visitante</b>!</p>
+                    <p class="greeting-text">Olá! Sou a Yume 👋</p>
                     <p class="help-text">Como posso ajudar você hoje?</p>
-                    <div class="orb" id="orb"></div>
+                    <div class="orb" id="orb">
+                        <i class="fas fa-robot"></i>
+                    </div>
                 </div>
                 <div class="chat-messages" id="chatMessages"></div>
             </div>
@@ -1285,16 +1527,18 @@
             <form class="chat-input-area" id="inputArea">
                 <div class="input-wrapper">
                     <input type="text" class="chat-input" id="userInput" 
-                           placeholder="Digite sua mensagem..." autocomplete="off">
+                           placeholder="Envie uma mensagem..." autocomplete="off">
                     <button type="button" class="icon-btn" id="micBtn" title="Usar Microfone">
                         <i class="fas fa-microphone"></i>
                     </button>
                 </div>
                 <button type="submit" class="icon-btn" id="sendButton">
-                    <i class="fas fa-arrow-up"></i>
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </form>
-            <div class="footer">Powered by ORPHEO Platforms • Mistral AI</div>
+            <div class="footer">
+                Yume AI • Powered by Mistral
+            </div>
         </div>
 
         <!-- Upgrade Screen -->
@@ -1303,55 +1547,34 @@
                 <div class="upgrade-icon">
                     <i class="fas fa-crown"></i>
                 </div>
-                <h1 class="upgrade-title">Faça Upgrade para Premium</h1>
-                <p class="upgrade-subtitle">Desbloqueie todo o potencial da Yume com recursos ilimitados</p>
+                <h1 class="upgrade-title">Yume Premium</h1>
+                <p class="upgrade-subtitle">Acesso ilimitado à inteligência artificial</p>
                 
                 <div class="plan-card premium">
                     <h3 class="plan-name">Plano Premium</h3>
                     <div class="plan-price">R$ 19,90<span style="font-size: 14px; color: var(--text-muted);">/mês</span></div>
                     <ul class="plan-features">
                         <li><i class="fas fa-check"></i> Mensagens ilimitadas</li>
-                        <li><i class="fas fa-check"></i> Acesso prioritário à Mistral AI</li>
+                        <li><i class="fas fa-check"></i> Acesso prioritário</li>
                         <li><i class="fas fa-check"></i> Suporte 24/7</li>
-                        <li><i class="fas fa-check"></i> Recursos avançados de IA</li>
-                        <li><i class="fas fa-check"></i> Sem anúncios</li>
+                        <li><i class="fas fa-check"></i> Recursos avançados</li>
                     </ul>
-                    
-                    <div class="payment-methods">
-                        <div class="payment-method selected" data-method="pix">
-                            <i class="fas fa-qrcode"></i>
-                            <div>PIX</div>
-                        </div>
-                        <div class="payment-method" data-method="mercadopago">
-                            <i class="fas fa-credit-card"></i>
-                            <div>Mercado Pago</div>
-                        </div>
-                    </div>
 
                     <div id="pixPayment" class="payment-section">
                         <div class="pix-code" id="pixCode">
-                            00020126580014br.gov.bcb.pix0136123e4567-e89b-12d3-a456-426614174000520400005303986540520.005802BR5913STUDIO TSUKIYO6008BRASILIA62070503***6304E2CA
+                            00020126900014BR.GOV.BCB.PIX013611a4cd6a-710d-4cd5-9f5b-2897c3fd0eed0228a ORPHEO Platforms agradece.520400005303986540519.905802BR5924Bruno Pereira dos Santos6009SAO PAULO62140510LAIzU3NkWl63040DF6
                         </div>
                         <button class="copy-btn" id="copyPixBtn">
                             <i class="fas fa-copy"></i> Copiar Código PIX
                         </button>
-                        <p style="font-size: 12px; margin-top: 10px; color: var(--text-muted);">
+                        <p style="font-size: 12px; margin-top: 12px; color: var(--text-muted);">
                             Após o pagamento, envie o comprovante para: sac.studiotsukiyo@outlook.com
-                        </p>
-                    </div>
-
-                    <div id="mercadopagoPayment" class="payment-section hidden">
-                        <button class="upgrade-btn" id="mercadopagoBtn">
-                            <i class="fas fa-shield-alt"></i> Pagar com Mercado Pago
-                        </button>
-                        <p style="font-size: 12px; margin-top: 10px; color: var(--text-muted);">
-                            Pagamento seguro processado pelo Mercado Pago
                         </p>
                     </div>
                 </div>
 
-                <button class="auth-btn" id="backToChatBtn" style="margin-top: 20px;">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Chat
+                <button class="auth-btn" id="backToChatBtn" style="margin-top: 16px; background: transparent; color: var(--text-muted); border: 1px solid var(--border-light);">
+                    Voltar ao Chat
                 </button>
             </div>
         </div>
@@ -1372,23 +1595,23 @@
                     </button>
                     <button id="aboutYumeBtn" class="menu-card">
                         <i class="fas fa-info-circle"></i>
-                        <span>Sobre a Yume</span>
+                        <span>Sobre</span>
                     </button>
                     <button id="statsBtn" class="menu-card">
                         <i class="fas fa-chart-bar"></i>
                         <span>Estatísticas</span>
                     </button>
                     <button id="profileBtn" class="menu-card">
-                        <i class="fas fa-user-circle"></i>
+                        <i class="fas fa-user"></i>
                         <span>Perfil</span>
                     </button>
                     <button id="upgradeBtn" class="menu-card premium">
                         <i class="fas fa-crown"></i>
-                        <span>Fazer Upgrade</span>
+                        <span>Premium</span>
                     </button>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" 
                        target="_blank" class="menu-card">
-                        <i class="fas fa-comment-dots"></i>
+                        <i class="fas fa-comment"></i>
                         <span>Feedback</span>
                     </a>
                     <a href="mailto:sac.studiotsukiyo@outlook.com" class="menu-card">
@@ -1408,23 +1631,96 @@
                     </label>
                 </div>
                 <div class="menu-list-item">
-                    <i class="fas fa-volume-up"></i> Voz da Yume
+                    <i class="fas fa-volume-up"></i> Voz
                     <label class="switch">
                         <input type="checkbox" id="voiceToggle" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="menu-list-item">
-                    <i class="fas fa-brain"></i> IA Mistral
-                    <label class="switch">
-                        <input type="checkbox" id="aiToggle" checked>
-                        <span class="slider"></span>
-                    </label>
-                </div>
+                <!-- Removido o toggle da Mistral AI -->
                 <button id="logoutBtn" class="menu-card logout-btn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Sair</span>
                 </button>
+            </div>
+        </div>
+
+        <!-- Profile Modal -->
+        <div class="modal-overlay" id="profileModal">
+            <div class="modal-content profile-modal">
+                <div class="menu-header">
+                    <h3>Meu Perfil</h3>
+                    <button class="close-btn" id="closeProfile">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <i class="fas fa-user"></i>
+                        <div class="avatar-edit">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <h2 class="profile-name" id="profileName">Usuário</h2>
+                    <p class="profile-email" id="profileEmail">usuario@email.com</p>
+                    <div class="profile-plan free" id="profilePlan">FREE</div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">
+                            <i class="fas fa-user-edit"></i> Informações Pessoais
+                        </h3>
+                        <div class="form-group">
+                            <label for="profileUsername">Nome de usuário</label>
+                            <input type="text" id="profileUsername" placeholder="Seu nome de usuário">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileBio">Bio</label>
+                            <textarea id="profileBio" rows="3" placeholder="Conte um pouco sobre você..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">
+                            <i class="fas fa-heart"></i> Preferências
+                        </h3>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                            Selecione seus interesses para personalizar sua experiência:
+                        </p>
+                        <div class="profile-preferences" id="preferencesList">
+                            <!-- Preferências serão carregadas dinamicamente -->
+                        </div>
+                    </div>
+                    
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">
+                            <i class="fas fa-chart-line"></i> Estatísticas
+                        </h3>
+                        <div class="profile-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="statMessages">0</div>
+                                <div class="stat-label">Mensagens</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statSessions">0</div>
+                                <div class="stat-label">Sessões</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statDays">0</div>
+                                <div class="stat-label">Dias ativo</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statFeedback">0</div>
+                                <div class="stat-label">Feedbacks</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <button class="profile-btn" id="cancelProfileBtn">Cancelar</button>
+                        <button class="profile-btn primary" id="saveProfileBtn">Salvar Alterações</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1434,1000 +1730,250 @@
         <!-- Loading Overlay -->
         <div class="loading-overlay hidden" id="loadingOverlay">
             <div class="loading-spinner"></div>
-            <p>Processando com Mistral AI...</p>
+            <p>Processando...</p>
         </div>
     </div>
 
     <script>
-        // Elementos DOM
-        const authScreen = document.getElementById('authScreen');
-        const chatScreen = document.getElementById('chatScreen');
-        const upgradeScreen = document.getElementById('upgradeScreen');
-        const loginForm = document.getElementById('loginForm');
-        const registerForm = document.getElementById('registerForm');
-        const showRegister = document.getElementById('showRegister');
-        const showLogin = document.getElementById('showLogin');
-        const menuBtn = document.getElementById('menuBtn');
-        const closeMenu = document.getElementById('closeMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const voiceToggle = document.getElementById('voiceToggle');
-        const aiToggle = document.getElementById('aiToggle');
-        const userInput = document.getElementById('userInput');
-        const inputArea = document.getElementById('inputArea');
-        const chatMessages = document.getElementById('chatMessages');
-        const quickReplyArea = document.getElementById('quickReplyArea');
-        const assistantUI = document.getElementById('assistantUI');
-        const greetingName = document.getElementById('greetingName');
-        const userAvatar = document.getElementById('userAvatar');
-        const planBadge = document.getElementById('planBadge');
-        const usageCounter = document.getElementById('usageCounter');
-        const toast = document.getElementById('toast');
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const micBtn = document.getElementById('micBtn');
-        const apiConfigBtn = document.getElementById('apiConfigBtn');
-        const clearCacheBtn = document.getElementById('clearCacheBtn');
-        const upgradeBtn = document.getElementById('upgradeBtn');
-        const backToChatBtn = document.getElementById('backToChatBtn');
-        const copyPixBtn = document.getElementById('copyPixBtn');
-        const mercadopagoBtn = document.getElementById('mercadopagoBtn');
-        const paymentMethods = document.querySelectorAll('.payment-method');
-
-        // Estado da aplicação
-        let currentUser = null;
-        let isListening = false;
-        let recognition = null;
-        let feedbackSystem = null;
-        let aiMemorySystem = null;
-        let aiIntegration = null;
-        let fallbackSystem = null;
-        let usageSystem = null;
-
-        // ==================== SISTEMA DE USO E LIMITES ====================
-
-        class UsageSystem {
-            constructor() {
-                this.dailyLimit = 20; // Limite diário gratuito
-                this.monthlyLimit = 100; // Limite mensal gratuito
-                this.init();
-            }
-
-            init() {
-                // Carregar uso do usuário
-                const savedUsage = sessionStorage.getItem('yumeUsage');
-                if (savedUsage) {
-                    const usage = JSON.parse(savedUsage);
-                    this.today = usage.today || this.getTodayDate();
-                    this.dailyCount = usage.dailyCount || 0;
-                    this.monthlyCount = usage.monthlyCount || 0;
-                    this.lastReset = usage.lastReset || this.getTodayDate();
-                } else {
-                    this.resetCounters();
-                }
-
-                this.checkReset();
-            }
-
-            getTodayDate() {
-                return new Date().toDateString();
-            }
-
-            resetCounters() {
-                this.today = this.getTodayDate();
-                this.dailyCount = 0;
-                this.monthlyCount = 0;
-                this.lastReset = this.today;
-                this.saveUsage();
-            }
-
-            checkReset() {
-                const today = this.getTodayDate();
-                if (today !== this.today) {
-                    this.today = today;
-                    this.dailyCount = 0;
-                    
-                    // Reset mensal no primeiro dia do mês
-                    const now = new Date();
-                    if (now.getDate() === 1) {
-                        this.monthlyCount = 0;
-                    }
-                    
-                    this.saveUsage();
-                }
-            }
-
-            canUseAI() {
-                return this.dailyCount < this.dailyLimit && this.monthlyCount < this.monthlyLimit;
-            }
-
-            incrementUsage() {
-                this.dailyCount++;
-                this.monthlyCount++;
-                this.saveUsage();
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "usage_incremented", {
-                        daily: this.dailyCount,
-                        monthly: this.monthlyCount
-                    });
-                }
-            }
-
-            getRemainingMessages() {
-                const dailyRemaining = Math.max(0, this.dailyLimit - this.dailyCount);
-                const monthlyRemaining = Math.max(0, this.monthlyLimit - this.monthlyCount);
-                return Math.min(dailyRemaining, monthlyRemaining);
-            }
-
-            getUsageStatus() {
-                const remaining = this.getRemainingMessages();
-                const totalLimit = Math.min(this.dailyLimit, this.monthlyLimit - this.monthlyCount + this.dailyLimit);
-                
-                return {
-                    used: this.dailyCount,
-                    remaining: remaining,
-                    total: totalLimit,
-                    isLow: remaining <= 5,
-                    isCritical: remaining <= 2,
-                    isExceeded: remaining <= 0
-                };
-            }
-
-            saveUsage() {
-                const usage = {
-                    today: this.today,
-                    dailyCount: this.dailyCount,
-                    monthlyCount: this.monthlyCount,
-                    lastReset: this.lastReset
-                };
-                sessionStorage.setItem('yumeUsage', JSON.stringify(usage));
-            }
-
-            // Para usuários premium
-            setPremium() {
-                this.dailyLimit = Infinity;
-                this.monthlyLimit = Infinity;
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "premium_activated");
-                }
-            }
-
-            isPremium() {
-                return this.dailyLimit === Infinity;
-            }
-        }
-
-        // ==================== SISTEMA DE MEMÓRIA E IA ====================
-
-        class AIMemorySystem {
-            constructor() {
-                this.conversationHistory = [];
-                this.responseCache = new Map();
-                this.maxHistoryLength = 15;
-                this.init();
-            }
-
-            init() {
-                // Carregar histórico do sessionStorage (temporário)
-                const savedHistory = sessionStorage.getItem('yumeConversationHistory');
-                if (savedHistory) {
-                    this.conversationHistory = JSON.parse(savedHistory);
-                }
-
-                // Carregar cache do sessionStorage
-                const savedCache = sessionStorage.getItem('yumeResponseCache');
-                if (savedCache) {
-                    const cacheArray = JSON.parse(savedCache);
-                    cacheArray.forEach(([key, value]) => {
-                        this.responseCache.set(key, value);
-                    });
-                }
-            }
-
-            // Adicionar mensagem ao histórico
-            addToHistory(message, response, sender, source = 'fallback') {
-                this.conversationHistory.push({
-                    message,
-                    response,
-                    sender,
-                    source,
-                    timestamp: Date.now()
-                });
-
-                // Manter apenas as últimas mensagens
-                if (this.conversationHistory.length > this.maxHistoryLength) {
-                    this.conversationHistory = this.conversationHistory.slice(-this.maxHistoryLength);
-                }
-
-                sessionStorage.setItem('yumeConversationHistory', JSON.stringify(this.conversationHistory));
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("set", "last_message", message.substring(0, 50));
-                    window.clarity("event", "message_sent", { 
-                        sender: sender, 
-                        source: source,
-                        message_length: message.length 
-                    });
-                }
-            }
-
-            // Buscar resposta em cache
-            getCachedResponse(message) {
-                const normalizedMessage = this.normalizeMessage(message);
-                return this.responseCache.get(normalizedMessage);
-            }
-
-            // Cache de resposta
-            cacheResponse(message, response, source = 'mistral') {
-                const normalizedMessage = this.normalizeMessage(message);
-                this.responseCache.set(normalizedMessage, { response, source });
-
-                // Salvar cache no sessionStorage
-                this.saveCacheToStorage();
-            }
-
-            saveCacheToStorage() {
-                const cacheArray = Array.from(this.responseCache.entries());
-                sessionStorage.setItem('yumeResponseCache', JSON.stringify(cacheArray));
-            }
-
-            // Normalizar mensagem para comparação
-            normalizeMessage(message) {
-                return message.toLowerCase()
-                    .trim()
-                    .replace(/[.,!?;]/g, '')
-                    .replace(/\s+/g, ' ');
-            }
-
-            // Buscar respostas similares no histórico
-            findSimilarResponses(message, threshold = 0.6) {
-                const normalizedMessage = this.normalizeMessage(message);
-                const similar = [];
-
-                this.conversationHistory.forEach(entry => {
-                    if (entry.sender === 'user') {
-                        const similarity = this.calculateSimilarity(normalizedMessage, this.normalizeMessage(entry.message));
-                        if (similarity > threshold) {
-                            similar.push({
-                                originalMessage: entry.message,
-                                response: entry.response,
-                                similarity: similarity,
-                                source: entry.source
-                            });
-                        }
-                    }
-                });
-
-                return similar.sort((a, b) => b.similarity - a.similarity);
-            }
-
-            calculateSimilarity(str1, str2) {
-                const words1 = str1.split(' ');
-                const words2 = str2.split(' ');
-
-                const set1 = new Set(words1);
-                const set2 = new Set(words2);
-
-                const intersection = new Set([...set1].filter(x => set2.has(x)));
-                const union = new Set([...set1, ...set2]);
-
-                return union.size > 0 ? intersection.size / union.size : 0;
-            }
-
-            // Limpar cache
-            clearCache() {
-                this.responseCache.clear();
-                sessionStorage.removeItem('yumeResponseCache');
-                this.conversationHistory = [];
-                sessionStorage.removeItem('yumeConversationHistory');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "cache_cleared");
-                }
-            }
-        }
-
-        // Sistema de Fallback Inteligente
-        class FallbackSystem {
-            constructor() {
-                this.responses = {
-                    greetings: [
-                        "Olá! Como posso ajudar você hoje? 😊",
-                        "Oi! Em que posso ser útil?",
-                        "Olá! Fico feliz em conversar com você."
-                    ],
-                    help: [
-                        "Posso ajudar com informações, responder perguntas ou apenas conversar!",
-                        "Estou aqui para ajudar no que precisar. Pode me fazer perguntas ou pedir assistência.",
-                        "Como assistente virtual, posso ajudar com diversas tarefas. O que você gostaria de fazer?"
-                    ],
-                    unknown: [
-                        "Hmm, não tenho certeza sobre isso. Pode reformular a pergunta?",
-                        "Interessante! Pode me dar mais detalhes?",
-                        "Vou pesquisar mais sobre isso. Tem alguma outra pergunta enquanto isso?",
-                        "Ainda estou aprendendo sobre esse assunto. Pode tentar outra pergunta?"
-                    ],
-                    thanks: [
-                        "De nada! Fico feliz em ajudar! 😊",
-                        "Por nada! Estou aqui para o que precisar.",
-                        "Disponha! Se tiver mais alguma dúvida, é só perguntar."
-                    ],
-                    limit_reached: [
-                        "📊 **Limite de Uso Atingido**\n\nVocê atingiu o limite de mensagens gratuitas por hoje. Faça upgrade para Premium para continuar usando a Yume sem limites!\n\n💎 **Premium inclui:**\n• Mensagens ilimitadas\n• Acesso prioritário\n• Suporte 24/7\n• Recursos avançados",
-                        "🚫 **Limite Diário**\n\nSuas mensagens gratuitas de hoje acabaram. Desbloqueie acesso ilimitado fazendo upgrade para o plano Premium!\n\n✨ **Vantagens Premium:**\n• Use sem limites\n• Respostas mais rápidas\n• Funcionalidades exclusivas",
-                        "⚡ **Upgrade Necessário**\n\nVocê utilizou todas as suas mensagens gratuitas. Faça upgrade para Premium e tenha acesso ilimitado à Yume!\n\n🌟 **Com Premium você:**\n• Conversa sem restrições\n• Aproveita todos os recursos\n• Tem suporte prioritário"
-                    ]
-                };
-            }
-
-            getResponse(message) {
-                const lowerMessage = message.toLowerCase();
-
-                if (this.isGreeting(lowerMessage)) {
-                    return this.getRandomResponse(this.responses.greetings);
-                }
-
-                if (this.isHelpRequest(lowerMessage)) {
-                    return this.getRandomResponse(this.responses.help);
-                }
-
-                if (this.isThanks(lowerMessage)) {
-                    return this.getRandomResponse(this.responses.thanks);
-                }
-
-                return this.getRandomResponse(this.responses.unknown);
-            }
-
-            getLimitReachedResponse() {
-                return this.getRandomResponse(this.responses.limit_reached);
-            }
-
-            isGreeting(message) {
-                const greetings = ['oi', 'olá', 'ola', 'hey', 'e aí', 'eai', 'bom dia', 'boa tarde', 'boa noite'];
-                return greetings.some(greet => message.includes(greet));
-            }
-
-            isHelpRequest(message) {
-                const helpWords = ['ajuda', 'ajude', 'help', 'como funciona', 'o que você faz', 'pode fazer'];
-                return helpWords.some(word => message.includes(word));
-            }
-
-            isThanks(message) {
-                const thanksWords = ['obrigado', 'obrigada', 'valeu', 'agradeço', 'thanks'];
-                return thanksWords.some(word => message.includes(word));
-            }
-
-            getRandomResponse(responses) {
-                return responses[Math.floor(Math.random() * responses.length)];
-            }
-        }
-
-        // Integração com Mistral AI
-        class MistralAIIntegration {
-            constructor() {
-                // API Key integrada diretamente
-                this.apiKey = 'NFuAj8PYUPcaf6tA1BjbyXuIeSjSA4sW';
-                this.endpoint = 'https://api.mistral.ai/v1/chat/completions';
-                this.enabled = true;
-            }
-
-            // Verificar se está configurado
-            isConfigured() {
-                return this.apiKey && this.enabled;
-            }
-
-            // Chamar a API da Mistral
-            async callMistralAI(message, conversationHistory = []) {
-                if (!this.isConfigured()) {
-                    throw new Error('Mistral AI não configurada');
-                }
-
-                const messages = [
-                    {
-                        role: "system",
-                        content: `Você é a Yume, uma assistente virtual brasileira amigável e prestativa. 
-                        Seja concisa mas útil. Responda em português brasileiro natural.
-                        Use emojis ocasionalmente para ser mais amigável.
-                        Mantenha as respostas entre 1-3 frases.
-                        Seja direta e evite rodeios.`
-                    },
-                    ...conversationHistory.slice(-6).map(entry => ({
-                        role: entry.sender === 'user' ? 'user' : 'assistant',
-                        content: entry.sender === 'user' ? entry.message : entry.response
-                    })),
-                    {
-                        role: "user",
-                        content: message
-                    }
-                ];
-
-                try {
-                    const response = await fetch(this.endpoint, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${this.apiKey}`
-                        },
-                        body: JSON.stringify({
-                            model: "mistral-tiny",
-                            messages: messages,
-                            max_tokens: 150,
-                            temperature: 0.7,
-                            stream: false
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Mistral API error: ${response.status} - ${errorText}`);
-                    }
-
-                    const data = await response.json();
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "mistral_api_call", {
-                            success: true,
-                            message_length: message.length,
-                            response_length: data.choices[0].message.content.length
-                        });
-                    }
-                    
-                    return data.choices[0].message.content.trim();
-                } catch (error) {
-                    console.error('Erro na Mistral AI:', error);
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "mistral_api_error", {
-                            error: error.message
-                        });
-                    }
-                    
-                    throw error;
-                }
-            }
-
-            // Alternar estado da IA
-            toggleEnabled(enabled) {
-                this.enabled = enabled;
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "ai_toggled", { enabled: enabled });
-                }
-            }
-        }
-
-        // Sistema de Feedback (atualizado para Clarity)
-        class FeedbackSystem {
-            constructor() {
-                this.init();
-            }
-
-            init() {
-                this.startSessionTime = Date.now();
-                this.messageCount = 0;
-                this.quickRepliesUsed = 0;
-                this.voiceInteractions = 0;
-                this.feedbackShownThisSession = false;
-                this.lastFeedbackTime = 0;
-                
-                // Inicializar Clarity session
-                if (window.clarity) {
-                    window.clarity("set", "session_start", new Date().toISOString());
-                    window.clarity("set", "user_type", "anonymous");
-                }
-                
-                this.trackUserBehavior();
-            }
-
-            trackUserBehavior() {
-                setInterval(() => {
-                    this.sessionDuration = Date.now() - this.startSessionTime;
-                    this.checkForContextualFeedback();
-                }, 1000);
-            }
-
-            addFeedbackToMessage(messageId, source) {
-                const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
-                if (!messageElement) return;
-
-                // Adicionar indicador de fonte
-                const sourceIndicator = document.createElement('div');
-                sourceIndicator.className = `ai-indicator ${source}`;
-
-                let sourceText = '';
-                switch(source) {
-                    case 'mistral': sourceText = '• Mistral AI'; break;
-                    case 'cache': sourceText = '• Cache'; break;
-                    case 'history': sourceText = '• Histórico'; break;
-                    case 'fallback': sourceText = '• Base de conhecimento'; break;
-                }
-
-                sourceIndicator.textContent = sourceText;
-                messageElement.appendChild(sourceIndicator);
-
-                // Botões de feedback
-                const feedbackHtml = `
-                    <div class="feedback-buttons">
-                        <span class="feedback-label">Esta resposta foi útil?</span>
-                        <button class="feedback-btn positive" data-rating="positive">👍</button>
-                        <button class="feedback-btn negative" data-rating="negative">👎</button>
-                    </div>
-                `;
-
-                const feedbackContainer = document.createElement('div');
-                feedbackContainer.innerHTML = feedbackHtml;
-                messageElement.appendChild(feedbackContainer);
-
-                feedbackContainer.querySelectorAll('.feedback-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        this.handleFeedbackResponse(e.target.dataset.rating, messageId, source);
-                    });
-                });
-            }
-
-            checkForContextualFeedback() {
-                const now = Date.now();
-                const timeSinceLastFeedback = now - this.lastFeedbackTime;
-
-                if (timeSinceLastFeedback > 120000 && !this.feedbackShownThisSession && this.messageCount >= 3) {
-                    this.showContextualFeedback("Como está sendo sua experiência com a Yume até agora?");
-                    this.feedbackShownThisSession = true;
-                    this.lastFeedbackTime = now;
-                }
-            }
-
-            showContextualFeedback(message) {
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.className = 'message assistant-message feedback-prompt';
-                feedbackDiv.innerHTML = `
-                    <p>${message}</p>
-                    <div class="feedback-options">
-                        <button class="feedback-option" data-value="excellent">Ótima! 👍</button>
-                        <button class="feedback-option" data-value="good">Boa 😊</button>
-                        <button class="feedback-option" data-value="average">Regular 😐</button>
-                        <button class="feedback-option" data-value="poor">Ruim 👎</button>
-                    </div>
-                `;
-
-                chatMessages.appendChild(feedbackDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                feedbackDiv.querySelectorAll('.feedback-option').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const rating = e.target.dataset.value;
-                        this.handleContextualFeedback(rating);
-                        feedbackDiv.style.opacity = '0.7';
-                    });
-                });
-            }
-
-            handleFeedbackResponse(rating, messageId, source) {
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "message_feedback", {
-                        rating: rating,
-                        source: source,
-                        message_count: this.messageCount,
-                        session_duration: Math.round(this.sessionDuration / 1000)
-                    });
-                }
-
-                this.showToast('Obrigado pelo feedback!', 'success');
-            }
-
-            handleContextualFeedback(rating) {
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "contextual_feedback", {
-                        rating: rating,
-                        message_count: this.messageCount,
-                        session_duration: Math.round(this.sessionDuration / 1000)
-                    });
-                }
-
-                this.showToast('Obrigado pelo feedback!', 'success');
-
-                let response = '';
-                switch(rating) {
-                    case 'excellent':
-                    case 'good':
-                        response = 'Que bom! Fico feliz em ajudar. 😊';
-                        break;
-                    case 'average':
-                        response = 'Obrigada pelo feedback! Vou continuar melhorando.';
-                        break;
-                    case 'poor':
-                        response = 'Lamento ouvir isso. Vou trabalhar para melhorar.';
-                        break;
-                }
-
-                if (response) {
-                    setTimeout(() => {
-                        addMessage(response, 'assistant', 'feedback');
-                    }, 500);
-                }
-            }
-
-            showToast(message, type = 'info') {
-                toast.textContent = message;
-                toast.className = 'toast-notification';
-
-                if (type === 'error') {
-                    toast.style.backgroundColor = 'var(--error-color)';
-                } else if (type === 'success') {
-                    toast.style.backgroundColor = 'var(--success-color)';
-                }
-
-                toast.classList.add('show');
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
-
-            incrementMessageCount() {
-                this.messageCount++;
-                
-                // Update no Clarity
-                if (window.clarity) {
-                    window.clarity("set", "message_count", this.messageCount);
-                }
-            }
-
-            incrementQuickReplies() {
-                this.quickRepliesUsed++;
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "quick_reply_used", { count: this.quickRepliesUsed });
-                }
-            }
-
-            incrementVoiceInteractions() {
-                this.voiceInteractions++;
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "voice_interaction", { count: this.voiceInteractions });
-                }
-            }
-
-            setUserProfile(user) {
-                if (window.clarity && user) {
-                    window.clarity("set", "user_type", "registered");
-                    window.clarity("set", "user_age_group", user.age);
-                    window.clarity("identify", user.email);
-                }
-            }
-
-            getMetricsReport() {
-                return {
-                    sessionDuration: this.sessionDuration,
-                    messageCount: this.messageCount,
-                    quickRepliesUsed: this.quickRepliesUsed,
-                    voiceInteractions: this.voiceInteractions
-                };
-            }
-        }
-
-        // ==================== FUNÇÕES PRINCIPAIS ====================
-
-        // Gerar resposta inteligente
-        async function generateYumeResponse(message) {
-            let response, source;
-
-            // Verificar limite de uso
-            if (!usageSystem.isPremium() && !usageSystem.canUseAI()) {
-                response = fallbackSystem.getLimitReachedResponse();
-                source = 'limit';
-                return { response, source };
-            }
-
-            // 1. Buscar em cache primeiro
-            const cached = aiMemorySystem.getCachedResponse(message);
-            if (cached) {
-                response = cached.response;
-                source = cached.source;
-                console.log('Resposta do cache:', source);
-            }
-
-            // 2. Buscar respostas similares no histórico
-            if (!response) {
-                const similarResponses = aiMemorySystem.findSimilarResponses(message);
-                if (similarResponses.length > 0 && similarResponses[0].similarity > 0.75) {
-                    response = similarResponses[0].response;
-                    source = similarResponses[0].source;
-                    console.log('Resposta similar do histórico:', source);
-                }
-            }
-
-            // 3. Tentar Mistral AI se configurada e ativada
-            if (!response && aiIntegration.isConfigured() && aiToggle.checked) {
-                try {
-                    showLoading(true);
-                    response = await aiIntegration.callMistralAI(message, aiMemorySystem.conversationHistory);
-                    source = 'mistral';
-                    console.log('Resposta da Mistral AI');
-
-                    // Incrementar uso apenas para respostas da Mistral
-                    if (!usageSystem.isPremium()) {
-                        usageSystem.incrementUsage();
-                        updateUsageCounter();
-                    }
-
-                    // Cache da resposta da Mistral
-                    aiMemorySystem.cacheResponse(message, response, 'mistral');
-                } catch (error) {
-                    console.warn('Mistral AI falhou:', error);
-                    // Continua para o fallback
-                } finally {
-                    showLoading(false);
-                }
-            }
-
-            // 4. Fallback para respostas pré-definidas
-            if (!response) {
-                response = fallbackSystem.getResponse(message);
-                source = 'fallback';
-                console.log('Usando fallback');
-            }
-
-            return { response, source };
-        }
-
-        // Adicionar mensagem ao chat
-        function addMessage(text, sender, source = 'fallback') {
-            if (sender === 'user') {
-                assistantUI.classList.add('hidden');
-                feedbackSystem.incrementMessageCount();
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "user_message", {
-                        length: text.length,
-                        has_quick_reply: false
-                    });
-                }
-            }
-
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-
-            if (sender === 'assistant') {
-                const messageId = 'msg_' + Date.now();
-                messageDiv.setAttribute('data-message-id', messageId);
-                messageDiv.innerHTML = text.replace(/\n/g, '<br>');
-
-                // Adicionar feedback após um delay
-                setTimeout(() => {
-                    feedbackSystem.addFeedbackToMessage(messageId, source);
-                }, 500);
-
-                // Adicionar ao histórico
-                const lastUserMessage = Array.from(chatMessages.querySelectorAll('.user-message')).pop();
-                if (lastUserMessage) {
-                    aiMemorySystem.addToHistory(
-                        lastUserMessage.textContent, 
-                        text, 
-                        'assistant', 
-                        source
-                    );
-                }
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "assistant_response", {
-                        source: source,
-                        length: text.length
-                    });
-                }
-            } else {
-                messageDiv.textContent = text;
-
-                // Adicionar mensagem do usuário ao histórico
-                aiMemorySystem.addToHistory(text, '', 'user');
-            }
-
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            if (sender === 'assistant' && voiceToggle.checked) {
-                speakText(text);
-            }
-        }
-
-        // Atualizar contador de uso
-        function updateUsageCounter() {
-            const usage = usageSystem.getUsageStatus();
-            usageCounter.textContent = `${usage.used}/${usage.total} mensagens`;
-            
-            // Atualizar classes CSS baseadas no status
-            usageCounter.className = 'usage-counter';
-            if (usage.isLow) {
-                usageCounter.classList.add('low');
-            }
-            if (usage.isCritical) {
-                usageCounter.classList.add('critical');
-            }
-        }
-
-        // Atualizar interface para premium
-        function updatePremiumUI() {
-            userAvatar.classList.add('premium');
-            planBadge.textContent = 'PREMIUM';
-            planBadge.className = 'plan-badge premium';
-            usageCounter.textContent = 'ILIMITADO';
-            usageCounter.className = 'usage-counter';
-            
-            const orb = document.getElementById('orb');
-            orb.classList.add('premium');
-        }
-
-        // ==================== INICIALIZAÇÃO ====================
-
+        // Sistema principal com integração real da Mistral AI
         document.addEventListener('DOMContentLoaded', function() {
-            // Track page view no Clarity
-            if (window.clarity) {
-                window.clarity("event", "page_view");
-            }
+            // Configurações da API
+            const MISTRAL_API_KEY = 'NFuAj8PYUPcaf6tA1BjbyXuIeSjSA4sW';
+            const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
+            
+            // Elementos principais
+            const authScreen = document.getElementById('authScreen');
+            const chatScreen = document.getElementById('chatScreen');
+            const upgradeScreen = document.getElementById('upgradeScreen');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const chatInput = document.getElementById('userInput');
+            const chatMessages = document.getElementById('chatMessages');
+            const sendButton = document.getElementById('sendButton');
+            const menuBtn = document.getElementById('menuBtn');
+            const closeMenu = document.getElementById('closeMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const voiceToggle = document.getElementById('voiceToggle');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            const backToChatBtn = document.getElementById('backToChatBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const planBadge = document.getElementById('planBadge');
+            const usageCounter = document.getElementById('usageCounter');
+            
+            // Elementos do perfil
+            const userAvatar = document.getElementById('userAvatar');
+            const profileBtn = document.getElementById('profileBtn');
+            const profileModal = document.getElementById('profileModal');
+            const closeProfile = document.getElementById('closeProfile');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const profileName = document.getElementById('profileName');
+            const profileEmail = document.getElementById('profileEmail');
+            const profilePlan = document.getElementById('profilePlan');
+            const profileUsername = document.getElementById('profileUsername');
+            const profileBio = document.getElementById('profileBio');
+            const preferencesList = document.getElementById('preferencesList');
+            const saveProfileBtn = document.getElementById('saveProfileBtn');
+            const cancelProfileBtn = document.getElementById('cancelProfileBtn');
+
+            // Elementos do PIX
+            const copyPixBtn = document.getElementById('copyPixBtn');
+            const pixCode = document.getElementById('pixCode');
+
+            // Estado da aplicação
+            let currentUser = null;
+            let messageCount = 0;
+            let userStats = {
+                messages: 0,
+                sessions: 0,
+                daysActive: 0,
+                feedback: 0
+            };
+
+            // Preferências disponíveis
+            const availablePreferences = [
+                "Tecnologia", "Ciência", "Saúde", "Esportes", "Música", "Arte", 
+                "Literatura", "Viagens", "Culinária", "Filmes", "Séries", "Jogos",
+                "Programação", "Design", "Marketing", "Finanças", "Negócios", "Educação"
+            ];
 
             // Verificar se há usuário logado
-            const savedUser = sessionStorage.getItem('yumeUser');
+            const savedUser = localStorage.getItem('yumeUser');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
-                feedbackSystem.setUserProfile(currentUser);
-                
-                // Verificar se é premium
-                const isPremium = sessionStorage.getItem('yumePremium') === 'true';
-                if (isPremium) {
-                    usageSystem.setPremium();
-                    updatePremiumUI();
-                }
-                
                 showChatScreen();
+                loadUserStats();
+                updateUserAvatar();
+                
+                // Enviar dados para o Microsoft Clarity
+                sendUserDataToClarity();
             }
 
-            // Inicializar sistemas
-            aiMemorySystem = new AIMemorySystem();
-            aiIntegration = new MistralAIIntegration();
-            fallbackSystem = new FallbackSystem();
-            feedbackSystem = new FeedbackSystem();
-            usageSystem = new UsageSystem();
+            // Carregar estatísticas do usuário
+            function loadUserStats() {
+                const savedStats = localStorage.getItem(`yumeStats_${currentUser.email}`);
+                if (savedStats) {
+                    userStats = JSON.parse(savedStats);
+                } else {
+                    userStats = {
+                        messages: 0,
+                        sessions: 1,
+                        daysActive: 1,
+                        feedback: 0
+                    };
+                    saveUserStats();
+                }
+                updateStatsDisplay();
+            }
+
+            // Salvar estatísticas do usuário
+            function saveUserStats() {
+                localStorage.setItem(`yumeStats_${currentUser.email}`, JSON.stringify(userStats));
+                updateStatsDisplay();
+                
+                // Enviar estatísticas para o Clarity
+                if (window.clarity) {
+                    window.clarity("set", "user_stats", userStats);
+                }
+            }
+
+            // Atualizar exibição de estatísticas
+            function updateStatsDisplay() {
+                document.getElementById('statMessages').textContent = userStats.messages;
+                document.getElementById('statSessions').textContent = userStats.sessions;
+                document.getElementById('statDays').textContent = userStats.daysActive;
+                document.getElementById('statFeedback').textContent = userStats.feedback;
+            }
+
+            // Enviar dados do usuário para o Microsoft Clarity
+            function sendUserDataToClarity() {
+                if (window.clarity && currentUser) {
+                    // Identificar usuário
+                    window.clarity("identify", currentUser.email, {
+                        name: currentUser.name,
+                        username: currentUser.username,
+                        age: currentUser.age,
+                        plan: currentUser.plan || 'free'
+                    });
+                    
+                    // Enviar preferências
+                    if (currentUser.preferences && currentUser.preferences.length > 0) {
+                        window.clarity("set", "user_preferences", currentUser.preferences);
+                    }
+                    
+                    // Enviar configurações
+                    window.clarity("set", "dark_mode", localStorage.getItem('yumeDarkMode') === 'true');
+                    window.clarity("set", "voice_enabled", localStorage.getItem('yumeVoiceEnabled') !== 'false');
+                    
+                    // Enviar estatísticas
+                    window.clarity("set", "user_stats", userStats);
+                }
+            }
 
             // Configurar modo escuro
-            const darkMode = sessionStorage.getItem('yumeDarkMode') === 'true';
+            const darkMode = localStorage.getItem('yumeDarkMode') === 'true';
             document.body.classList.toggle('dark-mode', darkMode);
             darkModeToggle.checked = darkMode;
 
-            // Configurar toggle de voz
-            const voiceEnabled = sessionStorage.getItem('yumeVoiceEnabled') !== 'false';
+            // Configurar voz
+            const voiceEnabled = localStorage.getItem('yumeVoiceEnabled') !== 'false';
             voiceToggle.checked = voiceEnabled;
 
-            // Configurar toggle de IA
-            const aiEnabled = sessionStorage.getItem('yumeAIEnabled') !== 'false';
-            aiToggle.checked = aiEnabled;
-            aiIntegration.toggleEnabled(aiEnabled);
+            // Event Listeners
+            darkModeToggle.addEventListener('change', function() {
+                const isDarkMode = this.checked;
+                document.body.classList.toggle('dark-mode', isDarkMode);
+                localStorage.setItem('yumeDarkMode', isDarkMode);
+                
+                // Enviar preferência para o Clarity
+                if (window.clarity) {
+                    window.clarity("set", "dark_mode", isDarkMode);
+                }
+            });
 
-            // Configurar reconhecimento de voz
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                recognition = new SpeechRecognition();
-                recognition.continuous = false;
-                recognition.interimResults = false;
-                recognition.lang = 'pt-BR';
+            voiceToggle.addEventListener('change', function() {
+                const voiceEnabled = this.checked;
+                localStorage.setItem('yumeVoiceEnabled', voiceEnabled);
+                
+                // Enviar preferência para o Clarity
+                if (window.clarity) {
+                    window.clarity("set", "voice_enabled", voiceEnabled);
+                }
+            });
 
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    userInput.value = transcript;
-                    toggleMic(false);
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "voice_recognition_success");
-                    }
-                };
+            // Event Listeners do perfil
+            userAvatar.addEventListener('click', openProfileModal);
+            profileBtn.addEventListener('click', openProfileModal);
+            closeProfile.addEventListener('click', closeProfileModal);
+            cancelProfileBtn.addEventListener('click', closeProfileModal);
+            saveProfileBtn.addEventListener('click', saveProfile);
+            profileAvatar.addEventListener('click', changeAvatar);
 
-                recognition.onerror = function(event) {
-                    console.error('Erro no reconhecimento de voz:', event.error);
-                    toggleMic(false);
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "voice_recognition_error", {
-                            error: event.error
-                        });
-                    }
-                    
-                    showToast('Erro no reconhecimento de voz', 'error');
-                };
+            // Event Listeners do upgrade
+            planBadge.addEventListener('click', showUpgradeScreen);
+            usageCounter.addEventListener('click', showUpgradeScreen);
+            upgradeBtn.addEventListener('click', showUpgradeScreen);
 
-                recognition.onend = function() {
-                    toggleMic(false);
-                };
-            } else {
-                micBtn.style.display = 'none';
-            }
+            // Copiar código PIX
+            copyPixBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(pixCode.textContent).then(function() {
+                    showToast('Código PIX copiado!');
+                }).catch(function() {
+                    // Fallback para navegadores mais antigos
+                    const textArea = document.createElement('textarea');
+                    textArea.value = pixCode.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showToast('Código PIX copiado!');
+                });
+            });
 
-            setupEventListeners();
-            setupQuickReplies();
-            updateUsageCounter();
-        });
-
-        // ==================== EVENT LISTENERS ====================
-
-        function setupEventListeners() {
-            // Alternância entre login e cadastro
-            showRegister.addEventListener('click', function(e) {
+            // Navegação entre login/cadastro
+            document.getElementById('showRegister').addEventListener('click', function(e) {
                 e.preventDefault();
                 loginForm.classList.add('hidden');
                 registerForm.classList.remove('hidden');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "show_register_form");
-                }
             });
 
-            showLogin.addEventListener('click', function(e) {
+            document.getElementById('showLogin').addEventListener('click', function(e) {
                 e.preventDefault();
                 registerForm.classList.add('hidden');
                 loginForm.classList.remove('hidden');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "show_login_form");
-                }
             });
 
-            // Formulário de login
+            // Login
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
 
                 if (email && password) {
-                    showLoading(true);
-                    setTimeout(() => {
-                        const user = {
-                            name: email.split('@')[0],
-                            email: email,
-                            age: '18-30'
-                        };
-                        currentUser = user;
-                        sessionStorage.setItem('yumeUser', JSON.stringify(user));
-                        feedbackSystem.setUserProfile(user);
-                        
-                        // Verificar se é premium
-                        const isPremium = sessionStorage.getItem('yumePremium') === 'true';
-                        if (isPremium) {
-                            usageSystem.setPremium();
-                            updatePremiumUI();
-                        }
-                        
-                        // Track no Clarity
-                        if (window.clarity) {
-                            window.clarity("event", "user_login_success");
-                        }
-                        
-                        showChatScreen();
-                        showLoading(false);
-                        showToast('Login realizado com sucesso!', 'success');
-                    }, 1500);
-                } else {
-                    showToast('Por favor, preencha todos os campos', 'error');
+                    // Verificar se usuário já existe
+                    let user = JSON.parse(localStorage.getItem('yumeUser')) || {
+                        name: email.split('@')[0],
+                        email: email,
+                        username: email.split('@')[0],
+                        bio: "",
+                        preferences: [],
+                        avatar: "default",
+                        plan: "free"
+                    };
+                    
+                    currentUser = user;
+                    localStorage.setItem('yumeUser', JSON.stringify(user));
+                    showChatScreen();
+                    showToast('Login realizado!');
+                    loadUserStats();
+                    updateUserAvatar();
+                    
+                    // Enviar dados para o Clarity
+                    sendUserDataToClarity();
                 }
             });
 
-            // Formulário de cadastro
+            // Cadastro
             registerForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const name = document.getElementById('registerName').value;
@@ -2437,414 +1983,311 @@
                 const terms = document.getElementById('termsAccept').checked;
 
                 if (name && email && password && age && terms) {
-                    if (password.length < 8) {
-                        showToast('A senha deve ter pelo menos 8 caracteres', 'error');
-                        return;
-                    }
-
-                    showLoading(true);
-                    setTimeout(() => {
-                        const user = {
-                            name: name,
-                            email: email,
-                            age: age
-                        };
-                        currentUser = user;
-                        sessionStorage.setItem('yumeUser', JSON.stringify(user));
-                        feedbackSystem.setUserProfile(user);
-                        
-                        // Track no Clarity
-                        if (window.clarity) {
-                            window.clarity("event", "user_register_success");
-                        }
-                        
-                        showChatScreen();
-                        showLoading(false);
-                        showToast('Conta criada com sucesso!', 'success');
-                    }, 1500);
-                } else {
-                    showToast('Por favor, preencha todos os campos', 'error');
+                    const user = {
+                        name: name,
+                        email: email,
+                        age: age,
+                        username: email.split('@')[0],
+                        bio: "",
+                        preferences: [],
+                        avatar: "default",
+                        plan: "free"
+                    };
+                    currentUser = user;
+                    localStorage.setItem('yumeUser', JSON.stringify(user));
+                    showChatScreen();
+                    showToast('Conta criada com sucesso!');
+                    loadUserStats();
+                    updateUserAvatar();
+                    
+                    // Enviar dados para o Clarity
+                    sendUserDataToClarity();
                 }
             });
+
+            // Chat - Integração real com Mistral AI
+            sendButton.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            async function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    addMessage(message, 'user');
+                    chatInput.value = '';
+                    
+                    // Mostrar loading
+                    const loadingMessage = addMessage('Processando sua pergunta...', 'assistant');
+                    
+                    // Atualizar estatísticas
+                    userStats.messages++;
+                    saveUserStats();
+                    
+                    try {
+                        // Integração real com Mistral AI
+                        const response = await fetch(MISTRAL_API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${MISTRAL_API_KEY}`
+                            },
+                            body: JSON.stringify({
+                                model: 'mistral-tiny',
+                                messages: [
+                                    {
+                                        role: 'user',
+                                        content: message
+                                    }
+                                ],
+                                max_tokens: 500,
+                                temperature: 0.7
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Erro na API: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        
+                        // Remover mensagem de loading
+                        loadingMessage.remove();
+                        
+                        // Adicionar resposta da IA
+                        const aiResponse = data.choices[0].message.content;
+                        addMessage(aiResponse, 'assistant');
+                        
+                    } catch (error) {
+                        console.error('Erro ao chamar Mistral AI:', error);
+                        
+                        // Remover mensagem de loading
+                        loadingMessage.remove();
+                        
+                        // Mensagem de fallback em caso de erro
+                        addMessage('Desculpe, estou tendo problemas técnicos no momento. Por favor, tente novamente em alguns instantes.', 'assistant');
+                    }
+                }
+            }
+
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                return messageDiv;
+            }
 
             // Menu
             menuBtn.addEventListener('click', function() {
                 menuOverlay.classList.add('active');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "menu_opened");
-                }
             });
 
             closeMenu.addEventListener('click', function() {
                 menuOverlay.classList.remove('active');
             });
 
-            // Logout
-            logoutBtn.addEventListener('click', function() {
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "user_logout");
-                }
-                
-                currentUser = null;
-                sessionStorage.removeItem('yumeUser');
-                showAuthScreen();
-                menuOverlay.classList.remove('active');
-                showToast('Logout realizado com sucesso', 'success');
-            });
-
-            // Modo escuro
-            darkModeToggle.addEventListener('change', function() {
-                const isDarkMode = this.checked;
-                document.body.classList.toggle('dark-mode', isDarkMode);
-                sessionStorage.setItem('yumeDarkMode', isDarkMode);
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "dark_mode_toggled", { enabled: isDarkMode });
-                }
-            });
-
-            // Voz
-            voiceToggle.addEventListener('change', function() {
-                const voiceEnabled = this.checked;
-                sessionStorage.setItem('yumeVoiceEnabled', voiceEnabled);
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "voice_toggled", { enabled: voiceEnabled });
-                }
-            });
-
-            // IA Mistral
-            aiToggle.addEventListener('change', function() {
-                const aiEnabled = this.checked;
-                aiIntegration.toggleEnabled(aiEnabled);
-                sessionStorage.setItem('yumeAIEnabled', aiEnabled);
-                showToast(aiEnabled ? 'Mistral AI ativada' : 'Mistral AI desativada', 'success');
-            });
-
-            // Upgrade para Premium
-            upgradeBtn.addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
-                showUpgradeScreen();
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "upgrade_clicked");
-                }
-            });
-
-            // Voltar ao chat do upgrade
             backToChatBtn.addEventListener('click', function() {
                 showChatScreen();
             });
 
-            // Copiar código PIX
-            copyPixBtn.addEventListener('click', function() {
-                const pixCode = document.getElementById('pixCode');
-                navigator.clipboard.writeText(pixCode.textContent).then(() => {
-                    showToast('Código PIX copiado!', 'success');
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "pix_copied");
-                    }
-                });
-            });
-
-            // Mercado Pago
-            mercadopagoBtn.addEventListener('click', function() {
-                showToast('Redirecionando para Mercado Pago...', 'info');
+            logoutBtn.addEventListener('click', function() {
+                currentUser = null;
+                localStorage.removeItem('yumeUser');
+                showAuthScreen();
+                showToast('Logout realizado');
                 
-                // Simular pagamento (em produção, integrar com API real)
-                setTimeout(() => {
-                    activatePremium();
-                }, 2000);
-                
-                // Track no Clarity
+                // Limpar dados do Clarity
                 if (window.clarity) {
-                    window.clarity("event", "mercadopago_clicked");
+                    window.clarity("consent", false);
                 }
             });
 
-            // Métodos de pagamento
-            paymentMethods.forEach(method => {
-                method.addEventListener('click', function() {
-                    paymentMethods.forEach(m => m.classList.remove('selected'));
-                    this.classList.add('selected');
-                    
-                    const methodType = this.dataset.method;
-                    document.querySelectorAll('.payment-section').forEach(section => {
-                        section.classList.add('hidden');
-                    });
-                    document.getElementById(methodType + 'Payment').classList.remove('hidden');
-                });
-            });
-
-            // Configurar API Mistral (removido - já está integrada)
-            if (apiConfigBtn) {
-                apiConfigBtn.addEventListener('click', function() {
-                    menuOverlay.classList.remove('active');
-                    showToast('Mistral AI já está integrada e funcionando!', 'success');
-                    
-                    // Track no Clarity
-                    if (window.clarity) {
-                        window.clarity("event", "api_config_clicked");
-                    }
-                });
+            // Funções do perfil
+            function openProfileModal() {
+                menuOverlay.classList.remove('active');
+                loadProfileData();
+                profileModal.classList.add('active');
             }
 
-            // Limpar cache
-            clearCacheBtn.addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
-                if (confirm('Tem certeza que deseja limpar todo o cache e histórico?')) {
-                    aiMemorySystem.clearCache();
-                    showToast('Cache limpo com sucesso!', 'success');
-                }
-            });
+            function closeProfileModal() {
+                profileModal.classList.remove('active');
+            }
 
-            // Envio de mensagem
-            inputArea.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const message = userInput.value.trim();
-                if (message) {
-                    addMessage(message, 'user');
-                    userInput.value = '';
-
-                    try {
-                        const { response, source } = await generateYumeResponse(message);
-                        addMessage(response, 'assistant', source);
-                        showQuickReplies();
-                    } catch (error) {
-                        console.error('Erro ao gerar resposta:', error);
-                        addMessage('Desculpe, tive um problema. Pode tentar novamente?', 'assistant', 'error');
-                    }
-                }
-            });
-
-            // Microfone
-            micBtn.addEventListener('click', function() {
-                if (!isListening) {
-                    startVoiceRecognition();
-                } else {
-                    stopVoiceRecognition();
-                }
-            });
-
-            // Botões do menu
-            document.getElementById('helpBtn').addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
-                addMessage('Precisa de ajuda? Aqui estão algumas coisas que posso fazer:\n\n• Responder perguntas gerais\n• Fornecer informações úteis\n• Auxiliar com tarefas do dia a dia\n• Oferecer sugestões e conselhos\n\nEm que posso te ajudar especificamente?', 'assistant', 'fallback');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "help_clicked");
-                }
-            });
-
-            document.getElementById('aboutYumeBtn').addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
-                addMessage('Olá! Eu sou a Yume, sua assistente virtual inteligente com tecnologia Mistral AI. Fui desenvolvida para ajudar você com diversas tarefas e fornecer informações úteis no seu dia a dia.\n\nMinhas funcionalidades incluem:\n• Resposta a perguntas usando IA\n• Auxílio em tarefas\n• Fornecimento de informações\n• Suporte e orientação\n\nEstou sempre aprendendo e melhorando para te servir melhor!', 'assistant', 'fallback');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "about_clicked");
-                }
-            });
-
-            document.getElementById('statsBtn').addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
-                const metrics = feedbackSystem.getMetricsReport();
-                const aiStatus = aiIntegration.isConfigured() ? 'Configurada' : 'Não configurada';
-                const usage = usageSystem.getUsageStatus();
-                const planType = usageSystem.isPremium() ? 'Premium' : 'Gratuito';
-                
-                addMessage(`📊 **Estatísticas de Uso:**\n\n• Mensagens enviadas: ${metrics.messageCount}\n• Tempo de sessão: ${Math.round(metrics.sessionDuration/1000)} segundos\n• Respostas rápidas usadas: ${metrics.quickRepliesUsed}\n• Mistral AI: ${aiStatus}\n• Plano: ${planType}\n• Mensagens restantes: ${usage.remaining}\n\nContinue usando a Yume para descobrir mais funcionalidades!`, 'assistant', 'fallback');
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "stats_clicked");
-                }
-            });
-
-            document.getElementById('profileBtn').addEventListener('click', function() {
-                menuOverlay.classList.remove('active');
+            function loadProfileData() {
                 if (currentUser) {
-                    const planType = usageSystem.isPremium() ? 'Premium' : 'Gratuito';
-                    addMessage(`👤 **Seu Perfil:**\n\n• Nome: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Faixa etária: ${currentUser.age}\n• Plano: ${planType}\n\nPara alterar suas informações, entre em contato com o suporte.`, 'assistant', 'fallback');
-                }
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "profile_clicked");
-                }
-            });
-        }
-
-        // ==================== FUNÇÕES AUXILIARES ====================
-
-        function setupQuickReplies() {
-            const quickReplies = [
-                "O que você pode fazer?",
-                "Preciso de ajuda",
-                "Conte uma piada",
-                "Qual é o seu nome?",
-                "Obrigado"
-            ];
-
-            sessionStorage.setItem('yumeQuickReplies', JSON.stringify(quickReplies));
-        }
-
-        function showQuickReplies() {
-            const quickReplies = JSON.parse(sessionStorage.getItem('yumeQuickReplies') || '[]');
-            quickReplyArea.innerHTML = '';
-
-            quickReplies.forEach(reply => {
-                const button = document.createElement('button');
-                button.className = 'quick-reply';
-                button.textContent = reply;
-                button.addEventListener('click', async function() {
-                    addMessage(reply, 'user');
-                    feedbackSystem.incrementQuickReplies();
-
-                    try {
-                        const { response, source } = await generateYumeResponse(reply);
-                        addMessage(response, 'assistant', source);
-                    } catch (error) {
-                        console.error('Erro ao gerar resposta:', error);
-                        addMessage('Desculpe, tive um problema. Pode tentar novamente?', 'assistant', 'error');
-                    }
-                });
-                quickReplyArea.appendChild(button);
-            });
-        }
-
-        function showAuthScreen() {
-            authScreen.classList.remove('hidden');
-            chatScreen.classList.add('hidden');
-            upgradeScreen.classList.add('hidden');
-
-            loginForm.reset();
-            registerForm.reset();
-            registerForm.classList.add('hidden');
-            loginForm.classList.remove('hidden');
-
-            feedbackSystem = new FeedbackSystem();
-            usageSystem = new UsageSystem();
-        }
-
-        function showChatScreen() {
-            authScreen.classList.add('hidden');
-            chatScreen.classList.remove('hidden');
-            upgradeScreen.classList.add('hidden');
-
-            if (currentUser) {
-                greetingName.textContent = currentUser.name;
-                userAvatar.innerHTML = `<i class="fas fa-user"></i>`;
-
-                if (chatMessages.children.length === 0) {
-                    assistantUI.classList.remove('hidden');
-                    showQuickReplies();
+                    profileName.textContent = currentUser.name;
+                    profileEmail.textContent = currentUser.email;
+                    profileUsername.value = currentUser.username || '';
+                    profileBio.value = currentUser.bio || '';
+                    
+                    // Carregar preferências
+                    loadPreferences();
+                    
+                    // Atualizar avatar
+                    updateProfileAvatar();
                 }
             }
-        }
 
-        function showUpgradeScreen() {
-            authScreen.classList.add('hidden');
-            chatScreen.classList.add('hidden');
-            upgradeScreen.classList.remove('hidden');
-        }
-
-        function activatePremium() {
-            usageSystem.setPremium();
-            sessionStorage.setItem('yumePremium', 'true');
-            updatePremiumUI();
-            showChatScreen();
-            showToast('🎉 Parabéns! Agora você é usuário Premium!', 'success');
-            
-            // Track no Clarity
-            if (window.clarity) {
-                window.clarity("event", "premium_activated_success");
-            }
-        }
-
-        function startVoiceRecognition() {
-            if (recognition) {
-                recognition.start();
-                toggleMic(true);
-                feedbackSystem.incrementVoiceInteractions();
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "voice_recognition_started");
-                }
-            }
-        }
-
-        function stopVoiceRecognition() {
-            if (recognition) {
-                recognition.stop();
-                toggleMic(false);
-            }
-        }
-
-        function toggleMic(listening) {
-            isListening = listening;
-            if (listening) {
-                micBtn.innerHTML = '<i class="fas fa-stop"></i>';
-                micBtn.style.backgroundColor = 'var(--error-color)';
-                micBtn.style.color = 'white';
-            } else {
-                micBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-                micBtn.style.backgroundColor = '';
-                micBtn.style.color = '';
-            }
-        }
-
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'pt-BR';
-                utterance.rate = 1.0;
-                utterance.pitch = 1.0;
-                speechSynthesis.speak(utterance);
-                
-                // Track no Clarity
-                if (window.clarity) {
-                    window.clarity("event", "text_to_speech", {
-                        length: text.length
+            function loadPreferences() {
+                preferencesList.innerHTML = '';
+                availablePreferences.forEach(pref => {
+                    const isActive = currentUser.preferences && currentUser.preferences.includes(pref);
+                    const tag = document.createElement('div');
+                    tag.className = `preference-tag ${isActive ? 'active' : ''}`;
+                    tag.textContent = pref;
+                    tag.dataset.value = pref;
+                    tag.addEventListener('click', function() {
+                        this.classList.toggle('active');
                     });
+                    preferencesList.appendChild(tag);
+                });
+            }
+
+            function saveProfile() {
+                if (currentUser) {
+                    // Atualizar dados do usuário
+                    currentUser.username = profileUsername.value;
+                    currentUser.bio = profileBio.value;
+                    
+                    // Salvar preferências selecionadas
+                    const selectedPrefs = Array.from(preferencesList.querySelectorAll('.preference-tag.active'))
+                        .map(tag => tag.dataset.value);
+                    currentUser.preferences = selectedPrefs;
+                    
+                    // Salvar no localStorage
+                    localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                    
+                    // Enviar dados atualizados para o Clarity
+                    if (window.clarity) {
+                        window.clarity("set", "user_preferences", selectedPrefs);
+                        window.clarity("set", "username", currentUser.username);
+                        window.clarity("set", "user_bio", currentUser.bio);
+                    }
+                    
+                    showToast('Perfil atualizado com sucesso!');
+                    closeProfileModal();
+                    updateUserAvatar();
                 }
             }
-        }
 
-        function showToast(message, type = 'info') {
-            toast.textContent = message;
-            toast.className = 'toast-notification';
-
-            if (type === 'error') {
-                toast.style.backgroundColor = 'var(--error-color)';
-            } else if (type === 'success') {
-                toast.style.backgroundColor = 'var(--success-color)';
+            function changeAvatar() {
+                // Simular seleção de avatar (em uma implementação real, isso permitiria upload de imagem)
+                const avatars = ['default', 'male', 'female', 'robot', 'cat'];
+                const currentIndex = avatars.indexOf(currentUser.avatar || 'default');
+                const nextIndex = (currentIndex + 1) % avatars.length;
+                currentUser.avatar = avatars[nextIndex];
+                
+                // Salvar no localStorage
+                localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                
+                // Atualizar exibição
+                updateProfileAvatar();
+                updateUserAvatar();
+                
+                // Enviar para o Clarity
+                if (window.clarity) {
+                    window.clarity("set", "avatar", currentUser.avatar);
+                }
+                
+                showToast('Avatar alterado!');
             }
 
-            toast.classList.add('show');
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        function showLoading(show) {
-            if (show) {
-                loadingOverlay.classList.remove('hidden');
-            } else {
-                loadingOverlay.classList.add('hidden');
+            function updateProfileAvatar() {
+                const avatar = currentUser.avatar || 'default';
+                profileAvatar.innerHTML = '';
+                
+                if (avatar === 'default') {
+                    profileAvatar.innerHTML = '<i class="fas fa-user"></i>';
+                } else if (avatar === 'male') {
+                    profileAvatar.innerHTML = '<i class="fas fa-male"></i>';
+                } else if (avatar === 'female') {
+                    profileAvatar.innerHTML = '<i class="fas fa-female"></i>';
+                } else if (avatar === 'robot') {
+                    profileAvatar.innerHTML = '<i class="fas fa-robot"></i>';
+                } else if (avatar === 'cat') {
+                    profileAvatar.innerHTML = '<i class="fas fa-cat"></i>';
+                }
+                
+                profileAvatar.innerHTML += '<div class="avatar-edit"><i class="fas fa-camera"></i></div>';
             }
-        }
+
+            function updateUserAvatar() {
+                const avatar = currentUser.avatar || 'default';
+                userAvatar.innerHTML = '';
+                
+                if (avatar === 'default') {
+                    userAvatar.innerHTML = '<i class="fas fa-user"></i>';
+                } else if (avatar === 'male') {
+                    userAvatar.innerHTML = '<i class="fas fa-male"></i>';
+                } else if (avatar === 'female') {
+                    userAvatar.innerHTML = '<i class="fas fa-female"></i>';
+                } else if (avatar === 'robot') {
+                    userAvatar.innerHTML = '<i class="fas fa-robot"></i>';
+                } else if (avatar === 'cat') {
+                    userAvatar.innerHTML = '<i class="fas fa-cat"></i>';
+                }
+            }
+
+            // Navegação entre telas
+            function showAuthScreen() {
+                authScreen.classList.remove('hidden');
+                chatScreen.classList.add('hidden');
+                upgradeScreen.classList.add('hidden');
+            }
+
+            function showChatScreen() {
+                authScreen.classList.add('hidden');
+                chatScreen.classList.remove('hidden');
+                upgradeScreen.classList.add('hidden');
+                
+                if (currentUser) {
+                    document.getElementById('greetingName').textContent = currentUser.name;
+                }
+            }
+
+            function showUpgradeScreen() {
+                authScreen.classList.add('hidden');
+                chatScreen.classList.add('hidden');
+                upgradeScreen.classList.remove('hidden');
+                menuOverlay.classList.remove('active');
+            }
+
+            // Toast notification
+            function showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+
+            // Quick replies
+            setupQuickReplies();
+            
+            function setupQuickReplies() {
+                const quickReplies = [
+                    "Como você funciona?",
+                    "Preciso de ajuda",
+                    "O que você pode fazer?",
+                    "Conte uma curiosidade"
+                ];
+                
+                const quickReplyArea = document.getElementById('quickReplyArea');
+                quickReplies.forEach(reply => {
+                    const button = document.createElement('button');
+                    button.className = 'quick-reply';
+                    button.textContent = reply;
+                    button.addEventListener('click', function() {
+                        chatInput.value = reply;
+                        sendMessage();
+                    });
+                    quickReplyArea.appendChild(button);
+                });
+            }
+        });
     </script>
 </body>
 </html>
