@@ -6,6 +6,7 @@
     <title>Yume - Assistente Virtual IA</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
@@ -25,42 +26,47 @@
         }
 
         :root {
-            --primary-color: #10a37f;
-            --primary-light: #1abc9c;
-            --primary-dark: #0d8c6c;
-            --user-message-bg: #10a37f;
-            --assistant-message-bg: #f7f7f8;
-            --background-light: #ffffff;
-            --background-dark: #343541;
-            --surface-light: #ffffff;
-            --surface-dark: #444654;
-            --text-light: #374151;
-            --text-dark: #ececf1;
-            --text-muted: #6b7280;
-            --border-light: #e5e5e5;
-            --border-dark: #565869;
-            --success-color: #10a37f;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --premium-color: #f59e0b;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --border-radius: 8px;
-            --border-radius-lg: 12px;
-            --transition: all 0.2s ease;
+            --primary-color: #8B5CF6;
+            --primary-light: #A78BFA;
+            --primary-dark: #7C3AED;
+            --secondary-color: #F59E0B;
+            --accent-color: #EC4899;
+            --user-message-bg: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+            --assistant-message-bg: #F8FAFC;
+            --background-light: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+            --background-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            --surface-light: #FFFFFF;
+            --surface-dark: #334155;
+            --text-light: #1E293B;
+            --text-dark: #F1F5F9;
+            --text-muted: #64748B;
+            --border-light: #E2E8F0;
+            --border-dark: #475569;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+            --premium-color: #F59E0B;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --border-radius-xl: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--background-light);
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background-light);
             color: var(--text-light);
-            line-height: 1.5;
+            line-height: 1.6;
             transition: var(--transition);
             min-height: 100vh;
+            overflow: hidden;
         }
 
         body.dark-mode {
-            background-color: var(--background-dark);
+            background: var(--background-dark);
             color: var(--text-dark);
         }
 
@@ -99,17 +105,27 @@
 
         .auth-container {
             background: var(--surface-light);
-            border: 1px solid var(--border-light);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow);
-            padding: 32px;
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
             width: 100%;
-            max-width: 400px;
+            max-width: 440px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
         }
 
         .dark-mode .auth-container {
             background: var(--surface-dark);
-            border: 1px solid var(--border-dark);
             box-shadow: var(--shadow-dark);
         }
 
@@ -119,23 +135,29 @@
         }
 
         .auth-logo {
-            width: 64px;
-            height: 64px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 16px;
             border-radius: 50%;
             object-fit: cover;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
         }
 
         .auth-title {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 28px;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .auth-subtitle {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-muted);
+            font-weight: 400;
         }
 
         .auth-form {
@@ -144,32 +166,44 @@
         }
 
         .form-title {
-            font-size: 20px;
+            font-size: 22px;
             margin-bottom: 24px;
             text-align: center;
             font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .dark-mode .form-title {
+            color: var(--text-dark);
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
         }
 
         .form-group label {
             font-size: 14px;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .dark-mode .form-group label {
+            color: var(--text-dark);
         }
 
         .form-group input,
         .form-group select {
-            padding: 12px 16px;
+            padding: 14px 16px;
             border: 1px solid var(--border-light);
             border-radius: var(--border-radius);
-            font-size: 14px;
+            font-size: 15px;
             background: var(--surface-light);
             color: var(--text-light);
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
         }
 
         .dark-mode .form-group input,
@@ -183,33 +217,55 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
 
         .auth-btn {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            padding: 12px 16px;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            font-family: 'Poppins', sans-serif;
         }
 
         .auth-btn:hover {
-            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
         }
 
         .auth-switch {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
             font-size: 14px;
             color: var(--text-muted);
         }
 
         .auth-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+
+        .terms-checkbox input {
+            margin-top: 3px;
+        }
+
+        .terms-checkbox a {
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
@@ -231,122 +287,146 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px;
+            padding: 16px 24px;
             background: var(--surface-light);
             border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .chat-header {
             background: var(--surface-dark);
             border-bottom-color: var(--border-dark);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .header-user-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
         }
 
         .user-avatar {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
             transition: var(--transition);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .user-avatar:hover {
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .upgrade-card {
-            padding: 6px 12px;
-            background: var(--premium-color);
-            border-radius: 12px;
-            font-size: 11px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, var(--secondary-color), #EAB308);
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            color: #000;
+            color: #1E293B;
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
         }
 
         .upgrade-card:hover {
-            transform: scale(1.05);
-            background: #eab308;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
         }
 
         .header-title-group {
             display: flex;
             align-items: center;
+            gap: 12px;
         }
 
         .header-logo {
-            width: 24px;
-            height: 24px;
-            margin-right: 8px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
+            border: 2px solid var(--primary-color);
         }
 
         .header-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .chat-body {
             flex: 1;
             overflow-y: auto;
-            padding: 16px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
+            background: var(--background-light);
+        }
+
+        .dark-mode .chat-body {
+            background: var(--background-dark);
         }
 
         .assistant-ui {
             text-align: center;
-            padding: 48px 16px;
+            padding: 60px 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            flex: 1;
         }
 
         .greeting-text {
-            font-size: 24px;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .help-text {
-            font-size: 14px;
+            font-size: 16px;
             color: var(--text-muted);
-            margin-bottom: 24px;
+            margin-bottom: 32px;
+            max-width: 500px;
         }
 
         .chat-messages {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 20px;
         }
 
         .message {
-            max-width: 85%;
-            padding: 16px 20px;
+            max-width: 80%;
+            padding: 18px 22px;
             border-radius: var(--border-radius-lg);
-            animation: messageSlide 0.3s ease;
-            line-height: 1.5;
+            animation: messageSlide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            line-height: 1.6;
             white-space: pre-line;
+            position: relative;
+            box-shadow: var(--shadow);
         }
 
         @keyframes messageSlide {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -358,6 +438,7 @@
             align-self: flex-end;
             background: var(--user-message-bg);
             color: white;
+            border-bottom-right-radius: 4px;
         }
 
         .assistant-message {
@@ -365,6 +446,7 @@
             background: var(--assistant-message-bg);
             color: var(--text-light);
             border: 1px solid var(--border-light);
+            border-bottom-left-radius: 4px;
         }
 
         .dark-mode .assistant-message {
@@ -373,10 +455,26 @@
             border-color: var(--border-dark);
         }
 
-        .quick-reply-area {
-            padding: 16px;
+        .file-attachment {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
             display: flex;
-            gap: 8px;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .file-attachment i {
+            font-size: 18px;
+        }
+
+        .quick-reply-area {
+            padding: 20px 24px;
+            display: flex;
+            gap: 12px;
             overflow-x: auto;
             border-top: 1px solid var(--border-light);
             background: var(--surface-light);
@@ -388,15 +486,16 @@
         }
 
         .quick-reply {
-            padding: 8px 12px;
+            padding: 10px 18px;
             background: var(--surface-light);
             border: 1px solid var(--border-light);
-            border-radius: 16px;
-            font-size: 12px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 500;
             white-space: nowrap;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .quick-reply {
@@ -408,12 +507,14 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
         }
 
         .chat-input-area {
             display: flex;
-            padding: 16px;
-            gap: 12px;
+            padding: 20px 24px;
+            gap: 16px;
             align-items: center;
             background: var(--surface-light);
             border-top: 1px solid var(--border-light);
@@ -429,9 +530,11 @@
             display: flex;
             align-items: center;
             background: var(--surface-light);
-            border-radius: 20px;
-            padding: 0 16px;
+            border-radius: var(--border-radius-xl);
+            padding: 0 20px;
             border: 1px solid var(--border-light);
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .input-wrapper {
@@ -439,37 +542,86 @@
             border-color: var(--border-dark);
         }
 
+        .input-wrapper:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
         .chat-input {
             flex: 1;
             border: none;
             background: none;
-            padding: 12px 0;
-            font-size: 14px;
+            padding: 16px 0;
+            font-size: 15px;
             outline: none;
             color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
         }
 
         .dark-mode .chat-input {
             color: var(--text-dark);
         }
 
+        .voice-btn, .file-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-btn:hover, .file-btn:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .dark-mode .voice-btn:hover, .dark-mode .file-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .voice-btn.listening {
+            color: var(--error-color);
+            animation: pulse 1.5s infinite;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         #sendButton {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        #sendButton:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
         }
 
         .footer {
             text-align: center;
-            padding: 12px;
-            font-size: 11px;
+            padding: 16px;
+            font-size: 12px;
             color: var(--text-muted);
             background: var(--surface-light);
             border-top: 1px solid var(--border-light);
@@ -495,6 +647,7 @@
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
+            backdrop-filter: blur(5px);
         }
 
         .modal-overlay.active {
@@ -504,13 +657,14 @@
 
         .modal-content {
             background: var(--surface-light);
-            border-radius: var(--border-radius-lg);
+            border-radius: var(--border-radius-xl);
             width: 90%;
-            max-width: 500px;
+            max-width: 520px;
             max-height: 80vh;
             overflow-y: auto;
-            transform: translateY(20px);
+            transform: translateY(30px) scale(0.95);
             transition: var(--transition);
+            box-shadow: var(--shadow-lg);
         }
 
         .dark-mode .modal-content {
@@ -518,30 +672,56 @@
         }
 
         .modal-overlay.active .modal-content {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
 
         .menu-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px;
+            padding: 20px 24px;
             border-bottom: 1px solid var(--border-light);
+        }
+
+        .menu-header h3 {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .close-btn {
             background: none;
             border: none;
-            font-size: 16px;
+            font-size: 18px;
             cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
             color: var(--text-light);
+        }
+
+        .dark-mode .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
         }
 
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 16px;
+            gap: 16px;
+            padding: 24px;
         }
 
         .menu-card {
@@ -549,7 +729,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 16px 12px;
+            padding: 20px 16px;
             background: var(--surface-light);
             border-radius: var(--border-radius);
             border: 1px solid var(--border-light);
@@ -557,41 +737,131 @@
             transition: var(--transition);
             text-decoration: none;
             color: inherit;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .menu-card:hover {
             background: var(--primary-color);
             color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
+            border-color: var(--primary-color);
         }
 
         .menu-card i {
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 24px;
+            margin-bottom: 12px;
         }
 
         .logout-btn {
             grid-column: 1 / -1;
             background: rgba(239, 68, 68, 0.1);
             color: var(--error-color);
+            border-color: rgba(239, 68, 68, 0.2);
         }
 
         .logout-btn:hover {
             background: var(--error-color);
             color: white;
+            border-color: var(--error-color);
+        }
+
+        /* Modal de perfil customizado */
+        .profile-section {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .profile-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+
+        .dark-mode .profile-section h4 {
+            color: var(--text-dark);
+        }
+
+        .profile-avatar-options {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .avatar-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .preferences-section {
+            padding: 20px 24px;
+        }
+
+        .preference-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .preference-tag {
+            padding: 8px 16px;
+            background: var(--surface-light);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .dark-mode .preference-tag {
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        .preference-tag.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
         }
 
         .toast-notification {
             position: fixed;
-            bottom: 16px;
+            bottom: 24px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: var(--surface-dark);
             color: var(--text-dark);
-            padding: 12px 16px;
+            padding: 14px 20px;
             border-radius: var(--border-radius);
             z-index: 1000;
             opacity: 0;
             transition: var(--transition);
+            box-shadow: var(--shadow-lg);
+            font-weight: 500;
+            max-width: 90%;
+            text-align: center;
         }
 
         .toast-notification.show {
@@ -605,23 +875,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             color: white;
+            backdrop-filter: blur(5px);
         }
 
         .loading-spinner {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border: 3px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: var(--primary-color);
             animation: spin 1s linear infinite;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         @keyframes spin {
@@ -630,12 +901,46 @@
 
         @media (max-width: 768px) {
             .auth-container {
-                padding: 24px 16px;
+                padding: 32px 20px;
                 margin: 16px;
             }
             .message {
                 max-width: 90%;
             }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .chat-header {
+                padding: 12px 16px;
+            }
+            .chat-body {
+                padding: 16px;
+            }
+            .chat-input-area {
+                padding: 16px;
+            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 10px;
+        }
+
+        .dark-mode ::-webkit-scrollbar-thumb {
+            background: var(--border-dark);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
         }
     </style>
 </head>
@@ -647,7 +952,7 @@
                 <div class="auth-header">
                     <img src="https://i.imgur.com/orvGJOL.png" alt="Yume Logo" class="auth-logo">
                     <h1 class="auth-title">Yume 🌸</h1>
-                    <p class="auth-subtitle">Powered by ORPHEO Platforms 🌙</p>
+                    <p class="auth-subtitle">Sua assistente virtual inteligente</p>
                 </div>
 
                 <form class="auth-form" id="loginForm">
@@ -680,6 +985,12 @@
                         <label for="registerPassword">Senha</label>
                         <input type="password" id="registerPassword" required placeholder="Mínimo 8 caracteres">
                     </div>
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="acceptTerms" required>
+                        <label for="acceptTerms">
+                            Concordo com os <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Termos de Uso</a> e <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Política de Privacidade</a>
+                        </label>
+                    </div>
                     <button type="submit" class="auth-btn">Começar Agora</button>
                     <p class="auth-switch">
                         Já tem conta? <a href="#" id="showLogin">Fazer login</a>
@@ -706,7 +1017,7 @@
             <div class="chat-body">
                 <div class="assistant-ui" id="assistantUI">
                     <p class="greeting-text">Olá! Sou a Yume🌸 👋</p>
-                    <p class="help-text">Como posso ajudar você hoje?</p>
+                    <p class="help-text">Sua assistente virtual inteligente. Posso ajudar com respostas, recomendações, conversas e muito mais!</p>
                 </div>
                 <div class="chat-messages" id="chatMessages"></div>
             </div>
@@ -719,10 +1030,17 @@
             </div>
 
             <form class="chat-input-area" id="inputArea">
+                <button type="button" class="file-btn" id="fileButton" title="Enviar arquivo">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <input type="file" id="fileInput" style="display: none;" accept="image/*,audio/*,.pdf,.doc,.docx,.txt">
                 <div class="input-wrapper">
                     <input type="text" class="chat-input" id="userInput" 
                            placeholder="Envie uma mensagem..." autocomplete="off">
                 </div>
+                <button type="button" class="voice-btn" id="voiceButton" title="Falar">
+                    <i class="fas fa-microphone"></i>
+                </button>
                 <button type="submit" class="icon-btn" id="sendButton">
                     <i class="fas fa-paper-plane"></i>
                 </button>
@@ -741,6 +1059,44 @@
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
+                
+                <!-- Seção de Customização do Perfil -->
+                <div class="profile-section">
+                    <h4>Personalizar Avatar</h4>
+                    <div class="profile-avatar-options">
+                        <div class="avatar-option selected" data-avatar="default" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar1" style="background: linear-gradient(135deg, #F59E0B, #EAB308);">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar2" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar3" style="background: linear-gradient(135deg, #10B981, #059669);">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Seção de Preferências -->
+                <div class="preferences-section">
+                    <h4>Minhas Preferências</h4>
+                    <p style="font-size: 14px; margin-bottom: 16px; color: var(--text-muted);">
+                        Selecione seus interesses para que a Yume possa personalizar suas respostas:
+                    </p>
+                    <div class="preference-tags">
+                        <div class="preference-tag" data-pref="anime">Anime</div>
+                        <div class="preference-tag" data-pref="manga">Mangá</div>
+                        <div class="preference-tag" data-pref="tecnologia">Tecnologia</div>
+                        <div class="preference-tag" data-pref="livros">Livros</div>
+                        <div class="preference-tag" data-pref="musica">Música</div>
+                        <div class="preference-tag" data-pref="filmes">Filmes</div>
+                        <div class="preference-tag" data-pref="jogos">Jogos</div>
+                        <div class="preference-tag" data-pref="culinaria">Culinária</div>
+                    </div>
+                </div>
+                
                 <div class="menu-grid">
                     <button class="menu-card" id="helpBtn">
                         <i class="fas fa-question-circle"></i>
@@ -754,10 +1110,18 @@
                         <i class="fas fa-chart-bar"></i>
                         <span>Estatísticas</span>
                     </button>
-                    <button class="menu-card" id="clearCacheBtn">
-                        <i class="fas fa-trash"></i>
-                        <span>Limpar Cache</span>
+                    <button class="menu-card" id="termsBtn">
+                        <i class="fas fa-file-contract"></i>
+                        <span>Termos</span>
                     </button>
+                    <button class="menu-card" id="projectsBtn">
+                        <i class="fas fa-rocket"></i>
+                        <span>Mais Projetos</span>
+                    </button>
+                    <a href="https://naotodev1.github.io/orpheostudio" target="_blank" class="menu-card">
+                        <i class="fas fa-globe"></i>
+                        <span>Site Oficial</span>
+                    </a>
                     <button class="menu-card premium" id="upgradeBtn">
                         <i class="fas fa-crown"></i>
                         <span>Doar 🩷</span>
@@ -775,6 +1139,35 @@
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Sair</span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Mais Projetos -->
+        <div class="modal-overlay" id="projectsModal">
+            <div class="modal-content">
+                <div class="menu-header">
+                    <h3>Mais Projetos</h3>
+                    <button class="close-btn" id="closeProjects">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="menu-grid">
+                    <a href="https://www.instagram.com/yumerolloficial" target="_blank" class="menu-card">
+                        <i class="fab fa-instagram"></i>
+                        <span>YumeRoll Animes</span>
+                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Instagram</small>
+                    </a>
+                    <a href="https://www.tiktok.com/@yumerollanime" target="_blank" class="menu-card">
+                        <i class="fab fa-tiktok"></i>
+                        <span>YumeRoll Animes</span>
+                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">TikTok</small>
+                    </a>
+                    <a href="https://www.instagram.com/kaoruwriter" target="_blank" class="menu-card">
+                        <i class="fab fa-instagram"></i>
+                        <span>Café e Páginas</span>
+                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Clube do Livro</small>
+                    </a>
                 </div>
             </div>
         </div>
@@ -807,22 +1200,71 @@
             const inputArea = document.getElementById('inputArea');
             const userAvatar = document.getElementById('userAvatar');
             const profileModal = document.getElementById('profileModal');
+            const projectsModal = document.getElementById('projectsModal');
             const closeProfile = document.getElementById('closeProfile');
+            const closeProjects = document.getElementById('closeProjects');
             const upgradeCard = document.getElementById('upgradeCard');
             const logoutBtn = document.getElementById('logoutBtn');
             const toast = document.getElementById('toast');
             const loadingOverlay = document.getElementById('loadingOverlay');
             const assistantUI = document.getElementById('assistantUI');
+            const voiceButton = document.getElementById('voiceButton');
+            const fileButton = document.getElementById('fileButton');
+            const fileInput = document.getElementById('fileInput');
 
             // Estado da aplicação
             let currentUser = null;
             let messageCount = 0;
+            let userPreferences = [];
+            let recognition = null;
+            let isListening = false;
 
             // Verificar se há usuário logado
             const savedUser = localStorage.getItem('yumeUser');
+            const savedPreferences = localStorage.getItem('yumePreferences');
+            const savedAvatar = localStorage.getItem('yumeAvatar');
+            
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
+                if (savedPreferences) userPreferences = JSON.parse(savedPreferences);
                 showChatScreen();
+                updateUserAvatar(savedAvatar || 'default');
+            }
+
+            // Inicializar reconhecimento de voz se disponível
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'pt-BR';
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    voiceButton.classList.add('listening');
+                    showToast('Ouvindo...');
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    chatInput.value = transcript;
+                    isListening = false;
+                    voiceButton.classList.remove('listening');
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Erro no reconhecimento de voz:', event.error);
+                    isListening = false;
+                    voiceButton.classList.remove('listening');
+                    showToast('Erro no reconhecimento de voz');
+                };
+
+                recognition.onend = function() {
+                    isListening = false;
+                    voiceButton.classList.remove('listening');
+                };
+            } else {
+                voiceButton.style.display = 'none';
             }
 
             // Event Listeners de Navegação
@@ -862,8 +1304,9 @@
                 const name = document.getElementById('registerName').value;
                 const email = document.getElementById('registerEmail').value;
                 const password = document.getElementById('registerPassword').value;
+                const acceptTerms = document.getElementById('acceptTerms').checked;
 
-                if (name && email && password) {
+                if (name && email && password && acceptTerms) {
                     const user = {
                         name: name,
                         email: email
@@ -871,7 +1314,9 @@
                     currentUser = user;
                     localStorage.setItem('yumeUser', JSON.stringify(user));
                     showChatScreen();
-                    showToast('Conta criada com sucesso!');
+                    showToast('Conta criada com sucesso! 🌸');
+                } else if (!acceptTerms) {
+                    showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
                 }
             });
 
@@ -879,6 +1324,27 @@
             inputArea.addEventListener('submit', function(e) {
                 e.preventDefault();
                 sendMessage();
+            });
+
+            // Reconhecimento de voz
+            voiceButton.addEventListener('click', function() {
+                if (!isListening && recognition) {
+                    recognition.start();
+                } else if (isListening) {
+                    recognition.stop();
+                }
+            });
+
+            // Upload de arquivos
+            fileButton.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    handleFileUpload(file);
+                }
             });
 
             // Quick Replies
@@ -889,6 +1355,89 @@
                     sendMessage();
                 });
             });
+
+            // Personalização do perfil
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.avatar-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    const avatarType = this.getAttribute('data-avatar');
+                    updateUserAvatar(avatarType);
+                    localStorage.setItem('yumeAvatar', avatarType);
+                    showToast('Avatar atualizado! ✨');
+                });
+            });
+
+            // Preferências do usuário
+            document.querySelectorAll('.preference-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    const preference = this.getAttribute('data-pref');
+                    
+                    if (this.classList.contains('selected')) {
+                        if (!userPreferences.includes(preference)) {
+                            userPreferences.push(preference);
+                        }
+                    } else {
+                        userPreferences = userPreferences.filter(p => p !== preference);
+                    }
+                    
+                    localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
+                    showToast('Preferências atualizadas! 🌟');
+                });
+            });
+
+            // Função para atualizar avatar do usuário
+            function updateUserAvatar(avatarType) {
+                const avatarColors = {
+                    'default': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
+                    'avatar1': 'linear-gradient(135deg, #F59E0B, #EAB308)',
+                    'avatar2': 'linear-gradient(135deg, #EC4899, #DB2777)',
+                    'avatar3': 'linear-gradient(135deg, #10B981, #059669)'
+                };
+                
+                const avatarIcons = {
+                    'default': 'fa-user',
+                    'avatar1': 'fa-smile',
+                    'avatar2': 'fa-star',
+                    'avatar3': 'fa-heart'
+                };
+                
+                userAvatar.style.background = avatarColors[avatarType] || 'linear-gradient(135deg, #8B5CF6, #7C3AED)';
+                userAvatar.innerHTML = `<i class="fas ${avatarIcons[avatarType] || 'fa-user'}"></i>`;
+            }
+
+            // Função para lidar com upload de arquivos
+            function handleFileUpload(file) {
+                const fileType = file.type.split('/')[0];
+                let message = '';
+                
+                if (fileType === 'image') {
+                    message = `Enviei uma imagem: ${file.name}`;
+                } else if (fileType === 'audio') {
+                    message = `Enviei um arquivo de áudio: ${file.name}`;
+                } else {
+                    message = `Enviei um documento: ${file.name}`;
+                }
+                
+                addMessage(message, 'user', file);
+                
+                // Simular resposta da Yume
+                setTimeout(() => {
+                    let response = '';
+                    if (fileType === 'image') {
+                        response = "Que imagem interessante! Obrigada por compartilhar. Posso ajudar com algo relacionado a esta imagem?";
+                    } else if (fileType === 'audio') {
+                        response = "Obrigada pelo arquivo de áudio! Infelizmente não posso reproduzi-lo agora, mas posso ajudar com informações sobre música ou áudio.";
+                    } else {
+                        response = "Documento recebido! Posso ajudar a analisar o conteúdo ou responder perguntas sobre ele.";
+                    }
+                    
+                    addMessage(response, 'assistant');
+                }, 1000);
+            }
 
             // Função principal de envio de mensagens
             async function sendMessage() {
@@ -953,10 +1502,39 @@
             }
 
             // Função para adicionar mensagens ao chat
-            function addMessage(text, sender) {
+            function addMessage(text, sender, file = null) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}-message`;
-                messageDiv.textContent = text;
+                
+                if (file) {
+                    const fileType = file.type.split('/')[0];
+                    let fileIcon = 'fa-file';
+                    
+                    if (fileType === 'image') fileIcon = 'fa-image';
+                    else if (fileType === 'audio') fileIcon = 'fa-music';
+                    
+                    messageDiv.innerHTML = `
+                        <div>${text}</div>
+                        <div class="file-attachment">
+                            <i class="fas ${fileIcon}"></i>
+                            <span>${file.name}</span>
+                        </div>
+                    `;
+                } else {
+                    messageDiv.textContent = text;
+                    
+                    // Sintetizar voz para respostas da Yume
+                    if (sender === 'assistant' && 'speechSynthesis' in window) {
+                        setTimeout(() => {
+                            const utterance = new SpeechSynthesisUtterance(text);
+                            utterance.lang = 'pt-BR';
+                            utterance.rate = 1.0;
+                            utterance.pitch = 1.0;
+                            speechSynthesis.speak(utterance);
+                        }, 500);
+                    }
+                }
+                
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 messageCount++;
@@ -965,9 +1543,10 @@
             // Menu e Perfil - TOTALMENTE FUNCIONAL
             userAvatar.addEventListener('click', () => profileModal.classList.add('active'));
             closeProfile.addEventListener('click', () => profileModal.classList.remove('active'));
+            closeProjects.addEventListener('click', () => projectsModal.classList.remove('active'));
             upgradeCard.addEventListener('click', () => {
                 showToast('Redirecionando para doação...');
-                addMessage("Doando para o projeto você ajuda:\n\n• Manter o projeto vivo\n• Atualizações com novas funções\n• Suporte 24/7\n• Recursos avançados\n\nEntre em contato para fazer sua doação e saber mais:\n\nE-mail: sac.studiotsukiyo@outlook.com", 'assistant');
+                addMessage("Doando para o projeto você ajuda:\n\n• Manter o projeto vivo\n• Atualizações com novas funções\n• Suporte 24/7\n• Recursos avançados\n\nEntre em contato para fazer sua doação e saber mais:\n\nE-mail: sac.studiotsukiyo@outlook.com!", 'assistant');
             });
 
             // Botões do menu FUNCIONAIS
@@ -985,13 +1564,26 @@
 
             document.getElementById('statsBtn').addEventListener('click', () => {
                 showToast('Estatísticas do usuário');
-                addMessage(`Aqui estão suas estatísticas:\n\n• Usuário: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Mensagens trocadas: ${messageCount}\n• Status: Ativo`, 'assistant');
+                addMessage(`Aqui estão suas estatísticas:\n\n• Usuário: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Mensagens trocadas: ${messageCount}\n• Preferências: ${userPreferences.join(', ') || 'Nenhuma'}\n• Status: Ativo`, 'assistant');
                 profileModal.classList.remove('active');
+            });
+
+            document.getElementById('termsBtn').addEventListener('click', () => {
+                showToast('Abrindo Termos de Uso...');
+                addMessage("📜 Termos de Uso e Política de Privacidade\n\nPara visualizar nossos Termos de Uso completos e Política de Privacidade, acesse:\n\nhttps://naotodev1.github.io/terms-e-policy\n\nResumidamente, ao usar a Yume, você concorda com:\n• Coleta de dados de uso para melhorar o serviço\n• Armazenamento seguro de suas informações\n• Uso responsável da plataforma\n• Respeito às diretrizes da comunidade\n\nSe tiver dúvidas, entre em contato: sac.studiotsukiyo@outlook.com", 'assistant');
+                profileModal.classList.remove('active');
+            });
+
+            document.getElementById('projectsBtn').addEventListener('click', () => {
+                profileModal.classList.remove('active');
+                projectsModal.classList.add('active');
             });
 
             document.getElementById('clearCacheBtn').addEventListener('click', () => {
                 if (confirm('Tem certeza que deseja limpar o cache?')) {
                     localStorage.removeItem('yumeUser');
+                    localStorage.removeItem('yumePreferences');
+                    localStorage.removeItem('yumeAvatar');
                     showToast('Cache limpo com sucesso!');
                     profileModal.classList.remove('active');
                 }
@@ -1005,7 +1597,10 @@
 
             logoutBtn.addEventListener('click', function() {
                 currentUser = null;
+                userPreferences = [];
                 localStorage.removeItem('yumeUser');
+                localStorage.removeItem('yumePreferences');
+                localStorage.removeItem('yumeAvatar');
                 showAuthScreen();
                 showToast('Logout realizado');
                 profileModal.classList.remove('active');
@@ -1032,6 +1627,15 @@
                     assistantUI.classList.remove('hidden');
                 }
                 messageCount = 0;
+                
+                // Carregar preferências salvas
+                if (userPreferences.length > 0) {
+                    document.querySelectorAll('.preference-tag').forEach(tag => {
+                        if (userPreferences.includes(tag.getAttribute('data-pref'))) {
+                            tag.classList.add('selected');
+                        }
+                    });
+                }
             }
 
             function showLoading(show) {
@@ -1052,6 +1656,12 @@
             profileModal.addEventListener('click', function(e) {
                 if (e.target === profileModal) {
                     profileModal.classList.remove('active');
+                }
+            });
+            
+            projectsModal.addEventListener('click', function(e) {
+                if (e.target === projectsModal) {
+                    projectsModal.classList.remove('active');
                 }
             });
         });
