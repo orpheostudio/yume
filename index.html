@@ -24,6 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+        /* Reset e configurações básicas */
         * {
             margin: 0;
             padding: 0;
@@ -50,6 +51,7 @@
             --success-color: #10B981;
             --warning-color: #F59E0B;
             --error-color: #EF4444;
+            --premium-color: #F59E0B;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-dark: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -60,7 +62,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--background-light);
             color: var(--text-light);
             line-height: 1.6;
@@ -94,6 +96,7 @@
             display: none !important;
         }
 
+        /* Cookie Consent Banner */
         .cookie-banner {
             position: fixed;
             bottom: 0;
@@ -136,6 +139,10 @@
             font-weight: 500;
         }
 
+        .cookie-text a:hover {
+            text-decoration: underline;
+        }
+
         .cookie-buttons {
             display: flex;
             gap: 12px;
@@ -158,12 +165,43 @@
             color: white;
         }
 
+        .cookie-btn.accept:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
         .cookie-btn.reject {
             background: transparent;
             color: var(--text-dark);
             border: 1px solid var(--border-dark);
         }
 
+        .cookie-btn.reject:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* AdSense Container */
+        .adsense-container {
+            margin: 20px auto;
+            padding: 0 20px;
+            max-width: 1200px;
+        }
+
+        .adsense-unit {
+            background: var(--surface-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            margin: 10px 0;
+        }
+
+        .dark-mode .adsense-unit {
+            background: var(--surface-dark);
+            border-color: var(--border-dark);
+        }
+
+        /* Tela de autenticação */
         .auth-screen {
             display: flex;
             align-items: center;
@@ -214,6 +252,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 3px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
         }
 
         .auth-title {
@@ -229,6 +268,7 @@
         .auth-subtitle {
             font-size: 15px;
             color: var(--text-muted);
+            font-weight: 400;
         }
 
         .auth-form {
@@ -241,6 +281,11 @@
             margin-bottom: 24px;
             text-align: center;
             font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .dark-mode .form-title {
+            color: var(--text-dark);
         }
 
         .form-group {
@@ -253,9 +298,15 @@
             font-size: 14px;
             margin-bottom: 8px;
             font-weight: 500;
+            color: var(--text-light);
         }
 
-        .form-group input {
+        .dark-mode .form-group label {
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select {
             padding: 14px 16px;
             border: 1px solid var(--border-light);
             border-radius: var(--border-radius);
@@ -266,13 +317,15 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .dark-mode .form-group input {
+        .dark-mode .form-group input,
+        .dark-mode .form-group select {
             background: var(--surface-dark);
             border-color: var(--border-dark);
             color: var(--text-dark);
         }
 
-        .form-group input:focus {
+        .form-group input:focus,
+        .form-group select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
@@ -289,11 +342,13 @@
             cursor: pointer;
             transition: var(--transition);
             margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
             font-family: 'Poppins', sans-serif;
         }
 
         .auth-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
         }
 
         .auth-switch {
@@ -327,6 +382,7 @@
             font-weight: 500;
         }
 
+        /* Tela de chat */
         .chat-screen {
             display: flex;
             flex-direction: column;
@@ -345,11 +401,13 @@
             padding: 16px 24px;
             background: var(--surface-light);
             border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .chat-header {
             background: var(--surface-dark);
             border-bottom-color: var(--border-dark);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
         .header-user-info {
@@ -370,6 +428,14 @@
             font-size: 16px;
             cursor: pointer;
             transition: var(--transition);
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         .upgrade-card {
@@ -381,6 +447,12 @@
             cursor: pointer;
             transition: var(--transition);
             color: #1E293B;
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+        }
+
+        .upgrade-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(245, 158, 11, 0.4);
         }
 
         .header-title-group {
@@ -458,6 +530,7 @@
             animation: messageSlide 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             line-height: 1.6;
             white-space: pre-line;
+            position: relative;
             box-shadow: var(--shadow);
         }
 
@@ -476,6 +549,7 @@
             align-self: flex-end;
             background: var(--user-message-bg);
             color: white;
+            border-bottom-right-radius: 4px;
         }
 
         .assistant-message {
@@ -483,12 +557,29 @@
             background: var(--assistant-message-bg);
             color: var(--text-light);
             border: 1px solid var(--border-light);
+            border-bottom-left-radius: 4px;
         }
 
         .dark-mode .assistant-message {
             background: var(--surface-dark);
             color: var(--text-dark);
             border-color: var(--border-dark);
+        }
+
+        .file-attachment {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .file-attachment i {
+            font-size: 18px;
         }
 
         .quick-reply-area {
@@ -515,6 +606,7 @@
             white-space: nowrap;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .quick-reply {
@@ -526,6 +618,8 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
         }
 
         .chat-input-area {
@@ -551,11 +645,17 @@
             padding: 0 20px;
             border: 1px solid var(--border-light);
             transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .dark-mode .input-wrapper {
             background: var(--surface-dark);
             border-color: var(--border-dark);
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
         }
 
         .chat-input {
@@ -582,11 +682,31 @@
             padding: 10px;
             border-radius: 50%;
             transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .voice-btn:hover, .file-btn:hover {
             background: rgba(139, 92, 246, 0.1);
             color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .dark-mode .voice-btn:hover, .dark-mode .file-btn:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .voice-btn.listening {
+            color: var(--error-color);
+            animation: pulse 1.5s infinite;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         #sendButton {
@@ -601,6 +721,12 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        #sendButton:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
         }
 
         .footer {
@@ -617,6 +743,7 @@
             border-top-color: var(--border-dark);
         }
 
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -631,6 +758,7 @@
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
+            backdrop-filter: blur(5px);
         }
 
         .modal-overlay.active {
@@ -666,10 +794,6 @@
             border-bottom: 1px solid var(--border-light);
         }
 
-        .dark-mode .menu-header {
-            border-bottom-color: var(--border-dark);
-        }
-
         .menu-header h3 {
             font-size: 20px;
             font-weight: 600;
@@ -694,6 +818,16 @@
             justify-content: center;
         }
 
+        .close-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+
+        .dark-mode .close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -714,17 +848,14 @@
             transition: var(--transition);
             text-decoration: none;
             color: inherit;
-        }
-
-        .dark-mode .menu-card {
-            background: var(--surface-dark);
-            border-color: var(--border-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .menu-card:hover {
             background: var(--primary-color);
             color: white;
             transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
             border-color: var(--primary-color);
         }
 
@@ -746,49 +877,21 @@
             border-color: var(--error-color);
         }
 
+        /* Modal de perfil customizado */
         .profile-section {
             padding: 20px 24px;
             border-bottom: 1px solid var(--border-light);
-        }
-
-        .dark-mode .profile-section {
-            border-bottom-color: var(--border-dark);
         }
 
         .profile-section h4 {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 16px;
+            color: var(--text-light);
         }
 
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .profile-info-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: var(--background-light);
-            border-radius: var(--border-radius);
-        }
-
-        .dark-mode .profile-info-item {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .profile-info-label {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .profile-info-value {
-            font-size: 14px;
-            font-weight: 600;
+        .dark-mode .profile-section h4 {
+            color: var(--text-dark);
         }
 
         .profile-avatar-options {
@@ -810,11 +913,13 @@
             justify-content: center;
             color: white;
             font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .avatar-option.selected {
             border-color: var(--primary-color);
             transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
         }
 
         .preferences-section {
@@ -848,217 +953,8 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
-        }
-
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: var(--background-light);
-            border-radius: var(--border-radius);
-            margin-bottom: 12px;
-        }
-
-        .dark-mode .toggle-container {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .toggle-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .toggle-label i {
-            font-size: 18px;
-            color: var(--primary-color);
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: var(--border-light);
-            border-radius: 26px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .dark-mode .toggle-switch {
-            background: var(--border-dark);
-        }
-
-        .toggle-switch.active {
-            background: var(--primary-color);
-        }
-
-        .toggle-slider {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .toggle-switch.active .toggle-slider {
-            transform: translateX(24px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 20px 24px;
-        }
-
-        .stat-card {
-            background: var(--background-light);
-            padding: 16px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            border: 1px solid var(--border-light);
-        }
-
-        .dark-mode .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--border-dark);
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 4px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .voice-settings {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .dark-mode .voice-settings {
-            border-bottom-color: var(--border-dark);
-        }
-
-        .voice-control {
-            margin-top: 16px;
-        }
-
-        .voice-control label {
-            display: block;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .slider {
-            flex: 1;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            border-radius: 3px;
-            background: var(--border-light);
-            outline: none;
-        }
-
-        .dark-mode .slider {
-            background: var(--border-dark);
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            cursor: pointer;
-        }
-
-        .slider-value {
-            min-width: 40px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .voice-test-btn {
-            width: 100%;
-            margin-top: 16px;
-            padding: 12px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--border-radius);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .data-management {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .dark-mode .data-management {
-            border-bottom-color: var(--border-dark);
-        }
-
-        .data-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .data-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid var(--border-light);
-            background: var(--surface-light);
-            color: var(--text-light);
-            border-radius: var(--border-radius);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .dark-mode .data-btn {
-            background: var(--surface-dark);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        .data-btn:hover {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
         }
 
         .toast-notification {
@@ -1097,6 +993,7 @@
             justify-content: center;
             z-index: 1000;
             color: white;
+            backdrop-filter: blur(5px);
         }
 
         .loading-spinner {
@@ -1111,56 +1008,6 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
-        }
-
-        .donation-option {
-            padding: 16px;
-            border: 2px solid var(--border-light);
-            border-radius: var(--border-radius);
-            background: var(--surface-light);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .dark-mode .donation-option {
-            background: var(--surface-dark);
-            border-color: var(--border-dark);
-        }
-
-        .donation-option:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-        }
-
-        .donation-amount {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .donation-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .donation-option.custom {
-            border-style: dashed;
-            border-color: var(--primary-light);
-        }
-
-        .donation-option.custom:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .donation-option.custom:hover .donation-amount,
-        .donation-option.custom:hover .donation-label {
-            color: white;
         }
 
         @media (max-width: 768px) {
@@ -1191,26 +1038,40 @@
                 width: 100%;
                 justify-content: center;
             }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .greeting-text {
-                font-size: 24px;
-            }
-            .help-text {
-                font-size: 14px;
-            }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-light);
+            border-radius: 10px;
+        }
+
+        .dark-mode ::-webkit-scrollbar-thumb {
+            background: var(--border-dark);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
         }
     </style>
 </head>
 <body>
+    <!-- Cookie Consent Banner -->
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
             <div class="cookie-text">
                 🌸 Usamos cookies para melhorar sua experiência. Ao usar nosso site, você concorda com nossa 
-                <a href="https://www.termos.orpheostudio.com.br" target="_blank">Política de Cookies</a> 
+                <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Política de Cookies</a> 
                 e nossos 
-                <a href="www.termos.orpheostudio.com.br" target="_blank">Termos de Uso</a>.
+                <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Termos de Uso</a>.
             </div>
             <div class="cookie-buttons">
                 <button class="cookie-btn reject" id="rejectCookies">Recusar</button>
@@ -1220,6 +1081,7 @@
     </div>
 
     <div class="container">
+        <!-- Tela de Login/Cadastro -->
         <div class="screen auth-screen" id="authScreen">
             <div class="auth-container">
                 <div class="auth-header">
@@ -1241,7 +1103,7 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="loginTerms" required>
                         <label for="loginTerms">
-                            Concordo com os <a href="www.termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="https://www.termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
+                            Concordo com os <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Termos de Uso</a> e <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Política de Privacidade</a>
                         </label>
                     </div>
                     <button type="submit" class="auth-btn">Entrar</button>
@@ -1267,7 +1129,7 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="acceptTerms" required>
                         <label for="acceptTerms">
-                            Concordo com os <a href="https://www.termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="https://www.termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
+                            Concordo com os <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Termos de Uso</a> e <a href="https://naotodev1.github.io/terms-e-policy" target="_blank">Política de Privacidade</a>
                         </label>
                     </div>
                     <button type="submit" class="auth-btn">Começar Agora</button>
@@ -1278,6 +1140,7 @@
             </div>
         </div>
 
+        <!-- Tela Principal do Chat -->
         <div class="screen chat-screen hidden" id="chatScreen">
             <header class="chat-header">
                 <div class="header-user-info">
@@ -1292,12 +1155,24 @@
                 </div>
             </header>
 
-            <div class="chat-body" id="chatBody">
+            <div class="chat-body">
                 <div class="assistant-ui" id="assistantUI">
                     <p class="greeting-text">Olá! Sou a Yume🌸 👋</p>
                     <p class="help-text">Sua assistente virtual inteligente. Posso ajudar com respostas, recomendações, conversas e muito mais!</p>
                 </div>
                 <div class="chat-messages" id="chatMessages"></div>
+
+                <!-- AdSense Unit -->
+                <div class="adsense-container">
+                    <div class="adsense-unit">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-5941203056187445"
+                             data-ad-slot="1234567890"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                    </div>
+                </div>
             </div>
 
             <div class="quick-reply-area" id="quickReplyArea">
@@ -1313,7 +1188,8 @@
                 </button>
                 <input type="file" id="fileInput" style="display: none;" accept="image/*,audio/*,.pdf,.doc,.docx,.txt">
                 <div class="input-wrapper">
-                    <input type="text" class="chat-input" id="userInput" placeholder="Envie uma mensagem..." autocomplete="off">
+                    <input type="text" class="chat-input" id="userInput" 
+                           placeholder="Envie uma mensagem..." autocomplete="off">
                 </div>
                 <button type="button" class="voice-btn" id="voiceButton" title="Falar">
                     <i class="fas fa-microphone"></i>
@@ -1323,10 +1199,11 @@
                 </button>
             </form>
             <div class="footer">
-                Yume 🌸 • Powered by ORPHEO Platforms • V2.5.0
+                Yume 🌸 • Powered by ORPHEO Platforms • yume.orpheostudio.com.br
             </div>
         </div>
 
+        <!-- Modal de Perfil -->
         <div class="modal-overlay" id="profileModal">
             <div class="modal-content">
                 <div class="menu-header">
@@ -1336,73 +1213,7 @@
                     </button>
                 </div>
 
-                <div class="profile-section">
-                    <h4>Informações da Conta</h4>
-                    <div class="profile-info">
-                        <div class="profile-info-item">
-                            <span class="profile-info-label">Nome</span>
-                            <span class="profile-info-value" id="profileName">-</span>
-                        </div>
-                        <div class="profile-info-item">
-                            <span class="profile-info-label">E-mail</span>
-                            <span class="profile-info-value" id="profileEmail">-</span>
-                        </div>
-                        <div class="profile-info-item">
-                            <span class="profile-info-label">Membro desde</span>
-                            <span class="profile-info-value" id="profileDate">-</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="statMessages">0</div>
-                        <div class="stat-label">Mensagens</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statConversations">0</div>
-                        <div class="stat-label">Conversas</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statDays">0</div>
-                        <div class="stat-label">Dias de uso</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statFiles">0</div>
-                        <div class="stat-label">Arquivos</div>
-                    </div>
-                </div>
-
-                <div class="voice-settings">
-                    <h4>Configurações de Voz</h4>
-                    <div class="toggle-container">
-                        <div class="toggle-label">
-                            <i class="fas fa-volume-up"></i>
-                            <span>Respostas em Voz</span>
-                        </div>
-                        <div class="toggle-switch" id="voiceToggle">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="voice-control">
-                        <label>Velocidade da Voz: <span id="rateValue">1.0</span>x</label>
-                        <div class="slider-container">
-                            <input type="range" min="0.5" max="2" step="0.1" value="1" class="slider" id="voiceRate">
-                            <span class="slider-value" id="rateDisplay">1.0x</span>
-                        </div>
-                    </div>
-                    <div class="voice-control">
-                        <label>Tom da Voz: <span id="pitchValue">1.0</span></label>
-                        <div class="slider-container">
-                            <input type="range" min="0.5" max="2" step="0.1" value="1" class="slider" id="voicePitch">
-                            <span class="slider-value" id="pitchDisplay">1.0</span>
-                        </div>
-                    </div>
-                    <button class="voice-test-btn" id="voiceTest">
-                        <i class="fas fa-play"></i> Testar Voz
-                    </button>
-                </div>
-
+                <!-- Seção de Customização do Perfil -->
                 <div class="profile-section">
                     <h4>Personalizar Avatar</h4>
                     <div class="profile-avatar-options">
@@ -1421,10 +1232,11 @@
                     </div>
                 </div>
 
+                <!-- Seção de Preferências -->
                 <div class="preferences-section">
                     <h4>Minhas Preferências</h4>
                     <p style="font-size: 14px; margin-bottom: 16px; color: var(--text-muted);">
-                        Selecione seus interesses para personalizar suas respostas:
+                        Selecione seus interesses para que a Yume possa personalizar suas respostas:
                     </p>
                     <div class="preference-tags">
                         <div class="preference-tag" data-pref="anime">Anime</div>
@@ -1438,49 +1250,6 @@
                     </div>
                 </div>
 
-                <div class="preferences-section">
-                    <h4>Configurações</h4>
-                    <div class="toggle-container">
-                        <div class="toggle-label">
-                            <i class="fas fa-moon"></i>
-                            <span>Modo Escuro</span>
-                        </div>
-                        <div class="toggle-switch" id="darkModeToggle">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="toggle-container">
-                        <div class="toggle-label">
-                            <i class="fas fa-bell"></i>
-                            <span>Notificações</span>
-                        </div>
-                        <div class="toggle-switch" id="notificationsToggle">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="toggle-container">
-                        <div class="toggle-label">
-                            <i class="fas fa-save"></i>
-                            <span>Salvar Histórico</span>
-                        </div>
-                        <div class="toggle-switch active" id="historyToggle">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="data-management">
-                    <h4>Gerenciar Dados</h4>
-                    <div class="data-buttons">
-                        <button class="data-btn" id="exportData">
-                            <i class="fas fa-download"></i> Exportar
-                        </button>
-                        <button class="data-btn" id="clearHistory">
-                            <i class="fas fa-trash"></i> Limpar
-                        </button>
-                    </div>
-                </div>
-
                 <div class="menu-grid">
                     <button class="menu-card" id="helpBtn">
                         <i class="fas fa-question-circle"></i>
@@ -1490,27 +1259,32 @@
                         <i class="fas fa-info-circle"></i>
                         <span>Sobre</span>
                     </button>
+                    <button class="menu-card" id="statsBtn">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Estatísticas</span>
+                    </button>
                     <button class="menu-card" id="termsBtn">
                         <i class="fas fa-file-contract"></i>
                         <span>Termos</span>
                     </button>
                     <button class="menu-card" id="projectsBtn">
                         <i class="fas fa-rocket"></i>
-                        <span>Projetos</span>
+                        <span>Mais Projetos</span>
                     </button>
-                    <a href="https://www.studio.orpheostudio.com.br" target="_blank" class="menu-card">
+                    <a href="https://naotodev1.github.io/orpheostudio" target="_blank" class="menu-card">
                         <i class="fas fa-globe"></i>
                         <span>Site Oficial</span>
                     </a>
-                    <button class="menu-card" id="donateBtn">
-                        <i class="fas fa-heart"></i>
-                        <span>Doar</span>
+                    <button class="menu-card premium" id="upgradeBtn">
+                        <i class="fas fa-crown"></i>
+                        <span>Doar 🩷</span>
                     </button>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform" target="_blank" class="menu-card">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" 
+                       target="_blank" class="menu-card">
                         <i class="fas fa-comment"></i>
                         <span>Feedback</span>
                     </a>
-                    <a href="mailto:suporte@orpheostudio.com.br" class="menu-card">
+                    <a href="mailto:sac.studiotsukiyo@outlook.com" class="menu-card">
                         <i class="fas fa-bug"></i>
                         <span>Reportar</span>
                     </a>
@@ -1522,75 +1296,11 @@
             </div>
         </div>
 
-        <div class="modal-overlay" id="donationModal">
-            <div class="modal-content">
-                <div class="menu-header">
-                    <h3>Apoie o Projeto 🌸</h3>
-                    <button class="close-btn" id="closeDonation">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div style="padding: 20px 24px; text-align: center;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">💝</div>
-                    <h4 style="margin-bottom: 12px;">Faça uma Doação</h4>
-                    <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.5;">
-                        Sua doação ajuda a manter a Yume funcionando e a desenvolver novas funcionalidades. 
-                        Cada contribuição faz a diferença! ✨
-                    </p>
-                    
-                    <div class="donation-options" style="display: grid; gap: 12px; margin-bottom: 24px;">
-                        <button class="donation-option" data-amount="5" data-pix="00020126580014BR.GOV.BCB.PIX013611a4cd6a-710d-4cd5-9f5b-2897c3fd0eed52040000530398654045.005802BR5924Bruno Pereira dos Santos6009SAO PAULO62140510lQNuApyQ63045BCF">
-                            <span class="donation-amount">R$ 5,00</span>
-                            <span class="donation-label">Doação Básica</span>
-                        </button>
-                        
-                        <button class="donation-option" data-amount="10" data-pix="00020126580014BR.GOV.BCB.PIX013611a4cd6a-710d-4cd5-9f5b-2897c3fd0eed520400005303986540510.005802BR5924Bruno Pereira dos Santos6009SAO PAULO62140510etLP6JBWZp6304D588">
-                            <span class="donation-amount">R$ 10,00</span>
-                            <span class="donation-label">Doação Apoiador</span>
-                        </button>
-                        
-                        <button class="donation-option" data-amount="50" data-pix="00020126580014BR.GOV.BCB.PIX013611a4cd6a-710d-4cd5-9f5b-2897c3fd0eed520400005303986540550.005802BR5924Bruno Pereira dos Santos6009SAO PAULO62140510zfI3guLpqX630488C8">
-                            <span class="donation-amount">R$ 50,00</span>
-                            <span class="donation-label">Doação Premium</span>
-                        </button>
-                        
-                        <button class="donation-option custom" id="customDonation">
-                            <span class="donation-amount">Código para doar</span>
-                            <span class="donation-label">Copie o código e efetue o pagamento.</span>
-                        </button>
-                    </div>
-
-                    <div class="pix-info" style="background: var(--background-light); padding: 16px; border-radius: var(--border-radius); margin-bottom: 20px; display: none;" id="pixInfo">
-                        <h5 style="margin-bottom: 12px; color: var(--primary-color);">📱 PIX Copia e Cola</h5>
-                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                            <input type="text" id="pixCode" readonly style="flex: 1; padding: 12px; border: 1px solid var(--border-light); border-radius: var(--border-radius); background: var(--surface-light); color: var(--text-light); font-size: 12px; font-family: monospace;">
-                            <button id="copyPix" style="padding: 12px 16px; background: var(--primary-color); color: white; border: none; border-radius: var(--border-radius); cursor: pointer; font-weight: 600;">
-                                Copiar
-                            </button>
-                        </div>
-                        <p style="font-size: 12px; color: var(--text-muted); text-align: left;">
-                            <strong>Como usar:</strong><br>
-                            1. Copie o código PIX acima<br>
-                            2. Abra seu app do banco<br>
-                            3. Cole no campo PIX Copia e Cola<br>
-                            4. Confirme o pagamento
-                        </p>
-                    </div>
-
-                    <div style="border-top: 1px solid var(--border-light); padding-top: 20px;">
-                        <p style="font-size: 12px; color: var(--text-muted);">
-                            💜 Obrigada por apoiar o desenvolvimento da Yume!<br>
-                            Sua contribuição ajuda a manter o projeto ativo e em constante evolução.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- Modal de Mais Projetos -->
         <div class="modal-overlay" id="projectsModal">
             <div class="modal-content">
                 <div class="menu-header">
-                    <h3>Nossos Projetos</h3>
+                    <h3>Mais Projetos</h3>
                     <button class="close-btn" id="closeProjects">
                         <i class="fas fa-times"></i>
                     </button>
@@ -1611,17 +1321,14 @@
                         <span>Café e Páginas</span>
                         <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Clube do Livro</small>
                     </a>
-                    <a href="https://rtwriter.orpheostudio.com.br" target="_blank" class="menu-card">
-                        <i class="fas fa-feather"></i>
-                        <span>Ren The Writer</span>
-                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Plataforma de Escrita</small>
-                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Toast Notification -->
         <div class="toast-notification" id="toast"></div>
 
+        <!-- Loading Overlay -->
         <div class="loading-overlay hidden" id="loadingOverlay">
             <div class="loading-spinner"></div>
             <p>Processando sua pergunta...</p>
@@ -1629,13 +1336,17 @@
     </div>
 
     <script>
+        // Configuração do Supabase
         const supabaseUrl = 'https://onyhbarnwvoqpwveyvhc.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ueWhiYXJud3ZvcXB3dmV5dmhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1OTY0NDQsImV4cCI6MjA3MzE3MjQ0NH0.2zqN73ZxkqxlWLp49Kmrg1CUau0YAi7dee2EIyhodoI';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Configuração da API Mistral
         const MISTRAL_API_KEY = 'NFuAj8PYUPcaf6tA1BjbyXuIeSjSA4sW';
         const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Elementos principais
             const authScreen = document.getElementById('authScreen');
             const chatScreen = document.getElementById('chatScreen');
             const loginForm = document.getElementById('loginForm');
@@ -1643,15 +1354,13 @@
             const chatInput = document.getElementById('userInput');
             const chatMessages = document.getElementById('chatMessages');
             const sendButton = document.getElementById('sendButton');
+            const inputArea = document.getElementById('inputArea');
             const userAvatar = document.getElementById('userAvatar');
             const profileModal = document.getElementById('profileModal');
             const projectsModal = document.getElementById('projectsModal');
-            const donationModal = document.getElementById('donationModal');
             const closeProfile = document.getElementById('closeProfile');
             const closeProjects = document.getElementById('closeProjects');
-            const closeDonation = document.getElementById('closeDonation');
             const upgradeCard = document.getElementById('upgradeCard');
-            const donateBtn = document.getElementById('donateBtn');
             const logoutBtn = document.getElementById('logoutBtn');
             const toast = document.getElementById('toast');
             const loadingOverlay = document.getElementById('loadingOverlay');
@@ -1662,22 +1371,15 @@
             const cookieBanner = document.getElementById('cookieBanner');
             const acceptCookies = document.getElementById('acceptCookies');
             const rejectCookies = document.getElementById('rejectCookies');
-            const donationOptions = document.querySelectorAll('.donation-option');
-            const customDonation = document.getElementById('customDonation');
-            const pixInfo = document.getElementById('pixInfo');
-            const pixCode = document.getElementById('pixCode');
-            const copyPix = document.getElementById('copyPix');
 
+            // Estado da aplicação
             let currentUser = null;
             let messageCount = 0;
             let userPreferences = [];
             let recognition = null;
             let isListening = false;
-            let voiceEnabled = true;
-            let darkMode = false;
-            let notificationsEnabled = true;
-            let saveHistory = true;
 
+            // Inicialização
             init();
 
             async function init() {
@@ -1685,39 +1387,10 @@
                 setupEventListeners();
                 await checkExistingUser();
                 initVoiceRecognition();
-                loadSettings();
+                initAdSense();
             }
 
-            function loadSettings() {
-                const savedVoice = localStorage.getItem('yumeVoiceEnabled');
-                const savedDarkMode = localStorage.getItem('yumeDarkMode');
-                const savedNotifications = localStorage.getItem('yumeNotifications');
-                const savedHistory = localStorage.getItem('yumeSaveHistory');
-
-                if (savedVoice !== null) voiceEnabled = savedVoice === 'true';
-                if (savedDarkMode !== null) darkMode = savedDarkMode === 'true';
-                if (savedNotifications !== null) notificationsEnabled = savedNotifications === 'true';
-                if (savedHistory !== null) saveHistory = savedHistory === 'true';
-
-                updateToggleStates();
-                applyDarkMode();
-            }
-
-            function updateToggleStates() {
-                document.getElementById('voiceToggle').classList.toggle('active', voiceEnabled);
-                document.getElementById('darkModeToggle').classList.toggle('active', darkMode);
-                document.getElementById('notificationsToggle').classList.toggle('active', notificationsEnabled);
-                document.getElementById('historyToggle').classList.toggle('active', saveHistory);
-            }
-
-            function applyDarkMode() {
-                if (darkMode) {
-                    document.body.classList.add('dark-mode');
-                } else {
-                    document.body.classList.remove('dark-mode');
-                }
-            }
-
+            // Verificar consentimento de cookies
             function checkCookieConsent() {
                 const cookiesAccepted = localStorage.getItem('yumeCookiesAccepted');
                 if (cookiesAccepted === null) {
@@ -1727,10 +1400,13 @@
                 }
             }
 
+            // Configurar event listeners
             function setupEventListeners() {
+                // Cookie consent
                 acceptCookies.addEventListener('click', handleCookieAccept);
                 rejectCookies.addEventListener('click', handleCookieReject);
 
+                // Navegação de autenticação
                 document.getElementById('showRegister').addEventListener('click', function(e) {
                     e.preventDefault();
                     loginForm.classList.add('hidden');
@@ -1743,14 +1419,17 @@
                     loginForm.classList.remove('hidden');
                 });
 
+                // Forms de autenticação
                 loginForm.addEventListener('submit', handleLogin);
                 registerForm.addEventListener('submit', handleRegister);
 
-                document.getElementById('inputArea').addEventListener('submit', handleSendMessage);
+                // Chat
+                inputArea.addEventListener('submit', handleSendMessage);
                 voiceButton.addEventListener('click', toggleVoiceRecognition);
                 fileButton.addEventListener('click', () => fileInput.click());
                 fileInput.addEventListener('change', handleFileUpload);
 
+                // Quick replies
                 document.querySelectorAll('.quick-reply').forEach(button => {
                     button.addEventListener('click', function() {
                         const message = this.getAttribute('data-message');
@@ -1759,6 +1438,7 @@
                     });
                 });
 
+                // Personalização
                 document.querySelectorAll('.avatar-option').forEach(option => {
                     option.addEventListener('click', handleAvatarChange);
                 });
@@ -1767,163 +1447,138 @@
                     tag.addEventListener('click', handlePreferenceToggle);
                 });
 
+                // Menu e modais
                 userAvatar.addEventListener('click', () => profileModal.classList.add('active'));
                 closeProfile.addEventListener('click', () => profileModal.classList.remove('active'));
                 closeProjects.addEventListener('click', () => projectsModal.classList.remove('active'));
-                closeDonation.addEventListener('click', () => donationModal.classList.remove('active'));
-                upgradeCard.addEventListener('click', () => donationModal.classList.add('active'));
-                donateBtn.addEventListener('click', () => donationModal.classList.add('active'));
+                upgradeCard.addEventListener('click', handleUpgrade);
                 logoutBtn.addEventListener('click', handleLogout);
 
+                // Botões do menu
                 document.getElementById('helpBtn').addEventListener('click', showHelp);
                 document.getElementById('aboutYumeBtn').addEventListener('click', showAbout);
+                document.getElementById('statsBtn').addEventListener('click', showStats);
                 document.getElementById('termsBtn').addEventListener('click', showTerms);
                 document.getElementById('projectsBtn').addEventListener('click', showProjects);
-                document.getElementById('exportData').addEventListener('click', exportData);
-                document.getElementById('clearHistory').addEventListener('click', clearHistory);
+                document.getElementById('upgradeBtn').addEventListener('click', handleUpgrade);
 
-                document.getElementById('voiceToggle').addEventListener('click', toggleVoice);
-                document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
-                document.getElementById('notificationsToggle').addEventListener('click', toggleNotifications);
-                document.getElementById('historyToggle').addEventListener('click', toggleHistory);
-                document.getElementById('voiceRate').addEventListener('input', updateVoiceRate);
-                document.getElementById('voicePitch').addEventListener('input', updateVoicePitch);
-                document.getElementById('voiceTest').addEventListener('click', testVoice);
-
-                donationOptions.forEach(option => {
-                    option.addEventListener('click', handleDonation);
-                });
-                customDonation.addEventListener('click', handleCustomDonation);
-                copyPix.addEventListener('click', copyPixCode);
-
+                // Fechar modais ao clicar fora
                 profileModal.addEventListener('click', (e) => {
                     if (e.target === profileModal) profileModal.classList.remove('active');
                 });
                 projectsModal.addEventListener('click', (e) => {
                     if (e.target === projectsModal) projectsModal.classList.remove('active');
                 });
-                donationModal.addEventListener('click', (e) => {
-                    if (e.target === donationModal) donationModal.classList.remove('active');
-                });
             }
 
-            function handleDonation() {
-                const amount = this.getAttribute('data-amount');
-                const pix = this.getAttribute('data-pix');
-                pixCode.value = pix;
-                pixInfo.style.display = 'block';
-                pixInfo.scrollIntoView({ behavior: 'smooth' });
-                showToast(`Obrigada! Use o código PIX para doar R$ ${amount},00`);
-            }
+            // Verificar usuário existente
+            async function checkExistingUser() {
+                const savedUser = localStorage.getItem('yumeUser');
+                const savedPreferences = localStorage.getItem('yumePreferences');
+                const savedAvatar = localStorage.getItem('yumeAvatar');
 
-            function handleCustomDonation() {
-                const customPix = '00020126580014BR.GOV.BCB.PIX013611a4cd6a-710d-4cd5-9f5b-2897c3fd0eed5204000053039865802BR5924Bruno Pereira dos Santos6009SAO PAULO62140510naYw6GffEZ6304B17B';
-                pixCode.value = customPix;
-                pixInfo.style.display = 'block';
-                pixInfo.scrollIntoView({ behavior: 'smooth' });
-                showToast('Use o código PIX para doar qualquer valor! 💜');
-            }
-
-            function copyPixCode() {
-                pixCode.select();
-                document.execCommand('copy');
-                showToast('Código PIX copiado! 📋');
-            }
-
-            function toggleVoice() {
-                voiceEnabled = !voiceEnabled;
-                this.classList.toggle('active', voiceEnabled);
-                localStorage.setItem('yumeVoiceEnabled', voiceEnabled);
-                showToast(voiceEnabled ? 'Voz ativada 🎤' : 'Voz desativada 🔇');
-            }
-
-            function toggleDarkMode() {
-                darkMode = !darkMode;
-                this.classList.toggle('active', darkMode);
-                localStorage.setItem('yumeDarkMode', darkMode);
-                applyDarkMode();
-                showToast(darkMode ? 'Modo escuro ativado 🌙' : 'Modo claro ativado ☀️');
-            }
-
-            function toggleNotifications() {
-                notificationsEnabled = !notificationsEnabled;
-                this.classList.toggle('active', notificationsEnabled);
-                localStorage.setItem('yumeNotifications', notificationsEnabled);
-                showToast(notificationsEnabled ? 'Notificações ativadas 🔔' : 'Notificações desativadas 🔕');
-            }
-
-            function toggleHistory() {
-                saveHistory = !saveHistory;
-                this.classList.toggle('active', saveHistory);
-                localStorage.setItem('yumeSaveHistory', saveHistory);
-                showToast(saveHistory ? 'Histórico salvo 💾' : 'Histórico não salvo 🚫');
-            }
-
-            function updateVoiceRate() {
-                const rate = this.value;
-                document.getElementById('rateValue').textContent = rate;
-                document.getElementById('rateDisplay').textContent = rate + 'x';
-            }
-
-            function updateVoicePitch() {
-                const pitch = this.value;
-                document.getElementById('pitchValue').textContent = pitch;
-                document.getElementById('pitchDisplay').textContent = pitch;
-            }
-
-            function testVoice() {
-                if (!voiceEnabled) {
-                    showToast('Ative as respostas em voz primeiro!');
-                    return;
-                }
-                const testText = "Olá! Esta é uma demonstração da voz da Yume. Espero que goste!";
-                const utterance = new SpeechSynthesisUtterance(testText);
-                utterance.lang = 'pt-BR';
-                utterance.rate = parseFloat(document.getElementById('voiceRate').value);
-                utterance.pitch = parseFloat(document.getElementById('voicePitch').value);
-                speechSynthesis.speak(utterance);
-                showToast('Testando voz... 🎵');
-            }
-
-            function exportData() {
-                const userData = {
-                    user: currentUser,
-                    preferences: userPreferences,
-                    settings: { voiceEnabled, darkMode, notificationsEnabled, saveHistory },
-                    exportDate: new Date().toISOString()
-                };
-                const dataStr = JSON.stringify(userData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(dataBlob);
-                link.download = `yume-backup-${new Date().toISOString().split('T')[0]}.json`;
-                link.click();
-                showToast('Dados exportados com sucesso! 📁');
-            }
-
-            function clearHistory() {
-                if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
-                    chatMessages.innerHTML = '';
-                    if (assistantUI) assistantUI.classList.remove('hidden');
-                    messageCount = 0;
-                    clearSupabaseHistory();
-                    showToast('Histórico limpo! 🗑️');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    if (savedPreferences) userPreferences = JSON.parse(savedPreferences);
+                    if (savedAvatar) updateUserAvatar(savedAvatar);
+                    
+                    // Verificar se o usuário existe no Supabase
+                    await syncUserWithSupabase();
+                    showChatScreen();
                 }
             }
 
-            async function clearSupabaseHistory() {
-                if (!currentUser?.id) return;
+            // Sincronizar usuário com Supabase
+            async function syncUserWithSupabase() {
+                if (!currentUser) return;
+
                 try {
-                    const { error } = await supabase
-                        .from('messages')
-                        .delete()
-                        .eq('user_id', currentUser.id);
-                    if (error) throw error;
+                    const { data, error } = await supabase
+                        .from('users')
+                        .select('*')
+                        .eq('email', currentUser.email)
+                        .single();
+
+                    if (error && error.code === 'PGRST116') {
+                        // Usuário não existe, criar novo
+                        const { data: newUser, error: insertError } = await supabase
+                            .from('users')
+                            .insert([
+                                {
+                                    name: currentUser.name,
+                                    email: currentUser.email,
+                                    avatar: localStorage.getItem('yumeAvatar') || 'default',
+                                    preferences: userPreferences,
+                                    created_at: new Date().toISOString()
+                                }
+                            ])
+                            .select()
+                            .single();
+
+                        if (!insertError) {
+                            currentUser.id = newUser.id;
+                            localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                        }
+                    } else if (data) {
+                        // Usuário existe, atualizar local
+                        currentUser.id = data.id;
+                        localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                        
+                        // Atualizar preferências se necessário
+                        if (data.preferences) {
+                            userPreferences = data.preferences;
+                            localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
+                        }
+                    }
                 } catch (error) {
-                    console.error('Erro ao limpar histórico:', error);
+                    console.error('Erro ao sincronizar com Supabase:', error);
                 }
             }
 
+            // Inicializar reconhecimento de voz
+            function initVoiceRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    recognition = new SpeechRecognition();
+                    recognition.continuous = false;
+                    recognition.interimResults = false;
+                    recognition.lang = 'pt-BR';
+
+                    recognition.onstart = function() {
+                        isListening = true;
+                        voiceButton.classList.add('listening');
+                        showToast('Ouvindo...');
+                    };
+
+                    recognition.onresult = function(event) {
+                        const transcript = event.results[0][0].transcript;
+                        chatInput.value = transcript;
+                        isListening = false;
+                        voiceButton.classList.remove('listening');
+                    };
+
+                    recognition.onerror = function(event) {
+                        console.error('Erro no reconhecimento de voz:', event.error);
+                        isListening = false;
+                        voiceButton.classList.remove('listening');
+                        showToast('Erro no reconhecimento de voz');
+                    };
+
+                    recognition.onend = function() {
+                        isListening = false;
+                        voiceButton.classList.remove('listening');
+                    };
+                } else {
+                    voiceButton.style.display = 'none';
+                }
+            }
+
+            // Inicializar AdSense
+            function initAdSense() {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            }
+
+            // Handlers de cookies
             function handleCookieAccept() {
                 localStorage.setItem('yumeCookiesAccepted', 'true');
                 cookieBanner.classList.remove('show');
@@ -1936,107 +1591,26 @@
                 showToast('Preferências de cookies salvas! 🌸');
             }
 
-            async function checkExistingUser() {
-                const savedUser = localStorage.getItem('yumeUser');
-                const savedPreferences = localStorage.getItem('yumePreferences');
-                const savedAvatar = localStorage.getItem('yumeAvatar');
-                if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
-                    if (savedPreferences) userPreferences = JSON.parse(savedPreferences);
-                    if (savedAvatar) updateUserAvatar(savedAvatar);
-                    await syncUserWithSupabase();
-                    showChatScreen();
-                }
-            }
-
-            async function syncUserWithSupabase() {
-                if (!currentUser) return;
-                try {
-                    const { data, error } = await supabase
-                        .from('users')
-                        .select('*')
-                        .eq('email', currentUser.email)
-                        .single();
-                    if (error && error.code === 'PGRST116') {
-                        const { data: newUser, error: insertError } = await supabase
-                            .from('users')
-                            .insert([{
-                                name: currentUser.name,
-                                email: currentUser.email,
-                                avatar: localStorage.getItem('yumeAvatar') || 'default',
-                                preferences: userPreferences,
-                                created_at: new Date().toISOString()
-                            }])
-                            .select()
-                            .single();
-                        if (!insertError) {
-                            currentUser.id = newUser.id;
-                            localStorage.setItem('yumeUser', JSON.stringify(currentUser));
-                        }
-                    } else if (data) {
-                        currentUser.id = data.id;
-                        localStorage.setItem('yumeUser', JSON.stringify(currentUser));
-                        if (data.preferences) {
-                            userPreferences = data.preferences;
-                            localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
-                        }
-                    }
-                } catch (error) {
-                    console.error('Erro ao sincronizar com Supabase:', error);
-                }
-            }
-
-            function initVoiceRecognition() {
-                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    recognition = new SpeechRecognition();
-                    recognition.continuous = false;
-                    recognition.interimResults = false;
-                    recognition.lang = 'pt-BR';
-                    recognition.onstart = function() {
-                        isListening = true;
-                        voiceButton.classList.add('listening');
-                        showToast('Ouvindo...');
-                    };
-                    recognition.onresult = function(event) {
-                        const transcript = event.results[0][0].transcript;
-                        chatInput.value = transcript;
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                    };
-                    recognition.onerror = function(event) {
-                        console.error('Erro no reconhecimento de voz:', event.error);
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                        showToast('Erro no reconhecimento de voz');
-                    };
-                    recognition.onend = function() {
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                    };
-                } else {
-                    voiceButton.style.display = 'none';
-                }
-            }
-
+            // Handlers de autenticação
             async function handleLogin(e) {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 const acceptTerms = document.getElementById('loginTerms').checked;
+
                 if (!acceptTerms) {
                     showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
                     return;
                 }
+
                 if (email && password) {
                     const user = {
                         name: email.split('@')[0],
-                        email: email,
-                        joinDate: new Date().toLocaleDateString('pt-BR')
+                        email: email
                     };
                     currentUser = user;
+                    
                     await syncUserWithSupabase();
-                    updateProfileInfo();
                     showChatScreen();
                     showToast('Login realizado com sucesso!');
                 }
@@ -2048,46 +1622,46 @@
                 const email = document.getElementById('registerEmail').value;
                 const password = document.getElementById('registerPassword').value;
                 const acceptTerms = document.getElementById('acceptTerms').checked;
+
                 if (!acceptTerms) {
                     showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
                     return;
                 }
+
                 if (name && email && password) {
                     const user = {
                         name: name,
-                        email: email,
-                        joinDate: new Date().toLocaleDateString('pt-BR')
+                        email: email
                     };
                     currentUser = user;
+                    
                     await syncUserWithSupabase();
-                    updateProfileInfo();
                     showChatScreen();
                     showToast('Conta criada com sucesso! 🌸');
                 }
             }
 
-            function updateProfileInfo() {
-                if (!currentUser) return;
-                document.getElementById('profileName').textContent = currentUser.name;
-                document.getElementById('profileEmail').textContent = currentUser.email;
-                document.getElementById('profileDate').textContent = currentUser.joinDate;
-                document.getElementById('statMessages').textContent = messageCount;
-                document.getElementById('statConversations').textContent = Math.ceil(messageCount / 10);
-                document.getElementById('statDays').textContent = '1';
-                document.getElementById('statFiles').textContent = '0';
-            }
-
+            // Handlers de chat
             async function handleSendMessage(e) {
                 e.preventDefault();
                 const message = chatInput.value.trim();
                 if (!message) return;
+
+                // Adicionar mensagem do usuário
                 addMessage(message, 'user');
                 chatInput.value = '';
+
+                // Esconder UI de boas-vindas
                 if (assistantUI && !assistantUI.classList.contains('hidden')) {
                     assistantUI.classList.add('hidden');
                 }
+
+                // Salvar mensagem no Supabase
                 await saveMessageToSupabase(message, 'user');
+
+                // Mostrar loading
                 showLoading(true);
+
                 try {
                     const response = await fetch(MISTRAL_API_URL, {
                         method: 'POST',
@@ -2097,16 +1671,24 @@
                         },
                         body: JSON.stringify({
                             model: 'mistral-tiny',
-                            messages: [{ role: 'user', content: message }],
+                            messages: [{
+                                role: 'user',
+                                content: message
+                            }],
                             max_tokens: 500,
                             temperature: 0.7
                         })
                     });
+
                     if (!response.ok) throw new Error(`Erro na API: ${response.status}`);
+
                     const data = await response.json();
                     const aiResponse = data.choices[0].message.content;
+
+                    // Adicionar resposta da IA
                     addMessage(aiResponse, 'assistant');
                     await saveMessageToSupabase(aiResponse, 'assistant');
+
                 } catch (error) {
                     console.error('Erro:', error);
                     const fallbackResponse = "Desculpe, estou tendo problemas técnicos. Vou tentar novamente...";
@@ -2117,23 +1699,29 @@
                 }
             }
 
+            // Salvar mensagem no Supabase
             async function saveMessageToSupabase(content, sender) {
                 if (!currentUser?.id) return;
+
                 try {
                     const { error } = await supabase
                         .from('messages')
-                        .insert([{
-                            user_id: currentUser.id,
-                            content: content,
-                            sender: sender,
-                            created_at: new Date().toISOString()
-                        }]);
+                        .insert([
+                            {
+                                user_id: currentUser.id,
+                                content: content,
+                                sender: sender,
+                                created_at: new Date().toISOString()
+                            }
+                        ]);
+
                     if (error) throw error;
                 } catch (error) {
                     console.error('Erro ao salvar mensagem:', error);
                 }
             }
 
+            // Handlers de personalização
             function handleAvatarChange() {
                 document.querySelectorAll('.avatar-option').forEach(opt => {
                     opt.classList.remove('selected');
@@ -2142,13 +1730,17 @@
                 const avatarType = this.getAttribute('data-avatar');
                 updateUserAvatar(avatarType);
                 localStorage.setItem('yumeAvatar', avatarType);
+                
+                // Atualizar no Supabase
                 updateUserInSupabase({ avatar: avatarType });
+                
                 showToast('Avatar atualizado! ✨');
             }
 
             function handlePreferenceToggle() {
                 this.classList.toggle('selected');
                 const preference = this.getAttribute('data-pref');
+
                 if (this.classList.contains('selected')) {
                     if (!userPreferences.includes(preference)) {
                         userPreferences.push(preference);
@@ -2156,24 +1748,32 @@
                 } else {
                     userPreferences = userPreferences.filter(p => p !== preference);
                 }
+
                 localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
+                
+                // Atualizar no Supabase
                 updateUserInSupabase({ preferences: userPreferences });
+                
                 showToast('Preferências atualizadas! 🌟');
             }
 
+            // Atualizar usuário no Supabase
             async function updateUserInSupabase(updates) {
                 if (!currentUser?.id) return;
+
                 try {
                     const { error } = await supabase
                         .from('users')
                         .update(updates)
                         .eq('id', currentUser.id);
+
                     if (error) throw error;
                 } catch (error) {
                     console.error('Erro ao atualizar usuário:', error);
                 }
             }
 
+            // Handlers de funcionalidades
             function toggleVoiceRecognition() {
                 if (!isListening && recognition) {
                     recognition.start();
@@ -2187,6 +1787,7 @@
                     const file = e.target.files[0];
                     const fileType = file.type.split('/')[0];
                     let message = '';
+
                     if (fileType === 'image') {
                         message = `Enviei uma imagem: ${file.name}`;
                     } else if (fileType === 'audio') {
@@ -2194,8 +1795,11 @@
                     } else {
                         message = `Enviei um documento: ${file.name}`;
                     }
+
                     addMessage(message, 'user', file);
                     saveMessageToSupabase(message, 'user');
+
+                    // Simular resposta
                     setTimeout(() => {
                         let response = '';
                         if (fileType === 'image') {
@@ -2205,10 +1809,17 @@
                         } else {
                             response = "Documento recebido! Posso ajudar a analisar o conteúdo ou responder perguntas sobre ele.";
                         }
+
                         addMessage(response, 'assistant');
                         saveMessageToSupabase(response, 'assistant');
                     }, 1000);
                 }
+            }
+
+            function handleUpgrade() {
+                showToast('Redirecionando para doação...');
+                addMessage("Doando para o projeto você ajuda:\n\n• Manter o projeto vivo\n• Atualizações com novas funções\n• Suporte 24/7\n• Recursos avançados\n\nEntre em contato para fazer sua doação e saber mais:\n\nE-mail: sac.studiotsukiyo@outlook.com!", 'assistant');
+                profileModal.classList.remove('active');
             }
 
             function handleLogout() {
@@ -2221,14 +1832,45 @@
                 profileModal.classList.remove('active');
             }
 
+            // Funções de exibição
+            function showAuthScreen() {
+                authScreen.classList.remove('hidden');
+                chatScreen.classList.add('hidden');
+                loginForm.reset();
+                registerForm.reset();
+                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            }
+
+            function showChatScreen() {
+                authScreen.classList.add('hidden');
+                chatScreen.classList.remove('hidden');
+                chatInput.focus();
+                chatMessages.innerHTML = '';
+                if (assistantUI) assistantUI.classList.remove('hidden');
+                messageCount = 0;
+
+                // Carregar preferências salvas
+                if (userPreferences.length > 0) {
+                    document.querySelectorAll('.preference-tag').forEach(tag => {
+                        if (userPreferences.includes(tag.getAttribute('data-pref'))) {
+                            tag.classList.add('selected');
+                        }
+                    });
+                }
+            }
+
+            // Funções auxiliares
             function addMessage(text, sender, file = null) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}-message`;
+
                 if (file) {
                     const fileType = file.type.split('/')[0];
                     let fileIcon = 'fa-file';
                     if (fileType === 'image') fileIcon = 'fa-image';
                     else if (fileType === 'audio') fileIcon = 'fa-music';
+
                     messageDiv.innerHTML = `
                         <div>${text}</div>
                         <div class="file-attachment">
@@ -2238,20 +1880,22 @@
                     `;
                 } else {
                     messageDiv.textContent = text;
-                    if (sender === 'assistant' && 'speechSynthesis' in window && voiceEnabled) {
+
+                    // Sintetizar voz para respostas da Yume
+                    if (sender === 'assistant' && 'speechSynthesis' in window) {
                         setTimeout(() => {
                             const utterance = new SpeechSynthesisUtterance(text);
                             utterance.lang = 'pt-BR';
-                            utterance.rate = parseFloat(document.getElementById('voiceRate').value);
-                            utterance.pitch = parseFloat(document.getElementById('voicePitch').value);
+                            utterance.rate = 1.0;
+                            utterance.pitch = 1.0;
                             speechSynthesis.speak(utterance);
                         }, 500);
                     }
                 }
+
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 messageCount++;
-                updateProfileInfo();
             }
 
             function updateUserAvatar(avatarType) {
@@ -2261,12 +1905,14 @@
                     'avatar2': 'linear-gradient(135deg, #EC4899, #DB2777)',
                     'avatar3': 'linear-gradient(135deg, #10B981, #059669)'
                 };
+
                 const avatarIcons = {
                     'default': 'fa-user',
                     'avatar1': 'fa-smile',
                     'avatar2': 'fa-star',
                     'avatar3': 'fa-heart'
                 };
+
                 userAvatar.style.background = avatarColors[avatarType] || avatarColors.default;
                 userAvatar.innerHTML = `<i class="fas ${avatarIcons[avatarType] || 'fa-user'}"></i>`;
             }
@@ -2285,32 +1931,7 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             }
 
-            function showAuthScreen() {
-                authScreen.classList.remove('hidden');
-                chatScreen.classList.add('hidden');
-                loginForm.reset();
-                registerForm.reset();
-                registerForm.classList.add('hidden');
-                loginForm.classList.remove('hidden');
-            }
-
-            function showChatScreen() {
-                authScreen.classList.add('hidden');
-                chatScreen.classList.remove('hidden');
-                chatInput.focus();
-                chatMessages.innerHTML = '';
-                if (assistantUI) assistantUI.classList.remove('hidden');
-                messageCount = 0;
-                updateProfileInfo();
-                if (userPreferences.length > 0) {
-                    document.querySelectorAll('.preference-tag').forEach(tag => {
-                        if (userPreferences.includes(tag.getAttribute('data-pref'))) {
-                            tag.classList.add('selected');
-                        }
-                    });
-                }
-            }
-
+            // Funções do menu
             function showHelp() {
                 showToast('Abrindo ajuda...');
                 addMessage("Claro! Posso ajudar você com:\n\n• Responder perguntas\n• Explicar conceitos\n• Auxiliar com tarefas\n• Conversar sobre diversos temas\n\nO que você gostaria de saber?", 'assistant');
@@ -2323,9 +1944,15 @@
                 profileModal.classList.remove('active');
             }
 
+            function showStats() {
+                showToast('Estatísticas do usuário');
+                addMessage(`Aqui estão suas estatísticas:\n\n• Usuário: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Mensagens trocadas: ${messageCount}\n• Preferências: ${userPreferences.join(', ') || 'Nenhuma'}\n• Status: Ativo\n• Domínio: yume.orpheostudio.com.br`, 'assistant');
+                profileModal.classList.remove('active');
+            }
+
             function showTerms() {
                 showToast('Abrindo Termos de Uso...');
-                addMessage("📜 Termos de Uso e Política de Privacidade\n\nPara visualizar nossos Termos de Uso completos e Política de Privacidade, acesse:\n\nwww.termos.orpheostudio.com.br\n\nResumidamente, ao usar a Yume, você concorda com:\n• Coleta de dados de uso para melhorar o serviço\n• Armazenamento seguro de suas informações\n• Uso responsável da plataforma\n• Respeito às diretrizes da comunidade\n\nSe tiver dúvidas, entre em contato: sac.studiotsukiyo@outlook.com", 'assistant');
+                addMessage("📜 Termos de Uso e Política de Privacidade\n\nPara visualizar nossos Termos de Uso completos e Política de Privacidade, acesse:\n\nhttps://naotodev1.github.io/terms-e-policy\n\nResumidamente, ao usar a Yume, você concorda com:\n• Coleta de dados de uso para melhorar o serviço\n• Armazenamento seguro de suas informações\n• Uso responsável da plataforma\n• Respeito às diretrizes da comunidade\n\nSe tiver dúvidas, entre em contato: sac.studiotsukiyo@outlook.com", 'assistant');
                 profileModal.classList.remove('active');
             }
 
