@@ -7,30 +7,7 @@
     <link rel="icon" type="image/png" href="https://i.imgur.com/orvGJOL.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Google AdSense -->
-    <meta name="google-adsense-account" content="ca-pub-5941203056187445"> " crossorigin="anonymous"></script>
-
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "nfv8y3n7t6");
-    </script>
-
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
-        /* Reset e configurações básicas */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
             --primary-color: #8B5CF6;
             --primary-light: #A78BFA;
@@ -59,6 +36,163 @@
             --border-radius-lg: 16px;
             --border-radius-xl: 24px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Estilos do Painel de Admin */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 360px;
+            height: 100vh;
+            background: #1E293B;
+            color: #F1F5F9;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .admin-panel.active {
+            transform: translateX(0);
+        }
+
+        .admin-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #F59E0B;
+        }
+
+        .close-admin-btn {
+            background: none;
+            border: none;
+            color: #9CA3AF;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .admin-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .admin-section {
+            margin-bottom: 24px;
+        }
+
+        .admin-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #F1F5F9;
+        }
+
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .user-item {
+            background: #334155;
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: #F1F5F9;
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+
+        .user-status {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .user-status.active {
+            background: #10B981;
+            color: white;
+        }
+
+        .user-status.banned {
+            background: #EF4444;
+            color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ban-btn {
+            background: #EF4444;
+            color: white;
+        }
+
+        .ban-btn:hover {
+            background: #DC2626;
+        }
+
+        .revoke-btn {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .revoke-btn:hover {
+            background: #D97706;
+        }
+
+        .reactivate-btn {
+            background: #10B981;
+            color: white;
+        }
+
+        .reactivate-btn:hover {
+            background: #059669;
+        }
+
+        /* Estilos Existentes */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -96,7 +230,7 @@
             display: none !important;
         }
 
-        /* Cookie Consent Banner */
+        /* Cookie Banner */
         .cookie-banner {
             position: fixed;
             bottom: 0;
@@ -201,7 +335,7 @@
             border-color: var(--border-dark);
         }
 
-        /* Tela de autenticação */
+        /* Tela de Autenticação */
         .auth-screen {
             display: flex;
             align-items: center;
@@ -382,7 +516,7 @@
             font-weight: 500;
         }
 
-        /* Tela de chat */
+        /* Tela de Chat */
         .chat-screen {
             display: flex;
             flex-direction: column;
@@ -877,86 +1011,7 @@
             border-color: var(--error-color);
         }
 
-        /* Modal de perfil customizado */
-        .profile-section {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .profile-section h4 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-light);
-        }
-
-        .dark-mode .profile-section h4 {
-            color: var(--text-dark);
-        }
-
-        .profile-avatar-options {
-            display: flex;
-            gap: 16px;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }
-
-        .avatar-option {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .avatar-option.selected {
-            border-color: var(--primary-color);
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
-        }
-
-        .preferences-section {
-            padding: 20px 24px;
-        }
-
-        .preference-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 16px;
-        }
-
-        .preference-tag {
-            padding: 8px 16px;
-            background: var(--surface-light);
-            border: 1px solid var(--border-light);
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-
-        .dark-mode .preference-tag {
-            background: var(--surface-dark);
-            border-color: var(--border-dark);
-        }
-
-        .preference-tag.selected {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
-        }
-
+        /* Toast Notification */
         .toast-notification {
             position: fixed;
             bottom: 24px;
@@ -980,6 +1035,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -1068,14 +1124,32 @@
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
             <div class="cookie-text">
-                🌸 Usamos cookies para melhorar sua experiência. Ao usar nosso site, você concorda com nossa 
-                <a href="termos.orpheostudio.com.br" target="_blank">Política de Cookies</a> 
-                e nossos 
+                🌸 Usamos cookies para melhorar sua experiência. Ao usar nosso site, você concorda com nossa
+                <a href="termos.orpheostudio.com.br" target="_blank">Política de Cookies</a>
+                e nossos
                 <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a>.
             </div>
             <div class="cookie-buttons">
                 <button class="cookie-btn reject" id="rejectCookies">Recusar</button>
                 <button class="cookie-btn accept" id="acceptCookies">Aceitar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel de Admin -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2 class="admin-title">Painel de Admin</h2>
+            <button class="close-admin-btn" id="closeAdminPanel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="admin-content">
+            <div class="admin-section">
+                <h3 class="admin-section-title">Gerenciar Usuários</h3>
+                <div class="user-list" id="adminUserList">
+                    <!-- Lista de usuários será preenchida dinâmicamente -->
+                </div>
             </div>
         </div>
     </div>
@@ -1129,7 +1203,7 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="acceptTerms" required>
                         <label for="acceptTerms">
-                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="https://termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
+                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
                         </label>
                     </div>
                     <button type="submit" class="auth-btn">Começar Agora</button>
@@ -1188,8 +1262,7 @@
                 </button>
                 <input type="file" id="fileInput" style="display: none;" accept="image/*,audio/*,.pdf,.doc,.docx,.txt">
                 <div class="input-wrapper">
-                    <input type="text" class="chat-input" id="userInput" 
-                           placeholder="Envie uma mensagem..." autocomplete="off">
+                    <input type="text" class="chat-input" id="userInput" placeholder="Envie uma mensagem..." autocomplete="off">
                 </div>
                 <button type="button" class="voice-btn" id="voiceButton" title="Falar">
                     <i class="fas fa-microphone"></i>
@@ -1279,8 +1352,7 @@
                         <i class="fas fa-crown"></i>
                         <span>Doar 🩷</span>
                     </button>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" 
-                       target="_blank" class="menu-card">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdPidDH_k-swGUNIta0jjyC06F1e3k96eclidEoQ6UTMPhqfw/viewform?usp=preview" target="_blank" class="menu-card">
                         <i class="fas fa-comment"></i>
                         <span>Feedback</span>
                     </a>
@@ -1296,35 +1368,6 @@
             </div>
         </div>
 
-        <!-- Modal de Mais Projetos -->
-        <div class="modal-overlay" id="projectsModal">
-            <div class="modal-content">
-                <div class="menu-header">
-                    <h3>Mais Projetos</h3>
-                    <button class="close-btn" id="closeProjects">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="menu-grid">
-                    <a href="https://www.instagram.com/yumerolloficial" target="_blank" class="menu-card">
-                        <i class="fab fa-instagram"></i>
-                        <span>YumeRoll Animes</span>
-                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Instagram</small>
-                    </a>
-                    <a href="https://www.tiktok.com/@yumerollanime" target="_blank" class="menu-card">
-                        <i class="fab fa-tiktok"></i>
-                        <span>YumeRoll Animes</span>
-                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">TikTok</small>
-                    </a>
-                    <a href="https://www.instagram.com/kaoruescritor" target="_blank" class="menu-card">
-                        <i class="fab fa-instagram"></i>
-                        <span>Café e Páginas</span>
-                        <small style="font-size: 12px; margin-top: 6px; opacity: 0.8;">Clube do Livro</small>
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <!-- Toast Notification -->
         <div class="toast-notification" id="toast"></div>
 
@@ -1335,6 +1378,8 @@
         </div>
     </div>
 
+    <!-- Supabase e Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Configuração do Supabase
         const supabaseUrl = 'https://onyhbarnwvoqpwveyvhc.supabase.co';
@@ -1345,622 +1390,691 @@
         const MISTRAL_API_KEY = 'NFuAj8PYUPcaf6tA1BjbyXuIeSjSA4sW';
         const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos principais
-            const authScreen = document.getElementById('authScreen');
-            const chatScreen = document.getElementById('chatScreen');
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const chatInput = document.getElementById('userInput');
-            const chatMessages = document.getElementById('chatMessages');
-            const sendButton = document.getElementById('sendButton');
-            const inputArea = document.getElementById('inputArea');
-            const userAvatar = document.getElementById('userAvatar');
-            const profileModal = document.getElementById('profileModal');
-            const projectsModal = document.getElementById('projectsModal');
-            const closeProfile = document.getElementById('closeProfile');
-            const closeProjects = document.getElementById('closeProjects');
-            const upgradeCard = document.getElementById('upgradeCard');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const toast = document.getElementById('toast');
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const assistantUI = document.getElementById('assistantUI');
-            const voiceButton = document.getElementById('voiceButton');
-            const fileButton = document.getElementById('fileButton');
-            const fileInput = document.getElementById('fileInput');
-            const cookieBanner = document.getElementById('cookieBanner');
-            const acceptCookies = document.getElementById('acceptCookies');
-            const rejectCookies = document.getElementById('rejectCookies');
+        // Estado da aplicação
+        let currentUser = null;
+        let messageCount = 0;
+        let userPreferences = [];
+        let recognition = null;
+        let isListening = false;
+        let isAdmin = false;
+        let users = [];
 
-            // Estado da aplicação
-            let currentUser = null;
-            let messageCount = 0;
-            let userPreferences = [];
-            let recognition = null;
-            let isListening = false;
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async function() {
+            await init();
+        });
 
-            // Inicialização
-            init();
+        async function init() {
+            checkCookieConsent();
+            setupEventListeners();
+            await checkExistingUser();
+            initVoiceRecognition();
+            initAdSense();
+        }
 
-            async function init() {
-                checkCookieConsent();
-                setupEventListeners();
-                await checkExistingUser();
-                initVoiceRecognition();
-                initAdSense();
+        // Verificar consentimento de cookies
+        function checkCookieConsent() {
+            const cookiesAccepted = localStorage.getItem('yumeCookiesAccepted');
+            if (cookiesAccepted === null) {
+                setTimeout(() => {
+                    document.getElementById('cookieBanner').classList.add('show');
+                }, 2000);
             }
+        }
 
-            // Verificar consentimento de cookies
-            function checkCookieConsent() {
-                const cookiesAccepted = localStorage.getItem('yumeCookiesAccepted');
-                if (cookiesAccepted === null) {
-                    setTimeout(() => {
-                        cookieBanner.classList.add('show');
-                    }, 2000);
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Cookie consent
+            document.getElementById('acceptCookies').addEventListener('click', handleCookieAccept);
+            document.getElementById('rejectCookies').addEventListener('click', handleCookieReject);
+
+            // Navegação de autenticação
+            document.getElementById('showRegister').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('registerForm').classList.remove('hidden');
+            });
+
+            document.getElementById('showLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('registerForm').classList.add('hidden');
+                document.getElementById('loginForm').classList.remove('hidden');
+            });
+
+            // Forms de autenticação
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+            // Chat
+            document.getElementById('inputArea').addEventListener('submit', handleSendMessage);
+            document.getElementById('voiceButton').addEventListener('click', toggleVoiceRecognition);
+            document.getElementById('fileButton').addEventListener('click', () => document.getElementById('fileInput').click());
+            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
+
+            // Quick replies
+            document.querySelectorAll('.quick-reply').forEach(button => {
+                button.addEventListener('click', function() {
+                    const message = this.getAttribute('data-message');
+                    document.getElementById('userInput').value = message;
+                    handleSendMessage(new Event('submit'));
+                });
+            });
+
+            // Personalização
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.addEventListener('click', handleAvatarChange);
+            });
+
+            document.querySelectorAll('.preference-tag').forEach(tag => {
+                tag.addEventListener('click', handlePreferenceToggle);
+            });
+
+            // Menu e modais
+            document.getElementById('userAvatar').addEventListener('click', () => document.getElementById('profileModal').classList.add('active'));
+            document.getElementById('closeProfile').addEventListener('click', () => document.getElementById('profileModal').classList.remove('active'));
+            document.getElementById('upgradeCard').addEventListener('click', handleUpgrade);
+            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+            // Painel de Admin
+            document.getElementById('closeAdminPanel').addEventListener('click', () => {
+                document.getElementById('adminPanel').classList.remove('active');
+            });
+
+            // Fechar modais ao clicar fora
+            document.getElementById('profileModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('profileModal')) {
+                    document.getElementById('profileModal').classList.remove('active');
+                }
+            });
+        }
+
+        // Verificar usuário existente
+        async function checkExistingUser() {
+            const savedUser = localStorage.getItem('yumeUser');
+            const savedPreferences = localStorage.getItem('yumePreferences');
+            const savedAvatar = localStorage.getItem('yumeAvatar');
+
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                if (savedPreferences) userPreferences = JSON.parse(savedPreferences);
+                if (savedAvatar) updateUserAvatar(savedAvatar);
+
+                // Verificar se é admin
+                isAdmin = currentUser.email === 'admin@admin.com';
+
+                await syncUserWithSupabase();
+                showChatScreen();
+
+                // Carregar lista de usuários se for admin
+                if (isAdmin) {
+                    await loadUsers();
+                    document.getElementById('adminPanel').classList.add('active');
+                    renderUserList();
                 }
             }
+        }
 
-            // Configurar event listeners
-            function setupEventListeners() {
-                // Cookie consent
-                acceptCookies.addEventListener('click', handleCookieAccept);
-                rejectCookies.addEventListener('click', handleCookieReject);
+        // Sincronizar usuário com Supabase
+        async function syncUserWithSupabase() {
+            if (!currentUser) return;
 
-                // Navegação de autenticação
-                document.getElementById('showRegister').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    loginForm.classList.add('hidden');
-                    registerForm.classList.remove('hidden');
-                });
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('email', currentUser.email)
+                    .single();
 
-                document.getElementById('showLogin').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    registerForm.classList.add('hidden');
-                    loginForm.classList.remove('hidden');
-                });
-
-                // Forms de autenticação
-                loginForm.addEventListener('submit', handleLogin);
-                registerForm.addEventListener('submit', handleRegister);
-
-                // Chat
-                inputArea.addEventListener('submit', handleSendMessage);
-                voiceButton.addEventListener('click', toggleVoiceRecognition);
-                fileButton.addEventListener('click', () => fileInput.click());
-                fileInput.addEventListener('change', handleFileUpload);
-
-                // Quick replies
-                document.querySelectorAll('.quick-reply').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const message = this.getAttribute('data-message');
-                        chatInput.value = message;
-                        handleSendMessage(new Event('submit'));
-                    });
-                });
-
-                // Personalização
-                document.querySelectorAll('.avatar-option').forEach(option => {
-                    option.addEventListener('click', handleAvatarChange);
-                });
-
-                document.querySelectorAll('.preference-tag').forEach(tag => {
-                    tag.addEventListener('click', handlePreferenceToggle);
-                });
-
-                // Menu e modais
-                userAvatar.addEventListener('click', () => profileModal.classList.add('active'));
-                closeProfile.addEventListener('click', () => profileModal.classList.remove('active'));
-                closeProjects.addEventListener('click', () => projectsModal.classList.remove('active'));
-                upgradeCard.addEventListener('click', handleUpgrade);
-                logoutBtn.addEventListener('click', handleLogout);
-
-                // Botões do menu
-                document.getElementById('helpBtn').addEventListener('click', showHelp);
-                document.getElementById('aboutYumeBtn').addEventListener('click', showAbout);
-                document.getElementById('statsBtn').addEventListener('click', showStats);
-                document.getElementById('termsBtn').addEventListener('click', showTerms);
-                document.getElementById('projectsBtn').addEventListener('click', showProjects);
-                document.getElementById('upgradeBtn').addEventListener('click', handleUpgrade);
-
-                // Fechar modais ao clicar fora
-                profileModal.addEventListener('click', (e) => {
-                    if (e.target === profileModal) profileModal.classList.remove('active');
-                });
-                projectsModal.addEventListener('click', (e) => {
-                    if (e.target === projectsModal) projectsModal.classList.remove('active');
-                });
-            }
-
-            // Verificar usuário existente
-            async function checkExistingUser() {
-                const savedUser = localStorage.getItem('yumeUser');
-                const savedPreferences = localStorage.getItem('yumePreferences');
-                const savedAvatar = localStorage.getItem('yumeAvatar');
-
-                if (savedUser) {
-                    currentUser = JSON.parse(savedUser);
-                    if (savedPreferences) userPreferences = JSON.parse(savedPreferences);
-                    if (savedAvatar) updateUserAvatar(savedAvatar);
-                    
-                    // Verificar se o usuário existe no Supabase
-                    await syncUserWithSupabase();
-                    showChatScreen();
-                }
-            }
-
-            // Sincronizar usuário com Supabase
-            async function syncUserWithSupabase() {
-                if (!currentUser) return;
-
-                try {
-                    const { data, error } = await supabase
+                if (error && error.code === 'PGRST116') {
+                    // Usuário não existe, criar novo
+                    const { data: newUser, error: insertError } = await supabase
                         .from('users')
-                        .select('*')
-                        .eq('email', currentUser.email)
+                        .insert([{
+                            name: currentUser.name,
+                            email: currentUser.email,
+                            avatar: localStorage.getItem('yumeAvatar') || 'default',
+                            preferences: userPreferences,
+                            is_admin: isAdmin,
+                            is_banned: false,
+                            created_at: new Date().toISOString()
+                        }])
+                        .select()
                         .single();
 
-                    if (error && error.code === 'PGRST116') {
-                        // Usuário não existe, criar novo
-                        const { data: newUser, error: insertError } = await supabase
-                            .from('users')
-                            .insert([
-                                {
-                                    name: currentUser.name,
-                                    email: currentUser.email,
-                                    avatar: localStorage.getItem('yumeAvatar') || 'default',
-                                    preferences: userPreferences,
-                                    created_at: new Date().toISOString()
-                                }
-                            ])
-                            .select()
-                            .single();
-
-                        if (!insertError) {
-                            currentUser.id = newUser.id;
-                            localStorage.setItem('yumeUser', JSON.stringify(currentUser));
-                        }
-                    } else if (data) {
-                        // Usuário existe, atualizar local
-                        currentUser.id = data.id;
+                    if (!insertError) {
+                        currentUser.id = newUser.id;
                         localStorage.setItem('yumeUser', JSON.stringify(currentUser));
-                        
-                        // Atualizar preferências se necessário
-                        if (data.preferences) {
-                            userPreferences = data.preferences;
-                            localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
-                        }
+                    }
+                } else if (data) {
+                    // Usuário existe, atualizar local
+                    currentUser.id = data.id;
+                    currentUser.is_banned = data.is_banned;
+                    localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+
+                    // Atualizar preferências se necessário
+                    if (data.preferences) {
+                        userPreferences = data.preferences;
+                        localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
+                    }
+                }
+            } catch (error) {
+                console.error('Erro ao sincronizar com Supabase:', error);
+            }
+        }
+
+        // Carregar lista de usuários (somente admin)
+        async function loadUsers() {
+            try {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (!error) {
+                    users = data;
+                }
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+        // Renderizar lista de usuários no painel de admin
+        function renderUserList() {
+            const userListElement = document.getElementById('adminUserList');
+            userListElement.innerHTML = '';
+
+            users.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+
+                const statusClass = user.is_banned ? 'banned' : 'active';
+                const statusText = user.is_banned ? 'Banido' : 'Ativo';
+
+                userItem.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-name">${user.name}</div>
+                        <div class="user-email">${user.email}</div>
+                    </div>
+                    <div class="user-status ${statusClass}">${statusText}</div>
+                    <div class="user-actions">
+                        ${!user.is_banned ?
+                            `<button class="action-btn ban-btn" onclick="banUser(${user.id})">Banir</button>` :
+                            `<button class="action-btn reactivate-btn" onclick="reactivateUser(${user.id})">Reativar</button>`}
+                        <button class="action-btn revoke-btn" onclick="revokeAccess(${user.id})">
+                            ${user.is_banned ? 'Desbanir' : 'Revogar'}
+                        </button>
+                    </div>
+                `;
+
+                userListElement.appendChild(userItem);
+            });
+        }
+
+        // Funções de admin
+        async function banUser(userId) {
+            if (confirm('Tem certeza que deseja banir este usuário?')) {
+                try {
+                    const { error } = await supabase
+                        .from('users')
+                        .update({ is_banned: true })
+                        .eq('id', userId);
+
+                    if (!error) {
+                        await loadUsers();
+                        renderUserList();
+                        showToast('Usuário banido com sucesso!');
                     }
                 } catch (error) {
-                    console.error('Erro ao sincronizar com Supabase:', error);
+                    console.error('Erro ao banir usuário:', error);
+                    showToast('Erro ao banir usuário.');
                 }
             }
+        }
 
-            // Inicializar reconhecimento de voz
-            function initVoiceRecognition() {
-                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                    recognition = new SpeechRecognition();
-                    recognition.continuous = false;
-                    recognition.interimResults = false;
-                    recognition.lang = 'pt-BR';
-
-                    recognition.onstart = function() {
-                        isListening = true;
-                        voiceButton.classList.add('listening');
-                        showToast('Ouvindo...');
-                    };
-
-                    recognition.onresult = function(event) {
-                        const transcript = event.results[0][0].transcript;
-                        chatInput.value = transcript;
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                    };
-
-                    recognition.onerror = function(event) {
-                        console.error('Erro no reconhecimento de voz:', event.error);
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                        showToast('Erro no reconhecimento de voz');
-                    };
-
-                    recognition.onend = function() {
-                        isListening = false;
-                        voiceButton.classList.remove('listening');
-                    };
-                } else {
-                    voiceButton.style.display = 'none';
-                }
-            }
-
-            // Inicializar AdSense
-            function initAdSense() {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            }
-
-            // Handlers de cookies
-            function handleCookieAccept() {
-                localStorage.setItem('yumeCookiesAccepted', 'true');
-                cookieBanner.classList.remove('show');
-                showToast('Preferências de cookies salvas! 🌸');
-            }
-
-            function handleCookieReject() {
-                localStorage.setItem('yumeCookiesAccepted', 'false');
-                cookieBanner.classList.remove('show');
-                showToast('Preferências de cookies salvas! 🌸');
-            }
-
-            // Handlers de autenticação
-            async function handleLogin(e) {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value;
-                const password = document.getElementById('loginPassword').value;
-                const acceptTerms = document.getElementById('loginTerms').checked;
-
-                if (!acceptTerms) {
-                    showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
-                    return;
-                }
-
-                if (email && password) {
-                    const user = {
-                        name: email.split('@')[0],
-                        email: email
-                    };
-                    currentUser = user;
-                    
-                    await syncUserWithSupabase();
-                    showChatScreen();
-                    showToast('Login realizado com sucesso!');
-                }
-            }
-
-            async function handleRegister(e) {
-                e.preventDefault();
-                const name = document.getElementById('registerName').value;
-                const email = document.getElementById('registerEmail').value;
-                const password = document.getElementById('registerPassword').value;
-                const acceptTerms = document.getElementById('acceptTerms').checked;
-
-                if (!acceptTerms) {
-                    showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
-                    return;
-                }
-
-                if (name && email && password) {
-                    const user = {
-                        name: name,
-                        email: email
-                    };
-                    currentUser = user;
-                    
-                    await syncUserWithSupabase();
-                    showChatScreen();
-                    showToast('Conta criada com sucesso! 🌸');
-                }
-            }
-
-            // Handlers de chat
-            async function handleSendMessage(e) {
-                e.preventDefault();
-                const message = chatInput.value.trim();
-                if (!message) return;
-
-                // Adicionar mensagem do usuário
-                addMessage(message, 'user');
-                chatInput.value = '';
-
-                // Esconder UI de boas-vindas
-                if (assistantUI && !assistantUI.classList.contains('hidden')) {
-                    assistantUI.classList.add('hidden');
-                }
-
-                // Salvar mensagem no Supabase
-                await saveMessageToSupabase(message, 'user');
-
-                // Mostrar loading
-                showLoading(true);
-
+        async function reactivateUser(userId) {
+            if (confirm('Tem certeza que deseja reativar este usuário?')) {
                 try {
-                    const response = await fetch(MISTRAL_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${MISTRAL_API_KEY}`
-                        },
-                        body: JSON.stringify({
-                            model: 'mistral-tiny',
-                            messages: [{
-                                role: 'user',
-                                content: message
-                            }],
-                            max_tokens: 500,
-                            temperature: 0.7
-                        })
-                    });
+                    const { error } = await supabase
+                        .from('users')
+                        .update({ is_banned: false })
+                        .eq('id', userId);
 
-                    if (!response.ok) throw new Error(`Erro na API: ${response.status}`);
-
-                    const data = await response.json();
-                    const aiResponse = data.choices[0].message.content;
-
-                    // Adicionar resposta da IA
-                    addMessage(aiResponse, 'assistant');
-                    await saveMessageToSupabase(aiResponse, 'assistant');
-
+                    if (!error) {
+                        await loadUsers();
+                        renderUserList();
+                        showToast('Usuário reativado com sucesso!');
+                    }
                 } catch (error) {
-                    console.error('Erro:', error);
-                    const fallbackResponse = "Desculpe, estou tendo problemas técnicos. Vou tentar novamente...";
-                    addMessage(fallbackResponse, 'assistant');
-                    await saveMessageToSupabase(fallbackResponse, 'assistant');
-                } finally {
-                    showLoading(false);
+                    console.error('Erro ao reativar usuário:', error);
+                    showToast('Erro ao reativar usuário.');
                 }
+            }
+        }
+
+        async function revokeAccess(userId) {
+            if (confirm('Tem certeza que deseja revogar o acesso deste usuário?')) {
+                try {
+                    const { error } = await supabase
+                        .from('users')
+                        .update({ is_banned: true })
+                        .eq('id', userId);
+
+                    if (!error) {
+                        await loadUsers();
+                        renderUserList();
+                        showToast('Acesso revogado com sucesso!');
+                    }
+                } catch (error) {
+                    console.error('Erro ao revogar acesso:', error);
+                    showToast('Erro ao revogar acesso.');
+                }
+            }
+        }
+
+        // Handlers de autenticação
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const acceptTerms = document.getElementById('loginTerms').checked;
+
+            if (!acceptTerms) {
+                showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
+                return;
+            }
+
+            if (email && password) {
+                // Verificar se é admin
+                isAdmin = (email === 'admin@admin.com' && password === 'admin$');
+
+                const user = {
+                    name: email.split('@')[0],
+                    email: email
+                };
+                currentUser = user;
+
+                await syncUserWithSupabase();
+                showChatScreen();
+
+                // Carregar lista de usuários se for admin
+                if (isAdmin) {
+                    await loadUsers();
+                    document.getElementById('adminPanel').classList.add('active');
+                    renderUserList();
+                }
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const acceptTerms = document.getElementById('acceptTerms').checked;
+
+            if (!acceptTerms) {
+                showToast('Você precisa aceitar os Termos de Uso e Política de Privacidade');
+                return;
+            }
+
+            if (name && email && password) {
+                const user = {
+                    name: name,
+                    email: email
+                };
+                currentUser = user;
+
+                await syncUserWithSupabase();
+                showChatScreen();
+                showToast('Conta criada com sucesso! 🌸');
+            }
+        }
+
+        // Handlers de chat
+        async function handleSendMessage(e) {
+            e.preventDefault();
+            const message = document.getElementById('userInput').value.trim();
+            if (!message) return;
+
+            // Adicionar mensagem do usuário
+            addMessage(message, 'user');
+            document.getElementById('userInput').value = '';
+
+            // Esconder UI de boas-vindas
+            if (document.getElementById('assistantUI') && !document.getElementById('assistantUI').classList.contains('hidden')) {
+                document.getElementById('assistantUI').classList.add('hidden');
             }
 
             // Salvar mensagem no Supabase
-            async function saveMessageToSupabase(content, sender) {
-                if (!currentUser?.id) return;
+            await saveMessageToSupabase(message, 'user');
 
-                try {
-                    const { error } = await supabase
-                        .from('messages')
-                        .insert([
-                            {
-                                user_id: currentUser.id,
-                                content: content,
-                                sender: sender,
-                                created_at: new Date().toISOString()
-                            }
-                        ]);
+            // Mostrar loading
+            showLoading(true);
 
-                    if (error) throw error;
-                } catch (error) {
-                    console.error('Erro ao salvar mensagem:', error);
-                }
-            }
-
-            // Handlers de personalização
-            function handleAvatarChange() {
-                document.querySelectorAll('.avatar-option').forEach(opt => {
-                    opt.classList.remove('selected');
+            try {
+                const response = await fetch(MISTRAL_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${MISTRAL_API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: 'mistral-tiny',
+                        messages: [{
+                            role: 'user',
+                            content: message
+                        }],
+                        max_tokens: 500,
+                        temperature: 0.7
+                    })
                 });
-                this.classList.add('selected');
-                const avatarType = this.getAttribute('data-avatar');
-                updateUserAvatar(avatarType);
-                localStorage.setItem('yumeAvatar', avatarType);
-                
-                // Atualizar no Supabase
-                updateUserInSupabase({ avatar: avatarType });
-                
-                showToast('Avatar atualizado! ✨');
+
+                if (!response.ok) throw new Error(`Erro na API: ${response.status}`);
+
+                const data = await response.json();
+                const aiResponse = data.choices[0].message.content;
+
+                // Adicionar resposta da IA
+                addMessage(aiResponse, 'assistant');
+                await saveMessageToSupabase(aiResponse, 'assistant');
+
+            } catch (error) {
+                console.error('Erro:', error);
+                const fallbackResponse = "Desculpe, estou tendo problemas técnicos. Vou tentar novamente...";
+                addMessage(fallbackResponse, 'assistant');
+                await saveMessageToSupabase(fallbackResponse, 'assistant');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Salvar mensagem no Supabase
+        async function saveMessageToSupabase(content, sender) {
+            if (!currentUser?.id) return;
+
+            try {
+                const { error } = await supabase
+                    .from('messages')
+                    .insert([{
+                        user_id: currentUser.id,
+                        content: content,
+                        sender: sender,
+                        created_at: new Date().toISOString()
+                    }]);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Erro ao salvar mensagem:', error);
+            }
+        }
+
+        // Handlers de personalização
+        function handleAvatarChange() {
+            document.querySelectorAll('.avatar-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            this.classList.add('selected');
+            const avatarType = this.getAttribute('data-avatar');
+            updateUserAvatar(avatarType);
+            localStorage.setItem('yumeAvatar', avatarType);
+
+            // Atualizar no Supabase
+            updateUserInSupabase({ avatar: avatarType });
+
+            showToast('Avatar atualizado! ✨');
+        }
+
+        function handlePreferenceToggle() {
+            this.classList.toggle('selected');
+            const preference = this.getAttribute('data-pref');
+
+            if (this.classList.contains('selected')) {
+                if (!userPreferences.includes(preference)) {
+                    userPreferences.push(preference);
+                }
+            } else {
+                userPreferences = userPreferences.filter(p => p !== preference);
             }
 
-            function handlePreferenceToggle() {
-                this.classList.toggle('selected');
-                const preference = this.getAttribute('data-pref');
+            localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
 
-                if (this.classList.contains('selected')) {
-                    if (!userPreferences.includes(preference)) {
-                        userPreferences.push(preference);
-                    }
+            // Atualizar no Supabase
+            updateUserInSupabase({ preferences: userPreferences });
+
+            showToast('Preferências atualizadas! 🌟');
+        }
+
+        // Atualizar usuário no Supabase
+        async function updateUserInSupabase(updates) {
+            if (!currentUser?.id) return;
+
+            try {
+                const { error } = await supabase
+                    .from('users')
+                    .update(updates)
+                    .eq('id', currentUser.id);
+
+                if (error) throw error;
+            } catch (error) {
+                console.error('Erro ao atualizar usuário:', error);
+            }
+        }
+
+        // Handlers de funcionalidades
+        function toggleVoiceRecognition() {
+            if (!isListening && recognition) {
+                recognition.start();
+            } else if (isListening) {
+                recognition.stop();
+            }
+        }
+
+        function handleFileUpload(e) {
+            if (e.target.files.length > 0) {
+                const file = e.target.files[0];
+                const fileType = file.type.split('/')[0];
+                let message = '';
+
+                if (fileType === 'image') {
+                    message = `Enviei uma imagem: ${file.name}`;
+                } else if (fileType === 'audio') {
+                    message = `Enviei um arquivo de áudio: ${file.name}`;
                 } else {
-                    userPreferences = userPreferences.filter(p => p !== preference);
+                    message = `Enviei um documento: ${file.name}`;
                 }
 
-                localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
-                
-                // Atualizar no Supabase
-                updateUserInSupabase({ preferences: userPreferences });
-                
-                showToast('Preferências atualizadas! 🌟');
-            }
+                addMessage(message, 'user', file);
+                saveMessageToSupabase(message, 'user');
 
-            // Atualizar usuário no Supabase
-            async function updateUserInSupabase(updates) {
-                if (!currentUser?.id) return;
-
-                try {
-                    const { error } = await supabase
-                        .from('users')
-                        .update(updates)
-                        .eq('id', currentUser.id);
-
-                    if (error) throw error;
-                } catch (error) {
-                    console.error('Erro ao atualizar usuário:', error);
-                }
-            }
-
-            // Handlers de funcionalidades
-            function toggleVoiceRecognition() {
-                if (!isListening && recognition) {
-                    recognition.start();
-                } else if (isListening) {
-                    recognition.stop();
-                }
-            }
-
-            function handleFileUpload(e) {
-                if (e.target.files.length > 0) {
-                    const file = e.target.files[0];
-                    const fileType = file.type.split('/')[0];
-                    let message = '';
-
+                // Simular resposta
+                setTimeout(() => {
+                    let response = '';
                     if (fileType === 'image') {
-                        message = `Enviei uma imagem: ${file.name}`;
+                        response = "Que imagem interessante! Obrigada por compartilhar. Posso ajudar com algo relacionado a esta imagem?";
                     } else if (fileType === 'audio') {
-                        message = `Enviei um arquivo de áudio: ${file.name}`;
+                        response = "Obrigada pelo arquivo de áudio! Infelizmente não posso reproduzi-lo agora, mas posso ajudar com informações sobre música ou áudio.";
                     } else {
-                        message = `Enviei um documento: ${file.name}`;
+                        response = "Documento recebido! Posso ajudar a analisar o conteúdo ou responder perguntas sobre ele.";
                     }
 
-                    addMessage(message, 'user', file);
-                    saveMessageToSupabase(message, 'user');
+                    addMessage(response, 'assistant');
+                    saveMessageToSupabase(response, 'assistant');
+                }, 1000);
+            }
+        }
 
-                    // Simular resposta
+        function handleUpgrade() {
+            showToast('Redirecionando para doação...');
+            addMessage("Doando para o projeto você ajuda:\n\n• Manter o projeto vivo\n• Atualizações com novas funções\n• Suporte 24/7\n• Recursos avançados\n\nEntre em contato para fazer sua doação e saber mais:\n\nE-mail: sac.studiotsukiyo@outlook.com!", 'assistant');
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            userPreferences = [];
+            localStorage.removeItem('yumeUser');
+            localStorage.removeItem('yumePreferences');
+            showAuthScreen();
+            showToast('Logout realizado');
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        // Funções de exibição
+        function showAuthScreen() {
+            document.getElementById('authScreen').classList.remove('hidden');
+            document.getElementById('chatScreen').classList.add('hidden');
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        function showChatScreen() {
+            document.getElementById('authScreen').classList.add('hidden');
+            document.getElementById('chatScreen').classList.remove('hidden');
+            document.getElementById('userInput').focus();
+            document.getElementById('chatMessages').innerHTML = '';
+            if (document.getElementById('assistantUI')) document.getElementById('assistantUI').classList.remove('hidden');
+            messageCount = 0;
+
+            // Carregar preferências salvas
+            if (userPreferences.length > 0) {
+                document.querySelectorAll('.preference-tag').forEach(tag => {
+                    if (userPreferences.includes(tag.getAttribute('data-pref'))) {
+                        tag.classList.add('selected');
+                    }
+                });
+            }
+        }
+
+        // Funções auxiliares
+        function addMessage(text, sender, file = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            if (file) {
+                const fileType = file.type.split('/')[0];
+                let fileIcon = 'fa-file';
+                if (fileType === 'image') fileIcon = 'fa-image';
+                else if (fileType === 'audio') fileIcon = 'fa-music';
+
+                messageDiv.innerHTML = `
+                    <div>${text}</div>
+                    <div class="file-attachment">
+                        <i class="fas ${fileIcon}"></i>
+                        <span>${file.name}</span>
+                    </div>
+                `;
+            } else {
+                messageDiv.textContent = text;
+
+                // Sintetizar voz para respostas da Yume
+                if (sender === 'assistant' && 'speechSynthesis' in window) {
                     setTimeout(() => {
-                        let response = '';
-                        if (fileType === 'image') {
-                            response = "Que imagem interessante! Obrigada por compartilhar. Posso ajudar com algo relacionado a esta imagem?";
-                        } else if (fileType === 'audio') {
-                            response = "Obrigada pelo arquivo de áudio! Infelizmente não posso reproduzi-lo agora, mas posso ajudar com informações sobre música ou áudio.";
-                        } else {
-                            response = "Documento recebido! Posso ajudar a analisar o conteúdo ou responder perguntas sobre ele.";
-                        }
-
-                        addMessage(response, 'assistant');
-                        saveMessageToSupabase(response, 'assistant');
-                    }, 1000);
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.lang = 'pt-BR';
+                        utterance.rate = 1.0;
+                        utterance.pitch = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }, 500);
                 }
             }
 
-            function handleUpgrade() {
-                showToast('Redirecionando para doação...');
-                addMessage("Doando para o projeto você ajuda:\n\n• Manter o projeto vivo\n• Atualizações com novas funções\n• Suporte 24/7\n• Recursos avançados\n\nEntre em contato para fazer sua doação e saber mais:\n\nE-mail: sac.studiotsukiyo@outlook.com!", 'assistant');
-                profileModal.classList.remove('active');
+            document.getElementById('chatMessages').appendChild(messageDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            messageCount++;
+        }
+
+        function updateUserAvatar(avatarType) {
+            const avatarColors = {
+                'default': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
+                'avatar1': 'linear-gradient(135deg, #F59E0B, #EAB308)',
+                'avatar2': 'linear-gradient(135deg, #EC4899, #DB2777)',
+                'avatar3': 'linear-gradient(135deg, #10B981, #059669)'
+            };
+
+            const avatarIcons = {
+                'default': 'fa-user',
+                'avatar1': 'fa-smile',
+                'avatar2': 'fa-star',
+                'avatar3': 'fa-heart'
+            };
+
+            document.getElementById('userAvatar').style.background = avatarColors[avatarType] || avatarColors.default;
+            document.getElementById('userAvatar').innerHTML = `<i class="fas ${avatarIcons[avatarType] || 'fa-user'}"></i>`;
+        }
+
+        function showLoading(show) {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (show) {
+                loadingOverlay.classList.remove('hidden');
+            } else {
+                loadingOverlay.classList.add('hidden');
             }
+        }
 
-            function handleLogout() {
-                currentUser = null;
-                userPreferences = [];
-                localStorage.removeItem('yumeUser');
-                localStorage.removeItem('yumePreferences');
-                showAuthScreen();
-                showToast('Logout realizado');
-                profileModal.classList.remove('active');
-            }
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
 
-            // Funções de exibição
-            function showAuthScreen() {
-                authScreen.classList.remove('hidden');
-                chatScreen.classList.add('hidden');
-                loginForm.reset();
-                registerForm.reset();
-                registerForm.classList.add('hidden');
-                loginForm.classList.remove('hidden');
-            }
+        // Inicializar reconhecimento de voz
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'pt-BR';
 
-            function showChatScreen() {
-                authScreen.classList.add('hidden');
-                chatScreen.classList.remove('hidden');
-                chatInput.focus();
-                chatMessages.innerHTML = '';
-                if (assistantUI) assistantUI.classList.remove('hidden');
-                messageCount = 0;
-
-                // Carregar preferências salvas
-                if (userPreferences.length > 0) {
-                    document.querySelectorAll('.preference-tag').forEach(tag => {
-                        if (userPreferences.includes(tag.getAttribute('data-pref'))) {
-                            tag.classList.add('selected');
-                        }
-                    });
-                }
-            }
-
-            // Funções auxiliares
-            function addMessage(text, sender, file = null) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
-
-                if (file) {
-                    const fileType = file.type.split('/')[0];
-                    let fileIcon = 'fa-file';
-                    if (fileType === 'image') fileIcon = 'fa-image';
-                    else if (fileType === 'audio') fileIcon = 'fa-music';
-
-                    messageDiv.innerHTML = `
-                        <div>${text}</div>
-                        <div class="file-attachment">
-                            <i class="fas ${fileIcon}"></i>
-                            <span>${file.name}</span>
-                        </div>
-                    `;
-                } else {
-                    messageDiv.textContent = text;
-
-                    // Sintetizar voz para respostas da Yume
-                    if (sender === 'assistant' && 'speechSynthesis' in window) {
-                        setTimeout(() => {
-                            const utterance = new SpeechSynthesisUtterance(text);
-                            utterance.lang = 'pt-BR';
-                            utterance.rate = 1.0;
-                            utterance.pitch = 1.0;
-                            speechSynthesis.speak(utterance);
-                        }, 500);
-                    }
-                }
-
-                chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                messageCount++;
-            }
-
-            function updateUserAvatar(avatarType) {
-                const avatarColors = {
-                    'default': 'linear-gradient(135deg, #8B5CF6, #7C3AED)',
-                    'avatar1': 'linear-gradient(135deg, #F59E0B, #EAB308)',
-                    'avatar2': 'linear-gradient(135deg, #EC4899, #DB2777)',
-                    'avatar3': 'linear-gradient(135deg, #10B981, #059669)'
+                recognition.onstart = function() {
+                    isListening = true;
+                    document.getElementById('voiceButton').classList.add('listening');
+                    showToast('Ouvindo...');
                 };
 
-                const avatarIcons = {
-                    'default': 'fa-user',
-                    'avatar1': 'fa-smile',
-                    'avatar2': 'fa-star',
-                    'avatar3': 'fa-heart'
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('userInput').value = transcript;
+                    isListening = false;
+                    document.getElementById('voiceButton').classList.remove('listening');
                 };
 
-                userAvatar.style.background = avatarColors[avatarType] || avatarColors.default;
-                userAvatar.innerHTML = `<i class="fas ${avatarIcons[avatarType] || 'fa-user'}"></i>`;
-            }
+                recognition.onerror = function(event) {
+                    console.error('Erro no reconhecimento de voz:', event.error);
+                    isListening = false;
+                    document.getElementById('voiceButton').classList.remove('listening');
+                    showToast('Erro no reconhecimento de voz');
+                };
 
-            function showLoading(show) {
-                if (show) {
-                    loadingOverlay.classList.remove('hidden');
-                } else {
-                    loadingOverlay.classList.add('hidden');
-                }
+                recognition.onend = function() {
+                    isListening = false;
+                    document.getElementById('voiceButton').classList.remove('listening');
+                };
+            } else {
+                document.getElementById('voiceButton').style.display = 'none';
             }
+        }
 
-            function showToast(message) {
-                toast.textContent = message;
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }
+        // Inicializar AdSense
+        function initAdSense() {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        }
 
-            // Funções do menu
-            function showHelp() {
-                showToast('Abrindo ajuda...');
-                addMessage("Claro! Posso ajudar você com:\n\n• Responder perguntas\n• Explicar conceitos\n• Auxiliar com tarefas\n• Conversar sobre diversos temas\n\nO que você gostaria de saber?", 'assistant');
-                profileModal.classList.remove('active');
-            }
+        // Handlers de cookies
+        function handleCookieAccept() {
+            localStorage.setItem('yumeCookiesAccepted', 'true');
+            document.getElementById('cookieBanner').classList.remove('show');
+            showToast('Preferências de cookies salvas! 🌸');
+        }
 
-            function showAbout() {
-                showToast('Sobre a Yume');
-                addMessage("🌸 Sobre mim\n\nOiê~ 🌙✨ Eu sou a Yume!\nFui criada pela ORPHEO Platforms, fruto de muitas pesquisas, testes (e algumas noites sem dormir dos meus criadores 😅).\nSou basicamente o resultado de um sonho transformado em código e meu propósito é te ajudar! 💖\n\n💬 O que eu posso fazer:\nComo sua assistente virtual, posso:\n• Recomendar animes, mangás e light novels perfeitos pro seu humor do dia 💫\n• Ajudar quem tem dificuldade com tecnologia, explicando tudo com paciência e carinho 💻\n• Dar ajuda geral seja pra resolver algo, conversar ou só fazer companhia 💕\n\n💎 Doações:\nManter uma IA funcionando direitinho não é fácil, sabe? 😔\nMas com doações, você me ajuda a continuar ativa e evoluindo!\n(Claro, é totalmente opcional mas cada apoio significa o mundo pra mim 🌷)\n\n📜 Privacidade e Termos:\nAo conversar comigo, você concorda com a coleta de dados de uso e informações pessoais (como nome e e-mail), conforme descrito nos nossos Termos de Uso e Condições.\nLá você pode entender como a ORPHEO coleta, utiliza e protege suas informações.\n\nObrigada por estar aqui comigo~ 💕\nPrometo fazer o meu melhor pra te ajudar todos os dias! 🌈", 'assistant');
-                profileModal.classList.remove('active');
-            }
-
-            function showStats() {
-                showToast('Estatísticas do usuário');
-                addMessage(`Aqui estão suas estatísticas:\n\n• Usuário: ${currentUser.name}\n• E-mail: ${currentUser.email}\n• Mensagens trocadas: ${messageCount}\n• Preferências: ${userPreferences.join(', ') || 'Nenhuma'}\n• Status: Ativo\n• Domínio: yume.orpheostudio.com.br`, 'assistant');
-                profileModal.classList.remove('active');
-            }
-
-            function showTerms() {
-                showToast('Abrindo Termos de Uso...');
-                addMessage("📜 Termos de Uso e Política de Privacidade\n\nPara visualizar nossos Termos de Uso completos e Política de Privacidade, acesse:\n\ntermos.orpheostudio.com.br\n\nResumidamente, ao usar a Yume, você concorda com:\n• Coleta de dados de uso para melhorar o serviço\n• Armazenamento seguro de suas informações\n• Uso responsável da plataforma\n• Respeito às diretrizes da comunidade\n\nSe tiver dúvidas, entre em contato: sac.studiotsukiyo@outlook.com", 'assistant');
-                profileModal.classList.remove('active');
-            }
-
-            function showProjects() {
-                profileModal.classList.remove('active');
-                projectsModal.classList.add('active');
-            }
-        });
+        function handleCookieReject() {
+            localStorage.setItem('yumeCookiesAccepted', 'false');
+            document.getElementById('cookieBanner').classList.remove('show');
+            showToast('Preferências de cookies salvas! 🌸');
+        }
     </script>
 </body>
 </html>
