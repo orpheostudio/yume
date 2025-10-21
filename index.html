@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yume - Assistente Virtual IA</title>
+    <title>Sena - Assistente Virtual IA</title>
     <link rel="icon" type="image/png" href="https://i.imgur.com/2eZsc43.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1125,7 +1125,7 @@
         <div class="cookie-content">
             <div class="cookie-text">
                 🌸 Usamos cookies para melhorar sua experiência. Ao usar nosso site, você concorda com nossa
-                <a href="www.termos.orpheostudio.com.br" target="_blank">Política de Cookies</a>
+                <a href="www.politicas.orpheostudio.com.br" target="_blank">Política de Cookies</a>
                 e nossos
                 <a href="www.termos.orpheostudio.com.br" target="_blank">Termos de Uso</a>.
             </div>
@@ -1160,7 +1160,7 @@
             <div class="auth-container">
                 <div class="auth-header">
                     <img src="https://i.imgur.com/2eZsc43.png" alt="Yume Logo" class="auth-logo">
-                    <h1 class="auth-title">Facilita+</h1>
+                    <h1 class="auth-title">Sena</h1>
                     <p class="auth-subtitle">Powered by ORPHEO Platforms</p>
                 </div>
 
@@ -1177,7 +1177,7 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="loginTerms" required>
                         <label for="loginTerms">
-                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
+                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="politicas.orpheostudio.com.br" target="_blank">Políticas de Privacidade</a>
                         </label>
                     </div>
                     <button type="submit" class="auth-btn">Entrar</button>
@@ -1187,7 +1187,7 @@
                 </form>
 
                 <form class="auth-form hidden" id="registerForm">
-                    <h2 class="form-title">Junte-se ao Facilita+</h2>
+                    <h2 class="form-title">Junte-se a Sena</h2>
                     <div class="form-group">
                         <label for="registerName">Nome Completo</label>
                         <input type="text" id="registerName" required placeholder="Seu nome completo">
@@ -1203,7 +1203,7 @@
                     <div class="terms-checkbox">
                         <input type="checkbox" id="acceptTerms" required>
                         <label for="acceptTerms">
-                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="termos.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
+                            Concordo com os <a href="termos.orpheostudio.com.br" target="_blank">Termos de Uso</a> e <a href="politicas.orpheostudio.com.br" target="_blank">Política de Privacidade</a>
                         </label>
                     </div>
                     <button type="submit" class="auth-btn">Começar Agora</button>
@@ -1225,13 +1225,13 @@
                 </div>
                 <div class="header-title-group">
                     <img src="https://i.imgur.com/2eZsc43.png" alt="Yume Logo" class="header-logo">
-                    <h1 class="header-name">Facilita+</h1>
+                    <h1 class="header-name">Sena</h1>
                 </div>
             </header>
 
             <div class="chat-body">
                 <div class="assistant-ui" id="assistantUI">
-                    <p class="greeting-text">Olá! Sou a Yume🌸 👋</p>
+                    <p class="greeting-text">Olá! Sou a Sena🌸 👋</p>
                     <p class="help-text">Sua assistente virtual inteligente. Posso ajudar com respostas, recomendações, conversas e muito mais!</p>
                 </div>
                 <div class="chat-messages" id="chatMessages"></div>
@@ -1250,7 +1250,7 @@
             </div>
 
             <div class="quick-reply-area" id="quickReplyArea">
-                <button class="quick-reply" data-message="Como você funciona?">Como você funciona?</button>
+                <button class="quick-reply" data-message="Como você funciona?">Me exolique sobre os Termos de Uso da Orpheo Studio</button>
                 <button class="quick-reply" data-message="Preciso de ajuda">Preciso de ajuda</button>
                 <button class="quick-reply" data-message="O que você pode fazer?">O que você pode fazer?</button>
                 <button class="quick-reply" data-message="Conte uma curiosidade">Conte uma curiosidade</button>
@@ -1272,7 +1272,7 @@
                 </button>
             </form>
             <div class="footer">
-                Yume 🌸 • Powered by ORPHEO Platforms • V2.0.0
+                Sena 🌸 • Powered by ORPHEO Platforms • V2.0.0
             </div>
         </div>
 
@@ -1309,7 +1309,7 @@
                 <div class="preferences-section">
                     <h4>Minhas Preferências</h4>
                     <p style="font-size: 14px; margin-bottom: 16px; color: var(--text-muted);">
-                        Selecione seus interesses para que a Yume possa personalizar suas respostas:
+                        Selecione seus interesses para que a Sena possa personalizar suas respostas:
                     </p>
                     <div class="preference-tags">
                         <div class="preference-tag" data-pref="anime">Anime</div>
@@ -1543,18 +1543,18 @@
 
                     if (!insertError) {
                         currentUser.id = newUser.id;
-                        localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                        sessionStorage.setItem('yumeUser', JSON.stringify(currentUser));
                     }
                 } else if (data) {
                     // Usuário existe, atualizar local
                     currentUser.id = data.id;
                     currentUser.is_banned = data.is_banned;
-                    localStorage.setItem('yumeUser', JSON.stringify(currentUser));
+                    sessionStorage.setItem('yumeUser', JSON.stringify(currentUser));
 
                     // Atualizar preferências se necessário
                     if (data.preferences) {
                         userPreferences = data.preferences;
-                        localStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
+                        sessionStorage.setItem('yumePreferences', JSON.stringify(userPreferences));
                     }
                 }
             } catch (error) {
@@ -2065,13 +2065,13 @@
 
         // Handlers de cookies
         function handleCookieAccept() {
-            localStorage.setItem('yumeCookiesAccepted', 'true');
+            sessionStorage.setItem('yumeCookiesAccepted', 'true');
             document.getElementById('cookieBanner').classList.remove('show');
             showToast('Preferências de cookies salvas! 🌸');
         }
 
         function handleCookieReject() {
-            localStorage.setItem('yumeCookiesAccepted', 'false');
+            sessionStorage.setItem('yumeCookiesAccepted', 'false');
             document.getElementById('cookieBanner').classList.remove('show');
             showToast('Preferências de cookies salvas! 🌸');
         }
