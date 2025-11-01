@@ -4,37 +4,343 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#7C3AED">
-    <meta name="description" content="SENA - Assistente digital com alma gentil. Tecnologia acessível para todos.">
-
-    <!-- Manifest -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Ícone do site (favicon PNG) -->
+    <meta name="description" content="SENA - Assistente digital da AmplaAI. Tecnologia com alma gentil para todos.">
     <link rel="icon" type="image/png" href="https://i.imgur.com/5watJQF.png">
-
-    <!-- Ícone para dispositivos Apple -->
     <link rel="apple-touch-icon" type="image/png" href="https://i.imgur.com/5watJQF.png">
-
-    <title>SENA - Tecnologia com alma gentil</title>
-</head>
-<body>
-    <!-- Conteúdo da página -->
-</body>
-</html>
+    <title>SENA - AmplaAI | Tecnologia com alma gentil</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "YOUR_CLARITY_ID");
-    </script>
-
     <style>
-        * {
+        * { font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .dark { color-scheme: dark; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(1.5); }
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(124, 58, 237, 0.6); }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .chat-message { animation: fadeIn 0.3s ease-in; }
+        .pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+        .voice-wave { animation: wave 1s ease-in-out infinite; }
+        .sena-avatar { animation: breathe 3s ease-in-out infinite; transition: all 0.3s; }
+        .sena-avatar.listening { animation: pulse-glow 1s ease-in-out infinite; }
+        .sena-avatar.speaking { animation: breathe 0.5s ease-in-out infinite; }
+        
+        .bg-sena-gradient {
+            background: linear-gradient(180deg, #00D4FF 0%, #4A90E2 50%, #8B5CF6 100%);
+        }
+        
+        .chat-bubble-bot {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(139, 92, 246, 0.15) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+        }
+        
+        .dark .chat-bubble-bot {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(139, 92, 246, 0.25) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        .message-markdown p { margin-bottom: 0.5rem; }
+        .message-markdown code {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .dark .message-markdown code { background: rgba(255,255,255,0.1); }
+        
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: typing 1.4s infinite;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.7; }
+            30% { transform: translateY(-10px); opacity: 1; }
+        }
+        
+        .scroll-shadow {
+            position: relative;
+        }
+        .scroll-shadow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to bottom, white, transparent);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .dark .scroll-shadow::before {
+            background: linear-gradient(to bottom, rgb(31 41 55), transparent);
+        }
+        .scroll-shadow.scrolled::before { opacity: 1; }
+        
+        /* Custom scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(124, 58, 237, 0.3);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(124, 58, 237, 0.5);
+        }
+    </style>
+</head>
+<body class="transition-colors duration-300 bg-gradient-to-br from-purple-50 via-pink-50 to-purple-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-900">
+
+<!-- Language Selection Modal -->
+<div id="languageModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 max-w-md w-full transform transition-all" style="animation: fadeIn 0.3s ease-out;">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 text-center">🌍 Escolha seu idioma</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-8 text-center text-sm">Select your language | Seleccione su idioma</p>
+        
+        <div class="space-y-3">
+            <button onclick="selectLanguage('pt')" class="w-full flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 hover:from-purple-100 hover:to-pink-100 dark:hover:from-purple-900/50 dark:hover:to-pink-900/50 transition-all transform hover:scale-105 shadow-sm">
+                <span class="text-4xl">🇧🇷</span>
+                <div class="text-left flex-1">
+                    <div class="font-bold text-gray-900 dark:text-white text-lg">Português</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">Brasil</div>
+                </div>
+                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            
+            <button onclick="selectLanguage('en')" class="w-full flex items-center gap-4 p-5 rounded-2xl bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all transform hover:scale-105 shadow-sm">
+                <span class="text-4xl">🇺🇸</span>
+                <div class="text-left flex-1">
+                    <div class="font-bold text-gray-900 dark:text-white text-lg">English</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">United States</div>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+            
+            <button onclick="selectLanguage('es')" class="w-full flex items-center gap-4 p-5 rounded-2xl bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-all transform hover:scale-105 shadow-sm">
+                <span class="text-4xl">🇪🇸</span>
+                <div class="text-left flex-1">
+                    <div class="font-bold text-gray-900 dark:text-white text-lg">Español</div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">España</div>
+                </div>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Welcome Screen -->
+<div id="welcomeScreen" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 transition-colors">
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-6">
+                <div class="w-32 h-32 rounded-full bg-sena-gradient flex items-center justify-center sena-avatar shadow-2xl">
+                    <img src="https://i.imgur.com/5watJQF.png" alt="Logo Sena" class="w-20 h-20 object-contain">
+                </div>
+            </div>
+            <h1 class="text-6xl font-bold mb-3">
+                <span class="bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">SENA</span>
+            </h1>
+            <p class="text-2xl text-gray-600 dark:text-gray-300 mb-4" id="welcomeTagline">Tecnologia com alma gentil.</p>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed" id="welcomeDescription">Olá! Eu sou a Sena, sua assistente digital. Estou aqui para tornar a tecnologia simples e acessível para você. Vamos começar?</p>
+        </div>
+        
+        <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 mb-6 border border-purple-100 dark:border-purple-800">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2" id="welcomeFeaturesTitle">
+                ✨ O que posso fazer por você
+            </h2>
+            <ul class="space-y-3 text-gray-700 dark:text-gray-300 text-sm" id="welcomeFeaturesList">
+                <li class="flex items-start gap-3">
+                    <span class="text-xl">📚</span>
+                    <span>Explicar conceitos de tecnologia de forma simples</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-xl">📅</span>
+                    <span>Ajudar na organização do seu dia a dia</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-xl">💡</span>
+                    <span>Responder perguntas sobre diversos assuntos</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-xl">🎯</span>
+                    <span>Criar lembretes e sugestões personalizadas</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-xl">🗣️</span>
+                    <span>Conversar por voz (clique no microfone)</span>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-5 mb-6">
+            <p class="text-sm text-yellow-800 dark:text-yellow-200 flex items-start gap-2" id="welcomeDisclaimer">
+                <span class="text-xl">⚠️</span>
+                <span><strong>Aviso:</strong> Sou uma inteligência artificial e posso cometer erros. Sempre verifique informações importantes em fontes confiáveis.</span>
+            </p>
+        </div>
+        
+        <div class="mb-6">
+            <label class="flex items-start gap-3 cursor-pointer group">
+                <input type="checkbox" id="termsCheckbox" class="mt-1 w-5 h-5 text-purple-500 rounded focus:ring-2 focus:ring-purple-400 cursor-pointer">
+                <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" id="welcomeTerms">
+                    Ao usar, eu concordo com os <a href="https://termos.orpheostudio.com.br" target="_blank" class="text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300 font-medium">Termos de Uso</a> e <a href="https://políticas.orpheostudio.com.br" target="_blank" class="text-purple-600 dark:text-purple-400 underline hover:text-purple-700 dark:hover:text-purple-300 font-medium">Políticas de Privacidade</a> da AmplaAI.
+                </span>
+            </label>
+        </div>
+        
+        <button onclick="startChat()" id="startButton" disabled
+                class="w-full bg-sena-gradient hover:opacity-90 disabled:bg-gray-300 dark:disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-5 rounded-2xl transition-all transform hover:scale-105 disabled:hover:scale-100 shadow-lg text-lg">
+            Começar a conversar 🌸
+        </button>
+        
+        <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-6">
+            Desenvolvido com 💜 por <strong>AmplaAI</strong>
+        </p>
+    </div>
+</div>
+
+<!-- Main Chat Interface -->
+<div id="chatInterface" class="hidden min-h-screen p-4 pb-20">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+            <div class="flex items-center gap-4 flex-1">
+                <div class="w-16 h-16 rounded-full bg-sena-gradient flex items-center justify-center sena-avatar shadow-xl cursor-pointer" id="senaAvatarContainer" onclick="showAboutModal()">
+                    <img src="https://i.imgur.com/5watJQF.png" alt="Logo Sena" class="w-10 h-10 object-contain">
+                </div>
+                <div>
+                    <h1 class="text-3xl font-bold">
+                        <span class="bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">SENA</span>
+                    </h1>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center gap-2" id="headerTagline">
+                        <span id="statusIndicator" class="w-2 h-2 bg-green-400 rounded-full pulse-dot"></span>
+                        <span id="statusText">MiraAI Conectada</span>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex gap-2">
+                <button onclick="toggleLanguageMenu()" class="p-3 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all hover:scale-105" title="Mudar idioma">
+                    <span id="currentFlag" class="text-2xl">🇧🇷</span>
+                </button>
+                
+                <button onclick="toggleDarkMode()" class="p-3 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all hover:scale-105" title="Alternar modo escuro">
+                    <svg id="darkModeIcon" class="w-6 h-6 text-gray-700 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                
+                <button onclick="clearChat()" class="p-3 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all hover:scale-105" title="Limpar conversa">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                    </svg>
+                </button>
+                
+                <button onclick="reportBug()" class="p-3 rounded-2xl bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all hover:scale-105" title="Reportar problema">
+                    <svg class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Language Menu -->
+            <div id="languageMenu" class="hidden absolute right-4 top-24 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-2 z-20 min-w-[180px]">
+                <button onclick="changeLanguage('pt')" class="w-full flex items-center gap-3 p-3 hover:bg-purple-50 dark:hover:bg-purple-900/30 rounded-xl transition-colors">
+                    <span class="text-2xl">🇧🇷</span>
+                    <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Português</span>
+                </button>
+                <button onclick="changeLanguage('en')" class="w-full flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                    <span class="text-2xl">🇺🇸</span>
+                    <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">English</span>
+                </button>
+                <button onclick="changeLanguage('es')" class="w-full flex items-center gap-3 p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                    <span class="text-2xl">🇪🇸</span>
+                    <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Español</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Container -->
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden transition-colors">
+            <!-- Chat Header -->
+            <div class="bg-sena-gradient p-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -mr-20 -mt-20"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16"></div>
+                
+                <div class="flex items-center justify-between relative z-10">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg border-2 border-white/30">
+                            <img src="https://i.imgur.com/5watJQF.png" alt="Sena" class="w-8 h-8 object-contain">
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                                SENA
+                                <span class="w-2 h-2 bg-green-300 rounded-full pulse-dot"></span>
+                            </h2>
+                            <p class="text-sm text-white/90" id="chatStatusText">Online</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="toggleVoiceMode()" id="voiceToggle" class="p-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all shadow-lg border border-white/30 hover:scale-110" title="Modo de voz">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Messages Container -->
+            <div id="messagesContainer" class="h-[500px] overflow-y-auto p-6 space-y-4 scroll-smooth custom-scrollbar scroll-shadow">
+                <!-- Messages will be added here -->
+            </div>
+            
+            <!-- Input Area -->
+            <div class="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-        * {
             font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
